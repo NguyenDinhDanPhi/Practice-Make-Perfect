@@ -9,19 +9,21 @@
 /* Begin PBXBuildFile section */
 		D08977FE2D4253140098049F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08977FD2D4253140098049F /* AppDelegate.swift */; };
 		D08978002D4253140098049F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08977FF2D4253140098049F /* SceneDelegate.swift */; };
-		D08978022D4253140098049F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08978012D4253140098049F /* ViewController.swift */; };
+		D08978022D4253140098049F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08978012D4253140098049F /* LoginViewController.swift */; };
 		D08978072D4253150098049F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D08978062D4253150098049F /* Assets.xcassets */; };
 		D089780A2D4253150098049F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D08978082D4253150098049F /* LaunchScreen.storyboard */; };
+		D08978142D4254B80098049F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08978132D4254B80098049F /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D08977FA2D4253140098049F /* Bankey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bankey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D08977FD2D4253140098049F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D08977FF2D4253140098049F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D08978012D4253140098049F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D08978012D4253140098049F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D08978062D4253150098049F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D08978092D4253150098049F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D089780B2D4253150098049F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D08978132D4254B80098049F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +56,31 @@
 		D08977FC2D4253140098049F /* Bankey */ = {
 			isa = PBXGroup;
 			children = (
+				D08978112D42548C0098049F /* Screens */,
 				D08977FD2D4253140098049F /* AppDelegate.swift */,
 				D08977FF2D4253140098049F /* SceneDelegate.swift */,
-				D08978012D4253140098049F /* ViewController.swift */,
 				D08978062D4253150098049F /* Assets.xcassets */,
 				D08978082D4253150098049F /* LaunchScreen.storyboard */,
 				D089780B2D4253150098049F /* Info.plist */,
 			);
 			path = Bankey;
+			sourceTree = "<group>";
+		};
+		D08978112D42548C0098049F /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				D08978122D4254940098049F /* Login */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		D08978122D4254940098049F /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				D08978012D4253140098049F /* LoginViewController.swift */,
+				D08978132D4254B80098049F /* LoginView.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,8 +153,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D08978022D4253140098049F /* ViewController.swift in Sources */,
+				D08978022D4253140098049F /* LoginViewController.swift in Sources */,
 				D08977FE2D4253140098049F /* AppDelegate.swift in Sources */,
+				D08978142D4254B80098049F /* LoginView.swift in Sources */,
 				D08978002D4253140098049F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
