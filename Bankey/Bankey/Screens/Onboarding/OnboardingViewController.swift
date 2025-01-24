@@ -9,6 +9,9 @@ import UIKit
 
 class OnboardingViewController: UIViewController {
     
+    var imageHero: String
+    var titleText: String
+    
     private lazy var stackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -21,20 +24,31 @@ class OnboardingViewController: UIViewController {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
         img.contentMode = .scaleAspectFit
-        img.image = UIImage(named: "delorean")
+        img.image = UIImage(named: imageHero)
         return img
     }()
     
     private lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Bankey is faster, easier to use, and has a brand new look and feel that will make you feel like you are back in the 80s."
+        label.text = titleText
         label.font = UIFont.preferredFont(forTextStyle: .title3)
         label.numberOfLines = 0
         label.adjustsFontForContentSizeCategory = true
         label.textAlignment = .center
         return label
     }()
+    
+     init(imageHero: String, titleText: String) {
+        self.imageHero = imageHero
+        self.titleText = titleText
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
