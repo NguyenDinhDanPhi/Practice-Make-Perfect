@@ -13,6 +13,8 @@
 		D08978072D4253150098049F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D08978062D4253150098049F /* Assets.xcassets */; };
 		D089780A2D4253150098049F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D08978082D4253150098049F /* LaunchScreen.storyboard */; };
 		D08978142D4254B80098049F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08978132D4254B80098049F /* LoginView.swift */; };
+		D0BECFA52D43CDD200ECF11F /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA42D43CDD200ECF11F /* OnboardingContainerViewController.swift */; };
+		D0BECFA72D43D0EA00ECF11F /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		D08978092D4253150098049F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D089780B2D4253150098049F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D08978132D4254B80098049F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		D0BECFA42D43CDD200ECF11F /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
+		D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,7 @@
 		D08978112D42548C0098049F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				D0BECFA32D43CDC200ECF11F /* Onboarding */,
 				D08978122D4254940098049F /* Login */,
 			);
 			path = Screens;
@@ -81,6 +86,15 @@
 				D08978132D4254B80098049F /* LoginView.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		D0BECFA32D43CDC200ECF11F /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				D0BECFA42D43CDD200ECF11F /* OnboardingContainerViewController.swift */,
+				D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,8 +168,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D08978022D4253140098049F /* LoginViewController.swift in Sources */,
+				D0BECFA72D43D0EA00ECF11F /* OnboardingViewController.swift in Sources */,
 				D08977FE2D4253140098049F /* AppDelegate.swift in Sources */,
 				D08978142D4254B80098049F /* LoginView.swift in Sources */,
+				D0BECFA52D43CDD200ECF11F /* OnboardingContainerViewController.swift in Sources */,
 				D08978002D4253140098049F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
