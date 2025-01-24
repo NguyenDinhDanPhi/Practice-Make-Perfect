@@ -63,6 +63,9 @@ class LoginView: UIView {
             trailingAnchor.constraint(equalToSystemSpacingAfter: stackView.trailingAnchor, multiplier: 1),
             bottomAnchor.constraint(equalToSystemSpacingBelow: stackView.bottomAnchor, multiplier: 1),
             
+            userNameTextfield.heightAnchor.constraint(equalToConstant: 40),
+            passwordTextfield.heightAnchor.constraint(equalToConstant: 40),
+            
             driverView.heightAnchor.constraint(equalToConstant: 1)
         ])
     }
