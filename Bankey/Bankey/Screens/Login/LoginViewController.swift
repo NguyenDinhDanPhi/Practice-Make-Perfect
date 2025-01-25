@@ -7,8 +7,13 @@
 
 import UIKit
 
+protocol LoginViewControllerDelegate: AnyObject {
+    func didLogin()
+}
+
 class LoginViewController: UIViewController {
     lazy var loginView = LoginView()
+    weak var delegate: LoginViewControllerDelegate?
     
     lazy var signInButton: UIButton = {
         let button = UIButton(type: .system)
@@ -61,13 +66,34 @@ class LoginViewController: UIViewController {
     }
     
     @objc func signinTapped() {
-//        if let username = loginView.userNameTextfield.text,
-//           let password = loginView.passwordTextfield.text,
-//           username.isEmpty || password.isEmpty {
-//            errorLabel.isHidden = false
-//            errorLabel.text = "user / pass can't blank"
-//        }
+      login()
     }
+    
+    private func login() {
+        guard let username = loginView.userNameTextfield.text,
+              let password = loginView.passwordTextfield.text else {
+            assertionFailure("Username / password should never be nil")
+            return
+        }
+        
+        //        if username.isEmpty || password.isEmpty {
+        //            configureView(withMessage: "Username / password cannot be blank")
+        //            return
+        //        }
+        
+        if username == "" && password == "" {
+            signInButton.setTitle("", for: [])
+            signInButton.configuration?.showsActivityIndicator = true
+            delegate?.didLogin()
+        } else {
+            configureView(withMessage: "Incorrect username / password")
+        }
+    }
+    
+    private func configureView(withMessage message: String) {
+           errorLabel.isHidden = false
+        errorLabel.text = message
+       }
     
 }
 

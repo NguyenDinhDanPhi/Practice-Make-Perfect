@@ -7,10 +7,15 @@
 
 import UIKit
 
+protocol OnboardingContainerViewControllerDelegate: AnyObject {
+    func didFisnishOnboarding()
+}
+
 class OnboardingContainerViewController: UIViewController {
     
     let pageViewController: UIPageViewController
     var pages = [UIViewController]()
+    weak var delegate: OnboardingContainerViewControllerDelegate?
     var currentVC: UIViewController {
         didSet {
         }
@@ -48,7 +53,7 @@ class OnboardingContainerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemPink
         
         addChild(pageViewController)
         view.addSubview(pageViewController.view)
@@ -73,8 +78,9 @@ class OnboardingContainerViewController: UIViewController {
         currentVC = pages.first!
     }
     
+    //MARK: ACTION
     @objc func closeTapped() {
-        
+        delegate?.didFisnishOnboarding()
     }
 }
 
