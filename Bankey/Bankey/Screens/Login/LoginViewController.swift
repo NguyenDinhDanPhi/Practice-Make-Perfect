@@ -7,6 +7,9 @@
 
 import UIKit
 
+protocol LogoutDelegate: AnyObject {
+    func didLogout()
+}
 protocol LoginViewControllerDelegate: AnyObject {
     func didLogin()
 }
@@ -41,6 +44,12 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         setupLayout()
         view.backgroundColor = .systemBackground
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        signInButton.configuration?.showsActivityIndicator = false
+        signInButton.setTitle("Sign in", for: [])
     }
     
     private func setupLayout() {

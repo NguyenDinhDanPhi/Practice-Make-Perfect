@@ -25,7 +25,7 @@ class OnboardingContainerViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Close", for: [])
-        button.addTarget(self, action: #selector(closeTapped), for: [])
+        button.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         button.setTitleColor(.blue, for: .normal)
         return button
     }()
@@ -80,6 +80,7 @@ class OnboardingContainerViewController: UIViewController {
     
     //MARK: ACTION
     @objc func closeTapped() {
+        print("cc")
         delegate?.didFisnishOnboarding()
     }
 }
