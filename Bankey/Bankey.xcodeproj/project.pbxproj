@@ -16,6 +16,7 @@
 		D0BECFA52D43CDD200ECF11F /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA42D43CDD200ECF11F /* OnboardingContainerViewController.swift */; };
 		D0BECFA72D43D0EA00ECF11F /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */; };
 		D0BECFA92D44D04600ECF11F /* DummyVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA82D44D04600ECF11F /* DummyVIewController.swift */; };
+		D0BECFAC2D44DB2900ECF11F /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFAB2D44DB2900ECF11F /* LocalStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		D0BECFA42D43CDD200ECF11F /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		D0BECFA82D44D04600ECF11F /* DummyVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyVIewController.swift; sourceTree = "<group>"; };
+		D0BECFAB2D44DB2900ECF11F /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		D08977FC2D4253140098049F /* Bankey */ = {
 			isa = PBXGroup;
 			children = (
+				D0BECFAA2D44DB1800ECF11F /* Ultis */,
 				D08978112D42548C0098049F /* Screens */,
 				D08977FD2D4253140098049F /* AppDelegate.swift */,
 				D08977FF2D4253140098049F /* SceneDelegate.swift */,
@@ -98,6 +101,14 @@
 				D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		D0BECFAA2D44DB1800ECF11F /* Ultis */ = {
+			isa = PBXGroup;
+			children = (
+				D0BECFAB2D44DB2900ECF11F /* LocalStorage.swift */,
+			);
+			path = Ultis;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,6 +186,7 @@
 				D0BECFA72D43D0EA00ECF11F /* OnboardingViewController.swift in Sources */,
 				D08977FE2D4253140098049F /* AppDelegate.swift in Sources */,
 				D08978142D4254B80098049F /* LoginView.swift in Sources */,
+				D0BECFAC2D44DB2900ECF11F /* LocalStorage.swift in Sources */,
 				D0BECFA52D43CDD200ECF11F /* OnboardingContainerViewController.swift in Sources */,
 				D08978002D4253140098049F /* SceneDelegate.swift in Sources */,
 			);

@@ -50,12 +50,16 @@ extension SceneDelegate: LoginViewControllerDelegate, OnboardingContainerViewCon
     }
     
     func didFisnishOnboarding() {
-        print("hehe")
+        LocalStorage.hasOnboarded = true
         setRootView(dumyVc)
     }
     
     func didLogin() {
-        setRootView(onboardingContainerViewController)
+        if LocalStorage.hasOnboarded {
+            setRootView(dumyVc)
+        } else {
+            setRootView(onboardingContainerViewController)
+        }
     }
     
     
