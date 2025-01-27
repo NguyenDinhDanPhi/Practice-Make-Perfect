@@ -47,7 +47,7 @@ extension AccountSummaryViewController {
     
     private func setupTableHeaderView() {
         
-        // add headerView in tableHeader
+        
         let header = AccountSummaryHeaderView(frame: .zero)
         
         var size = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
