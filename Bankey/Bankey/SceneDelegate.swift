@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         loginViewController.delegate = self
         onboardingContainerViewController.delegate = self
         dumyVc.logoutDelegate = self
-        window.rootViewController = mainVC
+        window.rootViewController = AccountSummaryViewController()
         window.makeKeyAndVisible()
         self.window = window
     }
