@@ -9,6 +9,21 @@ import UIKit
 
 class AccountSumaryCell: UITableViewCell {
     
+    enum AccountType: String {
+        case Banking
+        case CreaditCard
+        case Investment
+    }
+    
+    struct ViewModel {
+        let accountType: AccountType
+        let accountName: String
+        let balance: Decimal
+        var balanceAsAttributedString: NSAttributedString {
+            return CurrencyFormatter().makeAttributedCurrency(balance)
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUp()
@@ -58,7 +73,6 @@ class AccountSumaryCell: UITableViewCell {
     var balanceAmountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "$929"
         label.textAlignment = .right
         return label
     }()
@@ -88,6 +102,8 @@ class AccountSumaryCell: UITableViewCell {
         balanceStackView.addArrangedSubview(balanceAmountLabel)
         contentView.addSubview(chevronImageView)
         
+        balanceAmountLabel.attributedText = makeFormattedBalance(dollars: "929,466", cents: "23")
+
         NSLayoutConstraint.activate([
             typeLabel.topAnchor.constraint(equalToSystemSpacingBelow: topAnchor, multiplier: 2),
             typeLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 2),
@@ -109,4 +125,39 @@ class AccountSumaryCell: UITableViewCell {
             
         ])
     }
+    
+    private func makeFormattedBalance(dollars: String, cents: String) -> NSMutableAttributedString {
+            let dollarSignAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .callout), .baselineOffset: 8]
+            let dollarAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .title1)]
+            let centAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .footnote), .baselineOffset: 8]
+            
+            let rootString = NSMutableAttributedString(string: "$", attributes: dollarSignAttributes)
+            let dollarString = NSAttributedString(string: dollars, attributes: dollarAttributes)
+            let centString = NSAttributedString(string: cents, attributes: centAttributes)
+            
+            rootString.append(dollarString)
+            rootString.append(centString)
+            
+            return rootString
+        }
+    
+    func configure(with vm: ViewModel) {
+           typeLabel.text = vm.accountType.rawValue
+           nameLabel.text = vm.accountName
+           balanceAmountLabel.attributedText = vm.balanceAsAttributedString
+           
+           switch vm.accountType {
+           case .Banking:
+               underLineView.backgroundColor = .systemTeal
+               balanceLabel.text = "Current balance"
+           case .CreaditCard:
+               underLineView.backgroundColor = .systemOrange
+               balanceLabel.text = "Current balance"
+           case .Investment:
+               underLineView.backgroundColor = .systemPurple
+               balanceLabel.text = "Value"
+           }
+       }
+    
 }
+

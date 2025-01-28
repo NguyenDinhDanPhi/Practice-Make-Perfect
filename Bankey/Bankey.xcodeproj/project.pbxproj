@@ -14,6 +14,7 @@
 		D08978072D4253150098049F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D08978062D4253150098049F /* Assets.xcassets */; };
 		D089780A2D4253150098049F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D08978082D4253150098049F /* LaunchScreen.storyboard */; };
 		D08978142D4254B80098049F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08978132D4254B80098049F /* LoginView.swift */; };
+		D0A2C9A72D48886D004731A3 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2C9A62D48886D004731A3 /* CurrencyFormatter.swift */; };
 		D0BECFA52D43CDD200ECF11F /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA42D43CDD200ECF11F /* OnboardingContainerViewController.swift */; };
 		D0BECFA72D43D0EA00ECF11F /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */; };
 		D0BECFA92D44D04600ECF11F /* DummyVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA82D44D04600ECF11F /* DummyVIewController.swift */; };
@@ -35,6 +36,7 @@
 		D08978092D4253150098049F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D089780B2D4253150098049F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D08978132D4254B80098049F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		D0A2C9A62D48886D004731A3 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		D0BECFA42D43CDD200ECF11F /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		D0BECFA82D44D04600ECF11F /* DummyVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyVIewController.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				D034F0112D477AE300B70BFB /* AccountSumaryCell.swift */,
+				D0A2C9A62D48886D004731A3 /* CurrencyFormatter.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				D08978022D4253140098049F /* LoginViewController.swift in Sources */,
 				D0BECFA92D44D04600ECF11F /* DummyVIewController.swift in Sources */,
 				D0BECFA72D43D0EA00ECF11F /* OnboardingViewController.swift in Sources */,
+				D0A2C9A72D48886D004731A3 /* CurrencyFormatter.swift in Sources */,
 				D08977FE2D4253140098049F /* AppDelegate.swift in Sources */,
 				D08978142D4254B80098049F /* LoginView.swift in Sources */,
 				D0BECFAF2D45254700ECF11F /* UIViewController+.swift in Sources */,
