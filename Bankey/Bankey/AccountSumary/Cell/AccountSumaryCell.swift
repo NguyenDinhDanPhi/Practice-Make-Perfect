@@ -11,7 +11,7 @@ class AccountSumaryCell: UITableViewCell {
     
     enum AccountType: String {
         case Banking
-        case CreaditCard
+        case CreditCard
         case Investment
     }
     
@@ -23,7 +23,7 @@ class AccountSumaryCell: UITableViewCell {
             return CurrencyFormatter().makeAttributedCurrency(balance)
         }
     }
-    
+    let viewModel: ViewModel? = nil
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUp()
@@ -150,7 +150,7 @@ class AccountSumaryCell: UITableViewCell {
            case .Banking:
                underLineView.backgroundColor = .systemTeal
                balanceLabel.text = "Current balance"
-           case .CreaditCard:
+           case .CreditCard:
                underLineView.backgroundColor = .systemOrange
                balanceLabel.text = "Current balance"
            case .Investment:
