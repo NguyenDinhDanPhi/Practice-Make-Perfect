@@ -34,7 +34,7 @@ struct CurrencyFormatter {
         let dollarsWithDecimal = formatter.string(from: NSNumber(value: dollarPart)) ?? "\(dollarPart)" // "929,466.00"
         let decimalSeparator = "." // Đặt thẳng dấu "." để đảm bảo nhất quán
         let dollarComponents = dollarsWithDecimal.components(separatedBy: decimalSeparator) // ["929,466", "00"]
-        var dollars = dollarComponents.first! // "929,466"
+        let dollars = dollarComponents.first! // "929,466"
 
         return dollars
     }

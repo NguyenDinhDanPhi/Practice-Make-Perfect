@@ -120,7 +120,6 @@
 		D08977FC2D4253140098049F /* Bankey */ = {
 			isa = PBXGroup;
 			children = (
-				D0BECFB22D476E9F00ECF11F /* AccountSumary */,
 				D0BECFAD2D45253200ECF11F /* Extention */,
 				D0BECFAA2D44DB1800ECF11F /* Ultis */,
 				D08978112D42548C0098049F /* Screens */,
@@ -137,6 +136,7 @@
 		D08978112D42548C0098049F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				D0BECFB22D476E9F00ECF11F /* AccountSumary */,
 				D0BECFA32D43CDC200ECF11F /* Onboarding */,
 				D08978122D4254940098049F /* Login */,
 			);
