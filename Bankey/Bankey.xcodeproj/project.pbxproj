@@ -17,6 +17,7 @@
 		D0A2C9A72D48886D004731A3 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2C9A62D48886D004731A3 /* CurrencyFormatter.swift */; };
 		D0A2C9B62D49FFD5004731A3 /* CurrencyFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2C9B52D49FFD5004731A3 /* CurrencyFormatterTest.swift */; };
 		D0A2C9B82D4A1E08004731A3 /* NSNotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2C9B72D4A1E08004731A3 /* NSNotificationName.swift */; };
+		D0A2C9BA2D4A2581004731A3 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2C9B92D4A2581004731A3 /* UITextField+.swift */; };
 		D0BECFA52D43CDD200ECF11F /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA42D43CDD200ECF11F /* OnboardingContainerViewController.swift */; };
 		D0BECFA72D43D0EA00ECF11F /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */; };
 		D0BECFA92D44D04600ECF11F /* DummyVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA82D44D04600ECF11F /* DummyVIewController.swift */; };
@@ -52,6 +53,7 @@
 		D0A2C9AC2D49FF3C004731A3 /* BankeyUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BankeyUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0A2C9B52D49FFD5004731A3 /* CurrencyFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatterTest.swift; sourceTree = "<group>"; };
 		D0A2C9B72D4A1E08004731A3 /* NSNotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotificationName.swift; sourceTree = "<group>"; };
+		D0A2C9B92D4A2581004731A3 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		D0BECFA42D43CDD200ECF11F /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		D0BECFA82D44D04600ECF11F /* DummyVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyVIewController.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			children = (
 				D0BECFAB2D44DB2900ECF11F /* LocalStorage.swift */,
 				D0A2C9B72D4A1E08004731A3 /* NSNotificationName.swift */,
+				D0A2C9B92D4A2581004731A3 /* UITextField+.swift */,
 			);
 			path = Ultis;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				D0BECFB42D476EB500ECF11F /* AccountSummaryViewController.swift in Sources */,
 				D08978002D4253140098049F /* SceneDelegate.swift in Sources */,
 				D0BECFB12D45287C00ECF11F /* MainViewController.swift in Sources */,
+				D0A2C9BA2D4A2581004731A3 /* UITextField+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

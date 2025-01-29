@@ -55,6 +55,7 @@ class LoginView: UIView {
         stackView.addArrangedSubview(userNameTextfield)
         stackView.addArrangedSubview(driverView)
         stackView.addArrangedSubview(passwordTextfield)
+        passwordTextfield.enablePasswordToggle()
 
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
