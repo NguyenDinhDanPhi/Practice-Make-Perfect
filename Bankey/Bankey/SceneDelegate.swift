@@ -12,7 +12,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     let loginViewController = LoginViewController()
     let onboardingContainerViewController = OnboardingContainerViewController()
-    let dumyVc = DummyViewController()
     let mainVC = MainViewController()
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -22,8 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScreen)
         loginViewController.delegate = self
         onboardingContainerViewController.delegate = self
-        dumyVc.logoutDelegate = self
-        window.rootViewController = AccountSummaryViewController()
+        mainVC.setStatusBar()
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().backgroundColor = .red
+        window.rootViewController = mainVC
         window.makeKeyAndVisible()
         self.window = window
     }
@@ -52,12 +53,12 @@ extension SceneDelegate: LoginViewControllerDelegate, OnboardingContainerViewCon
     
     func didFisnishOnboarding() {
         LocalStorage.hasOnboarded = true
-        setRootView(dumyVc)
+        setRootView(mainVC)
     }
     
     func didLogin() {
         if LocalStorage.hasOnboarded {
-            setRootView(dumyVc)
+            setRootView(mainVC)
         } else {
             setRootView(onboardingContainerViewController)
         }
