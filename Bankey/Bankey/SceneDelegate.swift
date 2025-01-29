@@ -22,13 +22,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScreen)
         loginViewController.delegate = self
         onboardingContainerViewController.delegate = self
-        displayLogin()
+        mainVC.setStatusBar()
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().backgroundColor = .red
+        window.rootViewController = mainVC
+        window.makeKeyAndVisible()
         self.window = window
+        
     }
     
-    private func displayLogin() {
-        setRootViewController(loginViewController)
-    }
     
     func setRootViewController(_ vc: UIViewController, animated: Bool = true) {
         guard animated, let window = self.window else {
@@ -46,39 +48,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                           completion: nil)
     }
     
-    private func prepMainView() {
-        mainVC.setStatusBar()
-        UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().backgroundColor = .systemTeal
-    }
+}
+//MARK: DELEGATE
+
+extension SceneDelegate: LoginViewControllerDelegate, OnboardingContainerViewControllerDelegate, LogoutDelegate {
     
-    private func displayNextScreen() {
+    func didLogin() {
         if LocalStorage.hasOnboarded {
-            prepMainView()
             setRootViewController(mainVC)
         } else {
             setRootViewController(onboardingVC)
         }
     }
     
-}
-//MARK: DELEGATE
-
-extension SceneDelegate: LoginViewControllerDelegate, OnboardingContainerViewControllerDelegate, LogoutDelegate {
-    
-    func didLogout() {
-        setRootViewController(loginViewController)
-        
-    }
     
     func didFisnishOnboarding() {
         LocalStorage.hasOnboarded = true
-        prepMainView()
         setRootViewController(mainVC)
     }
     
-    func didLogin() {
-        displayNextScreen()
+    func didLogout() {
+        setRootViewController(loginViewController)
     }
     
 }
+
