@@ -26,12 +26,15 @@ struct CurrencyFormatter {
     
     // Converts 929466 > 929,466
     private func convertDollar(_ dollarPart: Double) -> String {
-        let dollarsWithDecimal = dollarsFormatted(dollarPart) // "$929,466.00"
         let formatter = NumberFormatter()
-        let decimalSeparator = formatter.decimalSeparator! // "."
-        let dollarComponents = dollarsWithDecimal.components(separatedBy: decimalSeparator) // "$929,466" "00"
-        var dollars = dollarComponents.first! // "$929,466"
-        dollars.removeFirst() // "929,466"
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ","
+        formatter.decimalSeparator = "." // Đảm bảo dấu thập phân là "."
+        
+        let dollarsWithDecimal = formatter.string(from: NSNumber(value: dollarPart)) ?? "\(dollarPart)" // "929,466.00"
+        let decimalSeparator = "." // Đặt thẳng dấu "." để đảm bảo nhất quán
+        let dollarComponents = dollarsWithDecimal.components(separatedBy: decimalSeparator) // ["929,466", "00"]
+        var dollars = dollarComponents.first! // "929,466"
 
         return dollars
     }
