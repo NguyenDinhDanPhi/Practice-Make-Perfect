@@ -26,6 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().backgroundColor = .red
         window.rootViewController = mainVC
+        registerForNotifications()
         window.makeKeyAndVisible()
         self.window = window
         
@@ -48,6 +49,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                           completion: nil)
     }
     
+    private func registerForNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didLogout), name: .logout, object: nil)
+    }
+    
 }
 //MARK: DELEGATE
 
@@ -67,7 +72,7 @@ extension SceneDelegate: LoginViewControllerDelegate, OnboardingContainerViewCon
         setRootViewController(mainVC)
     }
     
-    func didLogout() {
+    @objc func didLogout() {
         setRootViewController(loginViewController)
     }
     
