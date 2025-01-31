@@ -18,6 +18,7 @@
 		D0A2C9B62D49FFD5004731A3 /* CurrencyFormatterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2C9B52D49FFD5004731A3 /* CurrencyFormatterTest.swift */; };
 		D0A2C9B82D4A1E08004731A3 /* NSNotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2C9B72D4A1E08004731A3 /* NSNotificationName.swift */; };
 		D0A2C9BA2D4A2581004731A3 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2C9B92D4A2581004731A3 /* UITextField+.swift */; };
+		D0A2C9BD2D4CC05D004731A3 /* ShakeyBellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A2C9BC2D4CC05D004731A3 /* ShakeyBellView.swift */; };
 		D0BECFA52D43CDD200ECF11F /* OnboardingContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA42D43CDD200ECF11F /* OnboardingContainerViewController.swift */; };
 		D0BECFA72D43D0EA00ECF11F /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */; };
 		D0BECFA92D44D04600ECF11F /* DummyVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFA82D44D04600ECF11F /* DummyVIewController.swift */; };
@@ -54,6 +55,7 @@
 		D0A2C9B52D49FFD5004731A3 /* CurrencyFormatterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatterTest.swift; sourceTree = "<group>"; };
 		D0A2C9B72D4A1E08004731A3 /* NSNotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNotificationName.swift; sourceTree = "<group>"; };
 		D0A2C9B92D4A2581004731A3 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		D0A2C9BC2D4CC05D004731A3 /* ShakeyBellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeyBellView.swift; sourceTree = "<group>"; };
 		D0BECFA42D43CDD200ECF11F /* OnboardingContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContainerViewController.swift; sourceTree = "<group>"; };
 		D0BECFA62D43D0EA00ECF11F /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		D0BECFA82D44D04600ECF11F /* DummyVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyVIewController.swift; sourceTree = "<group>"; };
@@ -148,8 +150,8 @@
 		D08978122D4254940098049F /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				D0A2C9BB2D4CC037004731A3 /* View */,
 				D08978012D4253140098049F /* LoginViewController.swift */,
-				D08978132D4254B80098049F /* LoginView.swift */,
 				D0BECFA82D44D04600ECF11F /* DummyVIewController.swift */,
 			);
 			path = Login;
@@ -161,6 +163,16 @@
 				D0A2C9B52D49FFD5004731A3 /* CurrencyFormatterTest.swift */,
 			);
 			path = BankeyUnitTests;
+			sourceTree = "<group>";
+		};
+		D0A2C9BB2D4CC037004731A3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D08978132D4254B80098049F /* LoginView.swift */,
+				D0A2C9BC2D4CC05D004731A3 /* ShakeyBellView.swift */,
+			);
+			name = View;
+			path = "Vieư";
 			sourceTree = "<group>";
 		};
 		D0BECFA32D43CDC200ECF11F /* Onboarding */ = {
@@ -312,6 +324,7 @@
 				D0A2C9B82D4A1E08004731A3 /* NSNotificationName.swift in Sources */,
 				D08978142D4254B80098049F /* LoginView.swift in Sources */,
 				D0BECFAF2D45254700ECF11F /* UIViewController+.swift in Sources */,
+				D0A2C9BD2D4CC05D004731A3 /* ShakeyBellView.swift in Sources */,
 				D0BECFAC2D44DB2900ECF11F /* LocalStorage.swift in Sources */,
 				D0BECFA52D43CDD200ECF11F /* OnboardingContainerViewController.swift in Sources */,
 				D0BECFB42D476EB500ECF11F /* AccountSummaryViewController.swift in Sources */,
