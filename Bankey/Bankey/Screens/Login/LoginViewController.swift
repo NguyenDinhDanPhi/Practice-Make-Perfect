@@ -113,8 +113,8 @@ class LoginViewController: UIViewController {
     }
     
     private func login() {
-        guard let username = loginView.userNameTextfield.text,
-              let password = loginView.passwordTextfield.text else {
+        guard let username = loginView.usernameTextField.text,
+              let password = loginView.passwordTextField.text else {
             assertionFailure("Username / password should never be nil")
             return
         }
