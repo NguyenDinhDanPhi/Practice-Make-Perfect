@@ -13,7 +13,11 @@ class AccountSummaryViewController: UIViewController {
     var headerViewModel = AccountSumaryHeaderViewModel(welcomeMessage: "Welcome", name: "", date: Date())
     var tableView = UITableView()
     let headerView = AccountSummaryHeaderView(frame: .zero)
-    var accounts: [AccountSumaryCell.ViewModel] = []
+    var accountCellViewModels: [AccountSumaryCell.ViewModel] = []
+    var accounts: [Account] = []
+    
+    
+    
     lazy var logoutButton: UIBarButtonItem = {
         let image = UIImage(systemName: "rectangle.portrait.and.arrow.right")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 18, weight: .thin))
         let barButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(logoutButtonTapped))
@@ -67,33 +71,6 @@ extension AccountSummaryViewController {
         tableView.tableHeaderView = headerView
     }
     
-    func fetchData() {
-        let savings = AccountSumaryCell.ViewModel(accountType: .Banking,
-                                                  accountName: "Basic Savings",
-                                                  balance: 929466.23)
-        let chequing = AccountSumaryCell.ViewModel(accountType: .Banking,
-                                                   accountName: "No-Fee All-In Chequing",
-                                                   balance: 17562.44)
-        let visa = AccountSumaryCell.ViewModel(accountType: .CreditCard,
-                                               accountName: "Visa Avion Card",
-                                               balance: 412.83)
-        let masterCard = AccountSumaryCell.ViewModel(accountType: .CreditCard,
-                                                     accountName: "Student Mastercard",
-                                                     balance: 50.83)
-        let investment1 = AccountSumaryCell.ViewModel(accountType: .Investment,
-                                                      accountName: "Tax-Free Saver",
-                                                      balance: 2000.00)
-        let investment2 = AccountSumaryCell.ViewModel(accountType: .Investment,
-                                                      accountName: "Growth Fund",
-                                                      balance: 15000.00)
-        
-        accounts.append(savings)
-        accounts.append(chequing)
-        accounts.append(visa)
-        accounts.append(masterCard)
-        accounts.append(investment1)
-        accounts.append(investment2)
-    }
     
     @objc func logoutButtonTapped() {
         NotificationCenter.default.post(name: .logout, object: nil)
@@ -104,7 +81,7 @@ extension AccountSummaryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard !accounts.isEmpty else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: AccountSumaryCell.reuseID, for: indexPath) as! AccountSumaryCell
-        let account = accounts[indexPath.row]
+        let account = accountCellViewModels[indexPath.row]
         cell.configure(with: account)
         return cell
     }
@@ -136,7 +113,16 @@ extension AccountSummaryViewController {
             }
         }
         
-        fetchData()
+        fetchAccounts(forUserId: "1") { result in
+            switch result {
+            case .success(let accounts):
+                self.accounts = accounts
+                self.configureTableCells(with: accounts)
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     private func configureTableHeaderView(with profile: Profile) {
@@ -144,5 +130,13 @@ extension AccountSummaryViewController {
                                               name: profile.firstName,
                                               date: Date())
         headerView.configure(viewModel: vm)
+    }
+    
+    private func configureTableCells(with accounts: [Account]) {
+        accountCellViewModels = accounts.map {
+            AccountSumaryCell.ViewModel(accountType: $0.type,
+                                         accountName: $0.name,
+                                         balance: $0.amount)
+        }
     }
 }

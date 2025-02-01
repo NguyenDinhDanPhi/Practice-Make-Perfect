@@ -9,7 +9,7 @@ import UIKit
 
 class AccountSumaryCell: UITableViewCell {
     
-    enum AccountType: String {
+    enum AccountType: String, Codable {
         case Banking
         case CreditCard
         case Investment
