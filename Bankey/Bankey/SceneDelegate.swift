@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         mainVC.setStatusBar()
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().backgroundColor = .red
-        window.rootViewController = loginViewController
+        window.rootViewController = mainVC
         registerForNotifications()
         window.makeKeyAndVisible()
         self.window = window

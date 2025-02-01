@@ -9,6 +9,10 @@ import UIKit
 class AccountSummaryHeaderView: UIView {
     
     @IBOutlet var containverView: UIView!
+    @IBOutlet weak var welcomeLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    
     var shakeyBellView = ShakeyBellView()
     
     override init(frame: CGRect) {
@@ -50,4 +54,9 @@ class AccountSummaryHeaderView: UIView {
             ])
         }
     
+    func configure(viewModel: AccountSumaryHeaderViewModel) {
+        welcomeLabel.text = viewModel.welcomeMessage
+        nameLabel.text = viewModel.name
+        dateLabel.text = viewModel.dateFormat
+    }
 }
