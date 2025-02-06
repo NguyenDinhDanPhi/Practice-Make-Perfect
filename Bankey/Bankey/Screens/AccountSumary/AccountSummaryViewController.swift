@@ -123,7 +123,13 @@ extension AccountSummaryViewController {
                 self.profile = profile
                 self.configureTableHeaderView(with: profile)
             case .failure(let error):
-                print(error.localizedDescription)
+                switch error {
+                    
+                case .serverError:
+                    self.showErrorAlert(title: "Network Error", mess: "Please check your network connectivity and try again")
+                case .decodingError:
+                    self.showErrorAlert(title: "Decoding Error", mess: "Please Try Again")
+                }
             }
             group.leave()
         }
@@ -155,8 +161,14 @@ extension AccountSummaryViewController {
     private func configureTableCells(with accounts: [Account]) {
         accountCellViewModels = accounts.map {
             AccountSumaryCell.ViewModel(accountType: $0.type,
-                                         accountName: $0.name,
-                                         balance: $0.amount)
+                                        accountName: $0.name,
+                                        balance: $0.amount)
         }
+    }
+    
+    func showErrorAlert(title: String, mess: String) {
+        let alert = UIAlertController(title: title, message: mess, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true, completion: nil)
     }
 }
