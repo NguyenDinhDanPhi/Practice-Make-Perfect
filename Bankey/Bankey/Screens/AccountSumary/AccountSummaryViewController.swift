@@ -16,6 +16,7 @@ class AccountSummaryViewController: UIViewController {
     var accountCellViewModels: [AccountSumaryCell.ViewModel] = []
     var accounts: [Account] = []
     
+    let refreshControl = UIRefreshControl()
     
     
     lazy var logoutButton: UIBarButtonItem = {
@@ -38,6 +39,7 @@ extension AccountSummaryViewController {
     private func setup() {
         setupTableView()
         setupTableHeaderView()
+        setUpRefreshControll()
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = logoutButton
     }
@@ -75,6 +77,16 @@ extension AccountSummaryViewController {
     @objc func logoutButtonTapped() {
         NotificationCenter.default.post(name: .logout, object: nil)
     }
+    
+    func setUpRefreshControll() {
+        refreshControl.tintColor = .systemTeal
+        refreshControl.addTarget(self, action: #selector(refreshContent), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc func refreshContent() {
+        fetchData()
+    }
 }
 
 extension AccountSummaryViewController: UITableViewDataSource {
@@ -102,8 +114,10 @@ extension AccountSummaryViewController: UITableViewDelegate {
 extension AccountSummaryViewController {
     private func fetchData() {
         let group = DispatchGroup()
+        //Mock refresh
+        let userID = String(Int.random(in: 1..<4))
         group.enter()
-        fetchProfile(forUserId: "1") { result in
+        fetchProfile(forUserId: userID) { result in
             switch result {
             case .success(let profile):
                 self.profile = profile
@@ -114,7 +128,7 @@ extension AccountSummaryViewController {
             group.leave()
         }
         group.enter()
-        fetchAccounts(forUserId: "1") { result in
+        fetchAccounts(forUserId: userID) { result in
             switch result {
             case .success(let accounts):
                 self.accounts = accounts
@@ -127,6 +141,7 @@ extension AccountSummaryViewController {
         
         group.notify(queue: .main) {
             self.tableView.reloadData()
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
     
