@@ -32,6 +32,7 @@
 		D0BECFB42D476EB500ECF11F /* AccountSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFB32D476EB500ECF11F /* AccountSummaryViewController.swift */; };
 		D0BECFB62D47706000ECF11F /* AccountSummaryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BECFB52D47706000ECF11F /* AccountSummaryHeaderView.swift */; };
 		D0BECFB82D4770E900ECF11F /* AccountSummaryHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0BECFB72D4770E900ECF11F /* AccountSummaryHeaderView.xib */; };
+		D0C16BDE2D55E98D006A061E /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C16BDD2D55E98D006A061E /* ProfileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		D0BECFB32D476EB500ECF11F /* AccountSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryViewController.swift; sourceTree = "<group>"; };
 		D0BECFB52D47706000ECF11F /* AccountSummaryHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryHeaderView.swift; sourceTree = "<group>"; };
 		D0BECFB72D4770E900ECF11F /* AccountSummaryHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountSummaryHeaderView.xib; sourceTree = "<group>"; };
+		D0C16BDD2D55E98D006A061E /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,12 +218,21 @@
 		D0BECFB22D476E9F00ECF11F /* AccountSumary */ = {
 			isa = PBXGroup;
 			children = (
+				D0C16BDC2D55E97C006A061E /* Networking */,
 				D034F0102D477AD000B70BFB /* Cell */,
 				D034F00F2D477AC400B70BFB /* Header */,
 				D0BECFB32D476EB500ECF11F /* AccountSummaryViewController.swift */,
 				D0BD02A72D4DF95300959437 /* AccountSummaryViewController+Networking.swift */,
 			);
 			path = AccountSumary;
+			sourceTree = "<group>";
+		};
+		D0C16BDC2D55E97C006A061E /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				D0C16BDD2D55E98D006A061E /* ProfileManager.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,6 +347,7 @@
 				D0BD02A42D4DF7E900959437 /* AccountSumaryHeaderViewModel.swift in Sources */,
 				D08977FE2D4253140098049F /* AppDelegate.swift in Sources */,
 				D0A2C9B82D4A1E08004731A3 /* NSNotificationName.swift in Sources */,
+				D0C16BDE2D55E98D006A061E /* ProfileManager.swift in Sources */,
 				D0BECFAF2D45254700ECF11F /* UIViewController+.swift in Sources */,
 				D0A2C9BD2D4CC05D004731A3 /* ShakeyBellView.swift in Sources */,
 				D0A3272B2D4D0780005C62C4 /* LoginView.swift in Sources */,

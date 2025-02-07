@@ -17,7 +17,7 @@ class AccountSummaryViewController: UIViewController {
     var accounts: [Account] = []
     
     let refreshControl = UIRefreshControl()
-    
+    var profileManager: ProfileManageable = ProfileManager()
     
     lazy var logoutButton: UIBarButtonItem = {
         let image = UIImage(systemName: "rectangle.portrait.and.arrow.right")?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 18, weight: .thin))
@@ -117,7 +117,7 @@ extension AccountSummaryViewController {
         //Mock refresh
         let userID = String(Int.random(in: 1..<4))
         group.enter()
-        fetchProfile(forUserId: userID) { result in
+        profileManager.fetchProfile(forUserID: userID) { result in
             switch result {
             case .success(let profile):
                 self.profile = profile
