@@ -87,6 +87,20 @@ extension AccountSummaryViewController {
     @objc func refreshContent() {
         fetchData()
     }
+    
+    private func displayError(_ error: NetworkError) {
+           let title: String
+           let message: String
+           switch error {
+           case .serverError:
+               title = "Server Error"
+               message = "We could not process your request. Please try again."
+           case .decodingError:
+               title = "Network Error"
+               message = "Ensure you are connected to the internet. Please try again."
+           }
+        self.showErrorAlert(title: title, mess: message)
+       }
 }
 
 extension AccountSummaryViewController: UITableViewDataSource {
@@ -123,13 +137,7 @@ extension AccountSummaryViewController {
                 self.profile = profile
                 self.configureTableHeaderView(with: profile)
             case .failure(let error):
-                switch error {
-                    
-                case .serverError:
-                    self.showErrorAlert(title: "Network Error", mess: "Please check your network connectivity and try again")
-                case .decodingError:
-                    self.showErrorAlert(title: "Decoding Error", mess: "Please Try Again")
-                }
+                self.displayError(error)
             }
             group.leave()
         }
@@ -140,7 +148,7 @@ extension AccountSummaryViewController {
                 self.accounts = accounts
                 self.configureTableCells(with: accounts)
             case .failure(let error):
-                print(error.localizedDescription)
+                self.displayError(error)
             }
             group.leave()
         }
