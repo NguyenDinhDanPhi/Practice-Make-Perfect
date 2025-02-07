@@ -88,19 +88,6 @@ extension AccountSummaryViewController {
         fetchData()
     }
     
-    private func displayError(_ error: NetworkError) {
-           let title: String
-           let message: String
-           switch error {
-           case .serverError:
-               title = "Server Error"
-               message = "We could not process your request. Please try again."
-           case .decodingError:
-               title = "Network Error"
-               message = "Ensure you are connected to the internet. Please try again."
-           }
-        self.showErrorAlert(title: title, mess: message)
-       }
 }
 
 extension AccountSummaryViewController: UITableViewDataSource {
@@ -178,5 +165,30 @@ extension AccountSummaryViewController {
         let alert = UIAlertController(title: title, message: mess, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true, completion: nil)
+    }
+    
+    private func displayError(_ error: NetworkError) {
+        let titleAndMessage = titleAndMessage(for: error)
+        self.showErrorAlert(title: titleAndMessage.0, mess: titleAndMessage.1)
+    }
+
+    private func titleAndMessage(for error: NetworkError) -> (String, String) {
+        let title: String
+        let message: String
+        switch error {
+        case .serverError:
+            title = "Server Error"
+            message = "We could not process your request. Please try again."
+        case .decodingError:
+            title = "Network Error"
+            message = "Ensure you are connected to the internet. Please try again."
+        }
+        return (title, message)
+    }
+}
+// MARK: Unit testing
+extension AccountSummaryViewController {
+    func titleAndMessageForTesting(for error: NetworkError) -> (String, String) {
+            return titleAndMessage(for: error)
     }
 }
