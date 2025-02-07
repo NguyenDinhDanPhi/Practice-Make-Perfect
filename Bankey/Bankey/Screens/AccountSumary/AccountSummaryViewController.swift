@@ -27,6 +27,12 @@ class AccountSummaryViewController: UIViewController {
         return barButton
     }()
     
+    lazy var errorAlert: UIAlertController = {
+        let alert =  UIAlertController(title: "", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        return alert
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -178,9 +184,9 @@ extension AccountSummaryViewController {
     }
     
     func showErrorAlert(title: String, mess: String) {
-        let alert = UIAlertController(title: title, message: mess, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true, completion: nil)
+        errorAlert.title = title
+        errorAlert.message = mess
+        present(errorAlert, animated: true, completion: nil)
     }
     
     private func displayError(_ error: NetworkError) {
@@ -207,4 +213,8 @@ extension AccountSummaryViewController {
     func titleAndMessageForTesting(for error: NetworkError) -> (String, String) {
             return titleAndMessage(for: error)
     }
+    
+    func forceFetchProfile() {
+            fetchProfile(group: DispatchGroup(), userId: "1")
+        }
 }
