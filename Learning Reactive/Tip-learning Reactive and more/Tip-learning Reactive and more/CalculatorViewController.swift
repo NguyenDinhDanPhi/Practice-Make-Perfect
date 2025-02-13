@@ -27,6 +27,7 @@ class CalculatorViewController: UIViewController {
     }
 
     private func layout() {
+        view.backgroundColor = ThemeColor.bg
         view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.leading.equalTo(view.snp.leadingMargin).offset(16)
