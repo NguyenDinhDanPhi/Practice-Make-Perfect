@@ -18,6 +18,9 @@
 		D0F6EFA02D5DB49600E63FDA /* Tip_learning_Reactive_and_moreUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EF9F2D5DB49600E63FDA /* Tip_learning_Reactive_and_moreUITestsLaunchTests.swift */; };
 		D0F6EFB22D5DB53800E63FDA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D0F6EFB12D5DB53800E63FDA /* SnapKit */; };
 		D0F6EFB52D5DB54200E63FDA /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D0F6EFB42D5DB54200E63FDA /* CombineCocoa */; };
+		D0F6EFB82D5DB5A000E63FDA /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D0F6EFB72D5DB5A000E63FDA /* CombineCocoa */; };
+		D0F6EFBB2D5DB5E500E63FDA /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = D0F6EFBA2D5DB5E500E63FDA /* SnapshotTesting */; };
+		D0F6EFBD2D5DB60A00E63FDA /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D0F6EFBC2D5DB60A00E63FDA /* CombineCocoa */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0F6EFB82D5DB5A000E63FDA /* CombineCocoa in Frameworks */,
+				D0F6EFBB2D5DB5E500E63FDA /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0F6EFBD2D5DB60A00E63FDA /* CombineCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +93,7 @@
 				D0F6EF922D5DB49600E63FDA /* Tip-learning Reactive and moreTests */,
 				D0F6EF9C2D5DB49600E63FDA /* Tip-learning Reactive and moreUITests */,
 				D0F6EF7A2D5DB49400E63FDA /* Products */,
+				D0F6EFB62D5DB5A000E63FDA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +138,13 @@
 			path = "Tip-learning Reactive and moreUITests";
 			sourceTree = "<group>";
 		};
+		D0F6EFB62D5DB5A000E63FDA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -169,6 +183,10 @@
 				D0F6EF912D5DB49600E63FDA /* PBXTargetDependency */,
 			);
 			name = "Tip-learning Reactive and moreTests";
+			packageProductDependencies = (
+				D0F6EFB72D5DB5A000E63FDA /* CombineCocoa */,
+				D0F6EFBA2D5DB5E500E63FDA /* SnapshotTesting */,
+			);
 			productName = "Tip-learning Reactive and moreTests";
 			productReference = D0F6EF8F2D5DB49600E63FDA /* Tip-learning Reactive and moreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -187,6 +205,9 @@
 				D0F6EF9B2D5DB49600E63FDA /* PBXTargetDependency */,
 			);
 			name = "Tip-learning Reactive and moreUITests";
+			packageProductDependencies = (
+				D0F6EFBC2D5DB60A00E63FDA /* CombineCocoa */,
+			);
 			productName = "Tip-learning Reactive and moreUITests";
 			productReference = D0F6EF992D5DB49600E63FDA /* Tip-learning Reactive and moreUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -226,6 +247,7 @@
 			packageReferences = (
 				D0F6EFB02D5DB53800E63FDA /* XCRemoteSwiftPackageReference "SnapKit" */,
 				D0F6EFB32D5DB54200E63FDA /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+				D0F6EFB92D5DB5E500E63FDA /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = D0F6EF7A2D5DB49400E63FDA /* Products */;
 			projectDirPath = "";
@@ -631,6 +653,14 @@
 				minimumVersion = 0.4.1;
 			};
 		};
+		D0F6EFB92D5DB5E500E63FDA /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.18.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -640,6 +670,21 @@
 			productName = SnapKit;
 		};
 		D0F6EFB42D5DB54200E63FDA /* CombineCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0F6EFB32D5DB54200E63FDA /* XCRemoteSwiftPackageReference "CombineCocoa" */;
+			productName = CombineCocoa;
+		};
+		D0F6EFB72D5DB5A000E63FDA /* CombineCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0F6EFB32D5DB54200E63FDA /* XCRemoteSwiftPackageReference "CombineCocoa" */;
+			productName = CombineCocoa;
+		};
+		D0F6EFBA2D5DB5E500E63FDA /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0F6EFB92D5DB5E500E63FDA /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+		D0F6EFBC2D5DB60A00E63FDA /* CombineCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D0F6EFB32D5DB54200E63FDA /* XCRemoteSwiftPackageReference "CombineCocoa" */;
 			productName = CombineCocoa;
