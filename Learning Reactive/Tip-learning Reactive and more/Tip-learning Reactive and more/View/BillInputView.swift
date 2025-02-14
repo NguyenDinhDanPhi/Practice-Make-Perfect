@@ -17,6 +17,6 @@ class BillInputView: UIView {
     }
     
     private func layout() {
-        
+        backgroundColor = .blue
     }
 }

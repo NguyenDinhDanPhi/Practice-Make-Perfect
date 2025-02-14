@@ -16,14 +16,19 @@ class CalculatorViewController: UIViewController {
     let spitInputView = SplitInputView()
     
     private lazy var  stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [logoView, resultView, tipInputView, spitInputView])
+        let stackView = UIStackView(arrangedSubviews: [logoView, resultView, billInputView, tipInputView, spitInputView])
         stackView.axis = .vertical
+        stackView.spacing = 36
         return stackView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        layout()        // Do any additional setup after loading the view.
+        layout() 
+        let screenSize = UIScreen.main.bounds
+        print("Chiều rộng: \(screenSize.width), Chiều cao: \(screenSize.height)")
+
+        // Do any additional setup after loading the view.
     }
 
     private func layout() {
@@ -45,10 +50,10 @@ class CalculatorViewController: UIViewController {
             make.height.equalTo(56)
         }
         tipInputView.snp.makeConstraints { make in
-            make.height.equalTo(56+56+16)
+            make.height.equalTo(56+56+15)
         }
         spitInputView.snp.makeConstraints { make in
-            make.height.equalTo(48)
+            make.height.equalTo(56)
         }
     }
 }

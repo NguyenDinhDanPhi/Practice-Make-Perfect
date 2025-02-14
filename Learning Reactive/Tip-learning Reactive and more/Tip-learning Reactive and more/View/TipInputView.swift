@@ -17,6 +17,6 @@ class TipInputView: UIView {
     }
     
     private func layout() {
-        
+        backgroundColor = .green
     }
 }

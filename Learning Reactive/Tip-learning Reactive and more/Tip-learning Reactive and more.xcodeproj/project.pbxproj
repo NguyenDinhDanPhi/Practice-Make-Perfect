@@ -29,6 +29,7 @@
 		D0F6EFCD2D5DBE5C00E63FDA /* ThemeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFCC2D5DBE5C00E63FDA /* ThemeFont.swift */; };
 		D0F6EFD02D5DBEA000E63FDA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFCF2D5DBEA000E63FDA /* UIColor+.swift */; };
 		D0F6EFD32D5DC3E900E63FDA /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFD22D5DC3E900E63FDA /* LabelFactory.swift */; };
+		D0F6EFD52D5F303E00E63FDA /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFD42D5F303E00E63FDA /* UIView+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		D0F6EFCC2D5DBE5C00E63FDA /* ThemeFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeFont.swift; sourceTree = "<group>"; };
 		D0F6EFCF2D5DBEA000E63FDA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		D0F6EFD22D5DC3E900E63FDA /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
+		D0F6EFD42D5F303E00E63FDA /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				D0F6EFCF2D5DBEA000E63FDA /* UIColor+.swift */,
+				D0F6EFD42D5F303E00E63FDA /* UIView+.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				D0F6EFCD2D5DBE5C00E63FDA /* ThemeFont.swift in Sources */,
 				D0F6EF7F2D5DB49400E63FDA /* SceneDelegate.swift in Sources */,
 				D0F6EFD32D5DC3E900E63FDA /* LabelFactory.swift in Sources */,
+				D0F6EFD52D5F303E00E63FDA /* UIView+.swift in Sources */,
 				D0F6EFC82D5DB91C00E63FDA /* SplitInputView.swift in Sources */,
 				D0F6EFC62D5DB90A00E63FDA /* TipInputView.swift in Sources */,
 			);

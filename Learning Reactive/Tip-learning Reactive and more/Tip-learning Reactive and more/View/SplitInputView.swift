@@ -17,6 +17,6 @@ class SplitInputView: UIView {
     }
     
     private func layout() {
-        
+        backgroundColor = .cyan
     }
 }
