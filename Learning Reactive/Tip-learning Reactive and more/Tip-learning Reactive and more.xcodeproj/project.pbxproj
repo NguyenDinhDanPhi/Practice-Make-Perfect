@@ -30,6 +30,7 @@
 		D0F6EFD02D5DBEA000E63FDA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFCF2D5DBEA000E63FDA /* UIColor+.swift */; };
 		D0F6EFD32D5DC3E900E63FDA /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFD22D5DC3E900E63FDA /* LabelFactory.swift */; };
 		D0F6EFD52D5F303E00E63FDA /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFD42D5F303E00E63FDA /* UIView+.swift */; };
+		D0F6EFD72D5F409800E63FDA /* AmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFD62D5F409800E63FDA /* AmountView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		D0F6EFCF2D5DBEA000E63FDA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		D0F6EFD22D5DC3E900E63FDA /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
 		D0F6EFD42D5F303E00E63FDA /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		D0F6EFD62D5F409800E63FDA /* AmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 				D0F6EFC32D5DB8FC00E63FDA /* BillInputView.swift */,
 				D0F6EFC52D5DB90A00E63FDA /* TipInputView.swift */,
 				D0F6EFC72D5DB91C00E63FDA /* SplitInputView.swift */,
+				D0F6EFD62D5F409800E63FDA /* AmountView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0F6EFD72D5F409800E63FDA /* AmountView.swift in Sources */,
 				D0F6EF812D5DB49400E63FDA /* CalculatorViewController.swift in Sources */,
 				D0F6EFC02D5DB86900E63FDA /* LogoView.swift in Sources */,
 				D0F6EFCB2D5DBE5100E63FDA /* ThemeColor.swift in Sources */,

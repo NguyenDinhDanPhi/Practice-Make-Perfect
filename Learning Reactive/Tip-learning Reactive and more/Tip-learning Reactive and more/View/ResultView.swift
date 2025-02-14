@@ -34,7 +34,7 @@ class ResultView: UIView {
     }()
     
     private lazy var hStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [AmountView(), UIView(), AmountView()])
+        let stackView = UIStackView(arrangedSubviews: [AmountView(title: "Total Bill", textAlignment: .left), UIView(), AmountView(title: "Total Tips", textAlignment: .right)])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         return stackView
@@ -63,42 +63,5 @@ class ResultView: UIView {
         }
         addShaDow(offset: CGSize(width: 0, height: 3), color: .black, radius: 12.0, opacity: 0.1)
         
-    }
-}
-
-class AmountView: UIView {
-    lazy var headerLabel: UILabel = {
-        LabelFactory.build(text: "Total Bill", font: ThemeFont.regular(ofSize: 18), textColor: ThemeColor.text)
-    }()
-    
-    private lazy var amountPerPerson: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        let text = NSMutableAttributedString(string: "$0", attributes: [.font: ThemeFont.bold(ofSize: 24)])
-        text.addAttributes([.font: ThemeFont.bold(ofSize: 24)], range: NSMakeRange(0, 1))
-        label.attributedText = text
-        return label
-    }()
-    
-    private lazy var stackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [headerLabel, amountPerPerson])
-        view.axis = .vertical
-        return view
-    }()
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        layout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func layout() {
-        addSubview(stackView)
-        
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
     }
 }

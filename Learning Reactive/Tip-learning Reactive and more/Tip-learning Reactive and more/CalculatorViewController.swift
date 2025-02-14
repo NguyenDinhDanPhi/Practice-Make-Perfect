@@ -27,7 +27,6 @@ class CalculatorViewController: UIViewController {
 
     private func layout() {
         view.backgroundColor = ThemeColor.bg
-       // view.addSubview(stackView)
         view.addSubview(logoView)
         view.addSubview(resultView)
         view.addSubview(billInputView)
