@@ -14,47 +14,56 @@ class CalculatorViewController: UIViewController {
     let billInputView = BillInputView()
     let tipInputView = TipInputView()
     let spitInputView = SplitInputView()
-    
-    private lazy var  stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [logoView, resultView, billInputView, tipInputView, spitInputView])
-        stackView.axis = .vertical
-        stackView.spacing = 36
-        return stackView
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         layout() 
-        let screenSize = UIScreen.main.bounds
-        print("Chiều rộng: \(screenSize.width), Chiều cao: \(screenSize.height)")
+        view.layoutIfNeeded()
+
+        print("Chiều cao thực tế của resultView: \(resultView.frame.height)")
 
         // Do any additional setup after loading the view.
     }
 
     private func layout() {
         view.backgroundColor = ThemeColor.bg
-        view.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.leading.equalTo(view.snp.leadingMargin).offset(16)
-            make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
-            make.bottom.equalTo(view.snp.bottomMargin).offset(-16)
-            make.top.equalTo(view.snp.topMargin).offset(16)
-        }
+       // view.addSubview(stackView)
+        view.addSubview(logoView)
+        view.addSubview(resultView)
+        view.addSubview(billInputView)
+        view.addSubview(tipInputView)
+        view.addSubview(spitInputView)
         logoView.snp.makeConstraints { make in
             make.height.equalTo(48)
+            make.top.equalTo(view.snp.topMargin).offset(16)
+            make.leading.equalTo(view.snp.leadingMargin).offset(16)
+            make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
         }
         resultView.snp.makeConstraints { make in
-            make.height.equalTo(224)
+            make.height.equalTo(234)
+            make.top.equalTo(logoView.snp.bottomMargin).offset(36)
+            make.leading.equalTo(view.snp.leadingMargin).offset(16)
+            make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
         }
         billInputView.snp.makeConstraints { make in
             make.height.equalTo(56)
+            make.top.equalTo(resultView.snp.bottomMargin).offset(36)
+            make.leading.equalTo(view.snp.leadingMargin).offset(16)
+            make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
         }
         tipInputView.snp.makeConstraints { make in
             make.height.equalTo(56+56+15)
+            make.top.equalTo(billInputView.snp.bottomMargin).offset(36)
+            make.leading.equalTo(view.snp.leadingMargin).offset(16)
+            make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
         }
         spitInputView.snp.makeConstraints { make in
             make.height.equalTo(56)
+            make.top.equalTo(tipInputView.snp.bottomMargin).offset(36)
+            make.leading.equalTo(view.snp.leadingMargin).offset(16)
+            make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
         }
+
     }
 }
 

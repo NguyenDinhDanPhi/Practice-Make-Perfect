@@ -67,6 +67,24 @@ class ResultView: UIView {
 }
 
 class AmountView: UIView {
+    lazy var headerLabel: UILabel = {
+        LabelFactory.build(text: "Total Bill", font: ThemeFont.regular(ofSize: 18), textColor: ThemeColor.text)
+    }()
+    
+    private lazy var amountPerPerson: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        let text = NSMutableAttributedString(string: "$0", attributes: [.font: ThemeFont.bold(ofSize: 24)])
+        text.addAttributes([.font: ThemeFont.bold(ofSize: 24)], range: NSMakeRange(0, 1))
+        label.attributedText = text
+        return label
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [headerLabel, amountPerPerson])
+        view.axis = .vertical
+        return view
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
@@ -77,7 +95,10 @@ class AmountView: UIView {
     }
     
     func layout() {
-        backgroundColor = .red
+        addSubview(stackView)
         
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }
