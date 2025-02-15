@@ -64,7 +64,7 @@ class BillInputView: UIView {
             make.bottom.top.equalToSuperview()
             make.centerY.equalTo(textFieldContainerView.snp.centerY)
             make.width.equalTo(68)
-            make.trailing.equalTo(textFieldContainerView.snp.leading).offset(-20)
+            make.trailing.equalTo(textFieldContainerView.snp.leading).offset(-17)
         }
         textFieldContainerView.snp.makeConstraints { make in
             make.top.trailing.bottom.equalToSuperview()
@@ -91,10 +91,10 @@ class BillInputView: UIView {
 class HeaderView: UIView {
     
     lazy var topLabel: UILabel = {
-        LabelFactory.build(text: nil, font: ThemeFont.bold(ofSize: 18))
+        LabelFactory.build(text: "Enter", font: ThemeFont.bold(ofSize: 18))
     }()
     lazy var botLabel: UILabel = {
-        LabelFactory.build(text: nil, font: ThemeFont.bold(ofSize: 16))
+        LabelFactory.build(text: "Your Bill", font: ThemeFont.bold(ofSize: 16))
     }()
     let topView = UIView()
     let botView = UIView()
@@ -108,7 +108,6 @@ class HeaderView: UIView {
     }()
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
         layout()
     }
     
@@ -117,6 +116,15 @@ class HeaderView: UIView {
     }
     
     private func layout() {
+        addSubview(stackView)
+        
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        topView.snp.makeConstraints { make in
+            make.height.equalTo(botView)
+        }
         
     }
 }
