@@ -8,10 +8,11 @@
 import UIKit
 class BillInputView: UIView {
     
-//    private lazy var headerView: HeaderView = {
-//        return HeaderView()
-   // }()
-    let headerView = HeaderView()
+    private lazy var headerView: HeaderView = {
+        let view = HeaderView()
+        view.config(top: "Enter", bot: "Your bill")
+        return view
+    }()
     private lazy var textFieldContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -91,10 +92,10 @@ class BillInputView: UIView {
 class HeaderView: UIView {
     
     lazy var topLabel: UILabel = {
-        LabelFactory.build(text: "Enter", font: ThemeFont.bold(ofSize: 18))
+        LabelFactory.build(text: nil, font: ThemeFont.bold(ofSize: 18))
     }()
     lazy var botLabel: UILabel = {
-        LabelFactory.build(text: "Your Bill", font: ThemeFont.bold(ofSize: 16))
+        LabelFactory.build(text: nil, font: ThemeFont.regular(ofSize: 16))
     }()
     let topView = UIView()
     let botView = UIView()
@@ -126,5 +127,10 @@ class HeaderView: UIView {
             make.height.equalTo(botView)
         }
         
+    }
+    
+    func config(top: String, bot: String) {
+        topLabel.text = top
+        botLabel.text = bot
     }
 }

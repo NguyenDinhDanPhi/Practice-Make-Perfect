@@ -31,6 +31,7 @@
 		D0F6EFD32D5DC3E900E63FDA /* LabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFD22D5DC3E900E63FDA /* LabelFactory.swift */; };
 		D0F6EFD52D5F303E00E63FDA /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFD42D5F303E00E63FDA /* UIView+.swift */; };
 		D0F6EFD72D5F409800E63FDA /* AmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFD62D5F409800E63FDA /* AmountView.swift */; };
+		D0F6EFDA2D6082A400E63FDA /* TIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EFD92D6082A400E63FDA /* TIP.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		D0F6EFD22D5DC3E900E63FDA /* LabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelFactory.swift; sourceTree = "<group>"; };
 		D0F6EFD42D5F303E00E63FDA /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		D0F6EFD62D5F409800E63FDA /* AmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountView.swift; sourceTree = "<group>"; };
+		D0F6EFD92D6082A400E63FDA /* TIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TIP.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 		D0F6EF7B2D5DB49400E63FDA /* Tip-learning Reactive and more */ = {
 			isa = PBXGroup;
 			children = (
+				D0F6EFD82D60829500E63FDA /* Model */,
 				D0F6EFD12D5DC3DA00E63FDA /* Factory */,
 				D0F6EFCE2D5DBE9100E63FDA /* Extentions */,
 				D0F6EFC92D5DBE4100E63FDA /* Config */,
@@ -205,6 +208,14 @@
 				D0F6EFD22D5DC3E900E63FDA /* LabelFactory.swift */,
 			);
 			path = Factory;
+			sourceTree = "<group>";
+		};
+		D0F6EFD82D60829500E63FDA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D0F6EFD92D6082A400E63FDA /* TIP.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,6 +377,7 @@
 				D0F6EFD32D5DC3E900E63FDA /* LabelFactory.swift in Sources */,
 				D0F6EFD52D5F303E00E63FDA /* UIView+.swift in Sources */,
 				D0F6EFC82D5DB91C00E63FDA /* SplitInputView.swift in Sources */,
+				D0F6EFDA2D6082A400E63FDA /* TIP.swift in Sources */,
 				D0F6EFC62D5DB90A00E63FDA /* TipInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -34,31 +34,31 @@ class CalculatorViewController: UIViewController {
         view.addSubview(spitInputView)
         logoView.snp.makeConstraints { make in
             make.height.equalTo(48)
-            make.top.equalTo(view.snp.topMargin).offset(16)
+            make.top.equalTo(view.snp.topMargin).offset(36)
             make.leading.equalTo(view.snp.leadingMargin).offset(16)
             make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
         }
         resultView.snp.makeConstraints { make in
             make.height.equalTo(234)
-            make.top.equalTo(logoView.snp.bottomMargin).offset(36)
+            make.top.equalTo(logoView.snp.bottomMargin).offset(46)
             make.leading.equalTo(view.snp.leadingMargin).offset(16)
             make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
         }
         billInputView.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.top.equalTo(resultView.snp.bottomMargin).offset(36)
+            make.top.equalTo(resultView.snp.bottomMargin).offset(46)
             make.leading.equalTo(view.snp.leadingMargin).offset(16)
             make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
         }
         tipInputView.snp.makeConstraints { make in
             make.height.equalTo(56+56+15)
-            make.top.equalTo(billInputView.snp.bottomMargin).offset(36)
+            make.top.equalTo(billInputView.snp.bottomMargin).offset(46)
             make.leading.equalTo(view.snp.leadingMargin).offset(16)
             make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
         }
         spitInputView.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.top.equalTo(tipInputView.snp.bottomMargin).offset(36)
+            make.top.equalTo(tipInputView.snp.bottomMargin).offset(46)
             make.leading.equalTo(view.snp.leadingMargin).offset(16)
             make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
         }
