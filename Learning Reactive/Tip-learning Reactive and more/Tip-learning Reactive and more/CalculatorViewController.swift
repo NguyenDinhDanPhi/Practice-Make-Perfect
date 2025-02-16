@@ -32,11 +32,14 @@ class CalculatorViewController: UIViewController {
                                                  tipPublisher: tipInputView.valueTipPublisher,
                                                  splitPublisher: spitInputView.valueSplitPublisher)
         let output = viewModel.transform(input: input)
-        output.upDateViewPublisher.sink { rs in
-            print("hehe \(rs)")
+        output.upDateViewPublisher.sink { [unowned self] rs in
+            resultView.configure(rs: rs)
+            
         }.store(in: &cancelable)
        
     }
+    
+    
 
     private func layout() {
         view.backgroundColor = ThemeColor.bg
