@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import Combine
+import CombineCocoa
+
+
 class BillInputView: UIView {
     
     private lazy var headerView: HeaderView = {
@@ -51,6 +55,7 @@ class BillInputView: UIView {
     init() {
         super.init(frame: .zero)
         layout()
+        observer()
     }
     
     required init?(coder: NSCoder) {
@@ -82,6 +87,10 @@ class BillInputView: UIView {
             make.leading.equalTo(currencyDenominationLabel.snp.trailing).offset(16)
             make.trailing.equalTo(textFieldContainerView.snp.trailing).offset(-16)
         }
+    }
+    
+    func observer() {
+        textField.textPublisher
     }
                                          
     @objc func doneTapped(){

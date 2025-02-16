@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Combine
 class CalculatorViewController: UIViewController {
     
     let logoView = LogoView()
@@ -14,15 +15,23 @@ class CalculatorViewController: UIViewController {
     let billInputView = BillInputView()
     let tipInputView = TipInputView()
     let spitInputView = SplitInputView()
-
+    let viewModel = CalculatorTipViewModel()
+    var cancelable = Set<AnyCancellable>()
     override func viewDidLoad() {
         super.viewDidLoad()
         layout() 
-        view.layoutIfNeeded()
-
-        print("Chiều cao thực tế của resultView: \(resultView.frame.height)")
-
-        // Do any additional setup after loading the view.
+        binding()
+    }
+    
+    func binding() {
+        let input = CalculatorTipViewModel.InPut(billPublisher: Just(10).eraseToAnyPublisher(),
+                                                 tipPublisher: Just(.tenPercent).eraseToAnyPublisher(),
+                                                 splitPublisher: Just(10).eraseToAnyPublisher())
+        let output = viewModel.transform(input: input)
+        output.upDateViewPublisher.sink	{ rs in
+            print("hehe \(rs)")
+            
+        }.store(in: &cancelable)
     }
 
     private func layout() {
