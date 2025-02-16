@@ -32,10 +32,10 @@ class CalculatorViewController: UIViewController {
                                                  tipPublisher: tipInputView.valueTipPublisher,
                                                  splitPublisher: spitInputView.valueSplitPublisher)
         let output = viewModel.transform(input: input)
-        output.upDateViewPublisher.sink	{ rs in
+        output.upDateViewPublisher.sink { rs in
             print("hehe \(rs)")
-            
         }.store(in: &cancelable)
+       
     }
 
     private func layout() {
