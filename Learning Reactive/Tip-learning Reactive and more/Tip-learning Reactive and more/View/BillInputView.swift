@@ -14,7 +14,7 @@ class BillInputView: UIView {
     
     var cancelable = Set<AnyCancellable>()
     private var billSubject: PassthroughSubject<Double, Never> = .init()
-    var billPublisher: AnyPublisher<Double, Never> {
+    var valueBillPublisher: AnyPublisher<Double, Never> {
         return billSubject.eraseToAnyPublisher()
     }
     private lazy var headerView: HeaderView = {

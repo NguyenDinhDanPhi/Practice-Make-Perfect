@@ -24,12 +24,12 @@ class CalculatorViewController: UIViewController {
     }
     
     func binding() {
-        billInputView.billPublisher.sink { bill in
+        billInputView.valueBillPublisher.sink { bill in
             print("bill \(bill)")
         }.store(in: &cancelable)
         
-        let input = CalculatorTipViewModel.InPut(billPublisher: billInputView.billPublisher,
-                                                 tipPublisher: Just(.tenPercent).eraseToAnyPublisher(),
+        let input = CalculatorTipViewModel.InPut(billPublisher: billInputView.valueBillPublisher,
+                                                 tipPublisher: tipInputView.valueTipPublisher,
                                                  splitPublisher: Just(10).eraseToAnyPublisher())
         let output = viewModel.transform(input: input)
         output.upDateViewPublisher.sink	{ rs in
