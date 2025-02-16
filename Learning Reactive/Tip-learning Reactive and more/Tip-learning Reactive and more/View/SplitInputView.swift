@@ -6,7 +6,17 @@
 //
 
 import UIKit
+import Combine
+import CombineCocoa
+
 class SplitInputView: UIView {
+    
+    private var splitSubject: CurrentValueSubject<Int, Never> = .init(1)
+    var valueSplitPublisher: AnyPublisher<Int, Never> {
+        return splitSubject.eraseToAnyPublisher()
+    }
+    var cancelable = Set<AnyCancellable>()
+
     lazy var headerView: HeaderView = {
         let view = HeaderView()
         view.config(top: "Split", bot: "The Tolal")
@@ -15,16 +25,25 @@ class SplitInputView: UIView {
     
     lazy var decrementButton: UIButton = {
         let button = buildButton(text: "--", corners: [.layerMinXMaxYCorner,.layerMinXMinYCorner])
+        button.tapPublisher.flatMap { [unowned self] _ in
+            Just(splitSubject.value == 1 ? 1 : splitSubject.value - 1)
+        }.assign(to: \.value, on: splitSubject)
+            .store(in: &cancelable)
         return button
     }()
     
     lazy var inrementButton: UIButton = {
         let button = buildButton(text: "+", corners: [.layerMaxXMinYCorner,.layerMaxXMaxYCorner])
+        button.tapPublisher.flatMap { [unowned self] _ in 
+            Just(splitSubject.value + 1)
+        }.assign(to: \.value, on: splitSubject)
+            .store(in: &cancelable)
         return button
     }()
     
     lazy var quantityLabel: UILabel = {
         let label = LabelFactory.build(text: "1", font: ThemeFont.bold(ofSize: 20))
+        label.backgroundColor = .white
         return label
     }()
     
@@ -39,6 +58,7 @@ class SplitInputView: UIView {
     init() {
         super.init(frame: .zero)
         layout()
+        observe()
     }
     
     required init?(coder: NSCoder) {
@@ -72,5 +92,10 @@ class SplitInputView: UIView {
         button.addRoundedCorners(corner: corners, radius: 8.0)
         button.backgroundColor = ThemeColor.primary
         return button
+    }
+    func observe() {
+        splitSubject.sink { [unowned self] text in
+            quantityLabel.text = text.stringValue
+        }.store(in: &cancelable)
     }
 }

@@ -30,7 +30,7 @@ class CalculatorViewController: UIViewController {
         
         let input = CalculatorTipViewModel.InPut(billPublisher: billInputView.valueBillPublisher,
                                                  tipPublisher: tipInputView.valueTipPublisher,
-                                                 splitPublisher: Just(10).eraseToAnyPublisher())
+                                                 splitPublisher: spitInputView.valueSplitPublisher)
         let output = viewModel.transform(input: input)
         output.upDateViewPublisher.sink	{ rs in
             print("hehe \(rs)")
