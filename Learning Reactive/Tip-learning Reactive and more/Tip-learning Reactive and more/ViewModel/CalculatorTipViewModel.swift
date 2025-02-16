@@ -21,8 +21,8 @@ class CalculatorTipViewModel {
     var cancelable = Set<AnyCancellable>()
 
     func transform(input: InPut) -> OutPut {
-        input.billPublisher.sink { bill in
-            print("the bill \(bill)")
+        input.tipPublisher.sink { bill in
+            print("the tip \(bill)")
         }.store(in: &cancelable)
         
         let rs = Results(amountPerPerson: 500, totalBill: 1000, totaltTip: 50.0)
