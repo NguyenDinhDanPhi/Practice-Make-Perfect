@@ -12,6 +12,11 @@ import CombineCocoa
 
 class BillInputView: UIView {
     
+    var cancelable = Set<AnyCancellable>()
+    private var billSubject: PassthroughSubject<Double, Never> = .init()
+    var billPublisher: AnyPublisher<Double, Never> {
+        return billSubject.eraseToAnyPublisher()
+    }
     private lazy var headerView: HeaderView = {
         let view = HeaderView()
         view.config(top: "Enter", bot: "Your bill")
@@ -90,7 +95,9 @@ class BillInputView: UIView {
     }
     
     func observer() {
-        textField.textPublisher
+        textField.textPublisher.sink { [unowned self] text in
+           billSubject.send(text?.doubleValue ?? 0)
+        }.store(in: &cancelable)
     }
                                          
     @objc func doneTapped(){

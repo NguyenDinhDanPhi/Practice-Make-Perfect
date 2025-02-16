@@ -24,7 +24,11 @@ class CalculatorViewController: UIViewController {
     }
     
     func binding() {
-        let input = CalculatorTipViewModel.InPut(billPublisher: Just(10).eraseToAnyPublisher(),
+        billInputView.billPublisher.sink { bill in
+            print("bill \(bill)")
+        }.store(in: &cancelable)
+        
+        let input = CalculatorTipViewModel.InPut(billPublisher: billInputView.billPublisher,
                                                  tipPublisher: Just(.tenPercent).eraseToAnyPublisher(),
                                                  splitPublisher: Just(10).eraseToAnyPublisher())
         let output = viewModel.transform(input: input)

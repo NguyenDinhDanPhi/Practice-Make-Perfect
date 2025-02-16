@@ -18,8 +18,13 @@ class CalculatorTipViewModel {
     struct OutPut {
         let upDateViewPublisher: AnyPublisher<Results, Never>
     }
-    
+    var cancelable = Set<AnyCancellable>()
+
     func transform(input: InPut) -> OutPut {
+        input.billPublisher.sink { bill in
+            print("the bill \(bill)")
+        }.store(in: &cancelable)
+        
         let rs = Results(amountPerPerson: 500, totalBill: 1000, totaltTip: 50.0)
         return OutPut(upDateViewPublisher: Just(rs).eraseToAnyPublisher())
     }
