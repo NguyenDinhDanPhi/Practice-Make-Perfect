@@ -83,6 +83,7 @@ class TipInputView: UIView {
     init() {
         super.init(frame: .zero)
         layout()
+        observe()
     }
     
     required init?(coder: NSCoder) {
@@ -131,6 +132,36 @@ class TipInputView: UIView {
         text.addAttributes([.font: ThemeFont.bold(ofSize: 14)], range: NSMakeRange(2,1))
         button.setAttributedTitle(text, for: .normal)
         return button
+    }
+    
+    func resetView() {
+        [tenButton, fifteenButton, twentyButton, customTipButton].forEach {
+            $0.backgroundColor = ThemeColor.primary
+        }
+        let text = NSMutableAttributedString(string: "Custom Tip",
+                                             attributes: [.font: ThemeFont.bold(ofSize: 20)])
+        customTipButton.setAttributedTitle(text, for: .normal)
+    }
+    
+    func observe() {
+        tipSubject.sink { [unowned self] tip in
+            resetView()
+            switch tip {
+            case .none:
+                break
+            case .tenPercent:
+                tenButton.backgroundColor = ThemeColor.secondary
+            case .fiftenPercent:
+                fifteenButton.backgroundColor = ThemeColor.secondary
+            case .twentyPercent:
+                twentyButton.backgroundColor = ThemeColor.secondary
+            case .custom(let value):
+                customTipButton.backgroundColor = ThemeColor.secondary
+                let text = NSMutableAttributedString(string: "\(value)",
+                                                     attributes: [.font: ThemeFont.bold(ofSize: 20)])
+                customTipButton.setAttributedTitle(text, for: .normal)
+            }
+        }.store(in: &cancelable)
     }
 }
 
