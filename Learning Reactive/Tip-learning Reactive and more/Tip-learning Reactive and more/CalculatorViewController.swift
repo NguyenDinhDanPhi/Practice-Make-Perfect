@@ -45,18 +45,21 @@ class CalculatorViewController: UIViewController {
     }
     
     func binding() {
-        billInputView.valueBillPublisher.sink { bill in
-            print("bill \(bill)")
-        }.store(in: &cancelable)
         
         let input = CalculatorTipViewModel.InPut(billPublisher: billInputView.valueBillPublisher,
                                                  tipPublisher: tipInputView.valueTipPublisher,
-                                                 splitPublisher: spitInputView.valueSplitPublisher)
+                                                 splitPublisher: spitInputView.valueSplitPublisher, 
+                                                 logoViewTapPublisher: logoViewTapPublisher)
         let output = viewModel.transform(input: input)
         output.upDateViewPublisher.sink { [unowned self] rs in
             resultView.configure(rs: rs)
             
         }.store(in: &cancelable)
+        
+        output.resultCalculatorPublisher.sink { _ in
+            print("hehe")
+        }.store(in: &cancelable)
+        
        
     }
     

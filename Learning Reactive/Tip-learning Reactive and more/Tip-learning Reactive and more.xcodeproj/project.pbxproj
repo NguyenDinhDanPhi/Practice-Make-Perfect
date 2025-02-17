@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D09C5F522D631E5B00881CFB /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5F512D631E5B00881CFB /* Double+.swift */; };
+		D09C5F552D63270700881CFB /* click.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D09C5F542D63270700881CFB /* click.m4a */; };
+		D09C5F582D63272A00881CFB /* AudioPlayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5F572D63272A00881CFB /* AudioPlayService.swift */; };
 		D0B9C21C2D61DF7D00C5CE14 /* CalculatorTipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9C21B2D61DF7D00C5CE14 /* CalculatorTipViewModel.swift */; };
 		D0B9C21E2D61E14300C5CE14 /* Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9C21D2D61E14300C5CE14 /* Results.swift */; };
 		D0B9C2202D61E8C800C5CE14 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9C21F2D61E8C800C5CE14 /* String+.swift */; };
@@ -59,6 +61,8 @@
 
 /* Begin PBXFileReference section */
 		D09C5F512D631E5B00881CFB /* Double+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
+		D09C5F542D63270700881CFB /* click.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = click.m4a; sourceTree = "<group>"; };
+		D09C5F572D63272A00881CFB /* AudioPlayService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayService.swift; sourceTree = "<group>"; };
 		D0B9C21B2D61DF7D00C5CE14 /* CalculatorTipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorTipViewModel.swift; sourceTree = "<group>"; };
 		D0B9C21D2D61E14300C5CE14 /* Results.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Results.swift; sourceTree = "<group>"; };
 		D0B9C21F2D61E8C800C5CE14 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -120,6 +124,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D09C5F532D6326F600881CFB /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				D09C5F542D63270700881CFB /* click.m4a */,
+			);
+			path = resource;
+			sourceTree = "<group>";
+		};
+		D09C5F562D63271900881CFB /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D09C5F572D63272A00881CFB /* AudioPlayService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		D0B9C21A2D61DF6700C5CE14 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +172,8 @@
 		D0F6EF7B2D5DB49400E63FDA /* Tip-learning Reactive and more */ = {
 			isa = PBXGroup;
 			children = (
+				D09C5F562D63271900881CFB /* Service */,
+				D09C5F532D6326F600881CFB /* resource */,
 				D0B9C21A2D61DF6700C5CE14 /* ViewModel */,
 				D0F6EFD82D60829500E63FDA /* Model */,
 				D0F6EFD12D5DC3DA00E63FDA /* Factory */,
@@ -364,6 +386,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D09C5F552D63270700881CFB /* click.m4a in Resources */,
 				D0F6EF892D5DB49600E63FDA /* LaunchScreen.storyboard in Resources */,
 				D0F6EF862D5DB49600E63FDA /* Assets.xcassets in Resources */,
 			);
@@ -410,6 +433,7 @@
 				D0F6EFD52D5F303E00E63FDA /* UIView+.swift in Sources */,
 				D0F6EFC82D5DB91C00E63FDA /* SplitInputView.swift in Sources */,
 				D0F6EFDA2D6082A400E63FDA /* TIP.swift in Sources */,
+				D09C5F582D63272A00881CFB /* AudioPlayService.swift in Sources */,
 				D0F6EFC62D5DB90A00E63FDA /* TipInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
