@@ -14,9 +14,11 @@ final class Tip_learning_Reactive_and_moreTests: XCTestCase {
     private var sut: CalculatorTipViewModel!
     private var cancelable: Set<AnyCancellable>!
     private var logoTapPublisher = PassthroughSubject<Void, Never>()
+    var audio: MockAudioPlayerService!
     override func setUp() {
         super.setUp()
-        sut = .init()
+        audio = .init()
+        sut = .init(audioPlayerService: audio)
         cancelable = .init()
     }
     override class func tearDown() {
@@ -95,6 +97,23 @@ final class Tip_learning_Reactive_and_moreTests: XCTestCase {
         }.store(in: &cancelable)
         
     }
+    
+    func testSoundWhenTapLogoView() {
+        // given
+        let ip = buildInput(bill: 100, tip: .fiftenPercent, split: 1)
+        let out = sut.transform(input: ip)
+        let ex1 = XCTestExpectation(description: "reset called")
+        let ex2 = audio.ex
+        // then
+        out.resetCalculatorPublisher.sink { _ in
+            ex1.fulfill()
+        }.store(in: &cancelable)
+        
+        // when
+        logoTapPublisher.send()
+        wait(for: [ex1,ex2], timeout: 1.0)
+        
+    }
 
     
     func buildInput(bill: Double, tip: Tip, split: Int) -> CalculatorTipViewModel.InPut {
@@ -103,4 +122,13 @@ final class Tip_learning_Reactive_and_moreTests: XCTestCase {
                      splitPublisher: Just(split).eraseToAnyPublisher(),
                      logoViewTapPublisher: logoTapPublisher.eraseToAnyPublisher())
     }
+}
+
+class MockAudioPlayerService: AudioPlayService {
+    var ex = XCTestExpectation(description: "sound played")
+    func playSound() {
+        ex.fulfill()
+    }
+    
+    
 }
