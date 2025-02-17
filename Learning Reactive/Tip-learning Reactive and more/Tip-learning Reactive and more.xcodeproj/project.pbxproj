@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D09C5F522D631E5B00881CFB /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5F512D631E5B00881CFB /* Double+.swift */; };
 		D0B9C21C2D61DF7D00C5CE14 /* CalculatorTipViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9C21B2D61DF7D00C5CE14 /* CalculatorTipViewModel.swift */; };
 		D0B9C21E2D61E14300C5CE14 /* Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9C21D2D61E14300C5CE14 /* Results.swift */; };
 		D0B9C2202D61E8C800C5CE14 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9C21F2D61E8C800C5CE14 /* String+.swift */; };
@@ -57,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D09C5F512D631E5B00881CFB /* Double+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
 		D0B9C21B2D61DF7D00C5CE14 /* CalculatorTipViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorTipViewModel.swift; sourceTree = "<group>"; };
 		D0B9C21D2D61E14300C5CE14 /* Results.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Results.swift; sourceTree = "<group>"; };
 		D0B9C21F2D61E8C800C5CE14 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				D0B9C21F2D61E8C800C5CE14 /* String+.swift */,
 				D0B9C2212D61FCA900C5CE14 /* UIResponder+.swift */,
 				D0B9C2232D6241F600C5CE14 /* Int+.swift */,
+				D09C5F512D631E5B00881CFB /* Double+.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0F6EFD72D5F409800E63FDA /* AmountView.swift in Sources */,
+				D09C5F522D631E5B00881CFB /* Double+.swift in Sources */,
 				D0F6EF812D5DB49400E63FDA /* CalculatorViewController.swift in Sources */,
 				D0F6EFC02D5DB86900E63FDA /* LogoView.swift in Sources */,
 				D0F6EFCB2D5DBE5100E63FDA /* ThemeColor.swift in Sources */,

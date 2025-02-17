@@ -61,11 +61,11 @@ class ResultView: UIView {
     
     func configure(rs: Results) {
         let text = NSMutableAttributedString(
-            string: String(rs.amountPerPerson),
+            string: rs.amountPerPerson.currencyFormatter,
             attributes: [.font: ThemeFont.bold(ofSize: 48)])
         amountPerPerson.attributedText = text
-        totalBill.configure(text: String(rs.totalBill))
-        totalTip.configure(text: String(rs.totaltTip))
+        totalBill.configure(amount: rs.totalBill)
+        totalTip.configure(amount: rs.totaltTip)
     }
     
     private func layout() {
