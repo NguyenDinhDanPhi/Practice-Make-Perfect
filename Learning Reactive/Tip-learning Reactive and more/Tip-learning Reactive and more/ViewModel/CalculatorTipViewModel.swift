@@ -18,7 +18,7 @@ class CalculatorTipViewModel {
     
     struct OutPut {
         let upDateViewPublisher: AnyPublisher<Results, Never>
-        let resultCalculatorPublisher: AnyPublisher<Void, Never>
+        let resetCalculatorPublisher: AnyPublisher<Void, Never>
     }
     
     var cancelable = Set<AnyCancellable>()
@@ -47,7 +47,7 @@ class CalculatorTipViewModel {
         }).flatMap {
             return Just($0)
         }.eraseToAnyPublisher()
-        return OutPut(upDateViewPublisher: updateViewPublisher, resultCalculatorPublisher: resultCalculatorPublisher)
+        return OutPut(upDateViewPublisher: updateViewPublisher, resetCalculatorPublisher: resultCalculatorPublisher)
     }
     
     func getTipAmount(bill: Double, tip: Tip) -> Double {

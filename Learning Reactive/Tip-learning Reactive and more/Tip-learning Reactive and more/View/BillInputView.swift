@@ -99,10 +99,16 @@ class BillInputView: UIView {
            billSubject.send(text?.doubleValue ?? 0)
         }.store(in: &cancelable)
     }
+    
+    func reset() {
+        textField.text = nil
+        billSubject.send(0)
+    }
                                          
     @objc func doneTapped(){
         textField.endEditing(true )
     }
+    
 }
 
 class HeaderView: UIView {

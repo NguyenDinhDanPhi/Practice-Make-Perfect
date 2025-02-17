@@ -85,6 +85,10 @@ class SplitInputView: UIView {
         }
     }
     
+    func reset() {
+        splitSubject.send(1)
+    }
+    
     func buildButton(text: String, corners: CACornerMask) -> UIButton {
         let button = UIButton()
         button.setTitle(text, for: .normal)

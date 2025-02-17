@@ -31,7 +31,7 @@ class CalculatorViewController: UIViewController {
     private lazy var logoViewTapPublisher: AnyPublisher<Void, Never> = {
         let tap = UITapGestureRecognizer(target: self, action: nil)
         tap.numberOfTapsRequired = 2
-        view.addGestureRecognizer(tap)
+        logoView.addGestureRecognizer(tap)
         return tap.tapPublisher.flatMap { _ in
             Just(())
         }.eraseToAnyPublisher()
@@ -39,7 +39,7 @@ class CalculatorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        layout() 
+        layout()
         binding()
         observe()
     }
@@ -48,7 +48,7 @@ class CalculatorViewController: UIViewController {
         
         let input = CalculatorTipViewModel.InPut(billPublisher: billInputView.valueBillPublisher,
                                                  tipPublisher: tipInputView.valueTipPublisher,
-                                                 splitPublisher: spitInputView.valueSplitPublisher, 
+                                                 splitPublisher: spitInputView.valueSplitPublisher,
                                                  logoViewTapPublisher: logoViewTapPublisher)
         let output = viewModel.transform(input: input)
         output.upDateViewPublisher.sink { [unowned self] rs in
@@ -56,19 +56,34 @@ class CalculatorViewController: UIViewController {
             
         }.store(in: &cancelable)
         
-        output.resultCalculatorPublisher.sink { _ in
-            print("hehe")
+        output.resetCalculatorPublisher.sink { [unowned self] _ in
+            billInputView.reset()
+            tipInputView.reset()
+            spitInputView.reset()
+            
+            UIView.animate(
+                withDuration: 0.1,
+                delay: 0,
+                usingSpringWithDamping: 5.0,
+                initialSpringVelocity: 0.5,
+                options: .curveEaseInOut,
+                animations: {
+                    self.logoView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+                },
+                completion: { _ in
+                    self.logoView.transform = .identity
+                }
+            )
+            
         }.store(in: &cancelable)
-        
-       
     }
     
     func observe() {
-            viewTapPublisher.sink { [unowned self] _ in
-                view.endEditing(true)
-            }.store(in: &cancelable)
+        viewTapPublisher.sink { [unowned self] _ in
+            view.endEditing(true)
+        }.store(in: &cancelable)
     }
-
+    
     private func layout() {
         view.backgroundColor = ThemeColor.bg
         view.addSubview(logoView)
@@ -106,7 +121,7 @@ class CalculatorViewController: UIViewController {
             make.leading.equalTo(view.snp.leadingMargin).offset(16)
             make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
         }
-
+        
     }
 }
 
