@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import Combine
+import CombineCocoa
+
 class CalculatorViewController: UIViewController {
     
     let logoView = LogoView()
@@ -17,10 +19,29 @@ class CalculatorViewController: UIViewController {
     let spitInputView = SplitInputView()
     let viewModel = CalculatorTipViewModel()
     var cancelable = Set<AnyCancellable>()
+    
+    private lazy var viewTapPublisher: AnyPublisher<Void, Never> = {
+        let tap = UITapGestureRecognizer(target: self, action: nil)
+        view.addGestureRecognizer(tap)
+        return tap.tapPublisher.flatMap { _ in
+            Just(())
+        }.eraseToAnyPublisher()
+    }()
+    
+    private lazy var logoViewTapPublisher: AnyPublisher<Void, Never> = {
+        let tap = UITapGestureRecognizer(target: self, action: nil)
+        tap.numberOfTapsRequired = 2
+        view.addGestureRecognizer(tap)
+        return tap.tapPublisher.flatMap { _ in
+            Just(())
+        }.eraseToAnyPublisher()
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         layout() 
         binding()
+        observe()
     }
     
     func binding() {
@@ -39,7 +60,11 @@ class CalculatorViewController: UIViewController {
        
     }
     
-    
+    func observe() {
+            viewTapPublisher.sink { [unowned self] _ in
+                view.endEditing(true)
+            }.store(in: &cancelable)
+    }
 
     private func layout() {
         view.backgroundColor = ThemeColor.bg
