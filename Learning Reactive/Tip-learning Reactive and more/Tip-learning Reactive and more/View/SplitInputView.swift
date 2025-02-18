@@ -29,6 +29,8 @@ class SplitInputView: UIView {
             Just(splitSubject.value == 1 ? 1 : splitSubject.value - 1)
         }.assign(to: \.value, on: splitSubject)
             .store(in: &cancelable)
+        button.accessibilityIdentifier = ScreenId.SplitInputView.decrementButton.rawValue
+
         return button
     }()
     
@@ -38,6 +40,8 @@ class SplitInputView: UIView {
             Just(splitSubject.value + 1)
         }.assign(to: \.value, on: splitSubject)
             .store(in: &cancelable)
+        button.accessibilityIdentifier = ScreenId.SplitInputView.inrementButton.rawValue
+
         return button
     }()
     

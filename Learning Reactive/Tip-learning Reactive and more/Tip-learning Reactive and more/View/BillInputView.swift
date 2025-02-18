@@ -51,6 +51,7 @@ class BillInputView: UIView {
         toolbar.items = [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), doneButton]
         toolbar.isUserInteractionEnabled = true
         tf.inputAccessoryView = toolbar
+        tf.accessibilityIdentifier = ScreenId.BillInputView.textField.rawValue
         return tf
     }()
     
