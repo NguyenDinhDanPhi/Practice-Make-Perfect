@@ -16,6 +16,7 @@
 		D0B9C2222D61FCA900C5CE14 /* UIResponder+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9C2212D61FCA900C5CE14 /* UIResponder+.swift */; };
 		D0B9C2242D6241F600C5CE14 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9C2232D6241F600C5CE14 /* Int+.swift */; };
 		D0BAA5622D6469FD0020B8E3 /* Tip_learning_Reactive_and_moreSnapShotTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BAA5612D6469FD0020B8E3 /* Tip_learning_Reactive_and_moreSnapShotTest.swift */; };
+		D0BAA5642D6471E60020B8E3 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BAA5632D6471E60020B8E3 /* UIView+.swift */; };
 		D0F6EF7D2D5DB49400E63FDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EF7C2D5DB49400E63FDA /* AppDelegate.swift */; };
 		D0F6EF7F2D5DB49400E63FDA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EF7E2D5DB49400E63FDA /* SceneDelegate.swift */; };
 		D0F6EF812D5DB49400E63FDA /* CalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F6EF802D5DB49400E63FDA /* CalculatorViewController.swift */; };
@@ -70,6 +71,7 @@
 		D0B9C2212D61FCA900C5CE14 /* UIResponder+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+.swift"; sourceTree = "<group>"; };
 		D0B9C2232D6241F600C5CE14 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		D0BAA5612D6469FD0020B8E3 /* Tip_learning_Reactive_and_moreSnapShotTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tip_learning_Reactive_and_moreSnapShotTest.swift; sourceTree = "<group>"; };
+		D0BAA5632D6471E60020B8E3 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		D0F6EF792D5DB49400E63FDA /* Tip-learning Reactive and more.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tip-learning Reactive and more.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0F6EF7C2D5DB49400E63FDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D0F6EF7E2D5DB49400E63FDA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			children = (
 				D0F6EF932D5DB49600E63FDA /* Tip_learning_Reactive_and_moreTests.swift */,
 				D0BAA5612D6469FD0020B8E3 /* Tip_learning_Reactive_and_moreSnapShotTest.swift */,
+				D0BAA5632D6471E60020B8E3 /* UIView+.swift */,
 			);
 			path = "Tip-learning Reactive and moreTests";
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0BAA5642D6471E60020B8E3 /* UIView+.swift in Sources */,
 				D0F6EF942D5DB49600E63FDA /* Tip_learning_Reactive_and_moreTests.swift in Sources */,
 				D0BAA5622D6469FD0020B8E3 /* Tip_learning_Reactive_and_moreSnapShotTest.swift in Sources */,
 			);

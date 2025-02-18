@@ -28,6 +28,18 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
         let size = CGSize(width: screenWidth, height: 234)
         // when
         let view = ResultView()
+       
+        // then
+        assertSnapshot(of: view, as: .image(size: size))
+    }
+    
+    func testResultViewWithValues() {
+        let size = CGSize(width: screenWidth, height: 234)
+        // when
+        let view = ResultView()
+        let rs = Results(amountPerPerson: 100.25, totalBill: 45, totaltTip: 60 )
+
+        view.configure(rs: rs)
         // then
         assertSnapshot(of: view, as: .image(size: size))
     }
@@ -41,6 +53,16 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
         assertSnapshot(of: view, as: .image(size: size))
     }
     
+    func testBillInputViewWithValues() {
+        // given
+        let size = CGSize(width: screenWidth, height: 56)
+        // when
+        let view = BillInputView()
+        let tf = view.allSubViewsOf(type: UITextField.self).first
+        tf?.text = "500"
+        // then
+        assertSnapshot(of: view, as: .image(size: size))
+    }
     
     func testTipInputView() {
         // given
@@ -51,11 +73,33 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
         assertSnapshot(of: view, as: .image(size: size))
     }
     
+    func testTipInputViewWithValue() {
+        // given
+        let size = CGSize(width: screenWidth, height: 56+56+15)
+        // when
+        let view = TipInputView()
+        let button = view.allSubViewsOf(type: UIButton.self).first
+        button?.sendActions(for: .touchUpInside)
+        // then
+        assertSnapshot(of: view, as: .image(size: size))
+    }
+    
     func testSplitInputViewtView() {
         // given
         let size = CGSize(width: screenWidth, height: 56)
         // when
         let view = SplitInputView()
+        // then
+        assertSnapshot(of: view, as: .image(size: size))
+    }
+    
+    func testSplitInputViewWithValue() {
+        // given
+        let size = CGSize(width: screenWidth, height: 56+56+15)
+        // when
+        let view = SplitInputView()
+        let button = view.allSubViewsOf(type: UIButton.self).last
+        button?.sendActions(for: .touchUpInside)
         // then
         assertSnapshot(of: view, as: .image(size: size))
     }
