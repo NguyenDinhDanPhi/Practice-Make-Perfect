@@ -11,7 +11,7 @@ class AmountView: UIView {
     
     private let title: String
     private let textAlignment:  NSTextAlignment
-    
+    private let amountLabelId: String
     lazy var headerLabel: UILabel = {
         LabelFactory.build(text: title, font: ThemeFont.regular(ofSize: 18), textColor: ThemeColor.text,textAlignment: textAlignment)
     }()
@@ -23,6 +23,7 @@ class AmountView: UIView {
         text.addAttributes([.font: ThemeFont.bold(ofSize: 16)], range: NSMakeRange(0, 1))
         label.textColor = ThemeColor.primary
         label.attributedText = text
+        label.accessibilityIdentifier = amountLabelId
         return label
     }()
     
@@ -31,9 +32,10 @@ class AmountView: UIView {
         view.axis = .vertical
         return view
     }()
-    init(title: String, textAlignment: NSTextAlignment) {
+    init(title: String, textAlignment: NSTextAlignment, amountLabelId: String) {
         self.title = title
         self.textAlignment = textAlignment
+        self.amountLabelId = amountLabelId
         super.init(frame: .zero)
         layout()
     }
