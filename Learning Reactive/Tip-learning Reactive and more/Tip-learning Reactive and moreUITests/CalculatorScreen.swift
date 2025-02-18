@@ -94,6 +94,9 @@ class CalculatorScreen {
     func selectInrementButton(numberTap: Int) {
         inrementButton.tap(withNumberOfTaps: numberTap, numberOfTouches: 1)
     }
+    func doubleTapLogoView() {
+      logoView.tap(withNumberOfTaps: 2, numberOfTouches: 1)
+    }
 }
 
 enum Tip {

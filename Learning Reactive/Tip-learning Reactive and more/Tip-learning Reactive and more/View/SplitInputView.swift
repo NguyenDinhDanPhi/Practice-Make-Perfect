@@ -48,6 +48,7 @@ class SplitInputView: UIView {
     lazy var quantityLabel: UILabel = {
         let label = LabelFactory.build(text: "1", font: ThemeFont.bold(ofSize: 20))
         label.backgroundColor = .white
+        label.accessibilityIdentifier = ScreenId.SplitInputView.quantityLabel.rawValue
         return label
     }()
     

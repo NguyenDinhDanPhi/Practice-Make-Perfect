@@ -64,4 +64,27 @@ final class Tip_learning_Reactive_and_moreUITests: XCTestCase {
       XCTAssertEqual(screen.totalTipValueLabel.label, "₫20")
     }
     
+    func testCustomTipAndSplitBillBy2() {
+      screen.enterBill(amount: 300)
+      screen.selectTip(tip: .custom(value: 200))
+      screen.selectInrementButton(numberTap: 1)
+      XCTAssertEqual(screen.totalBillValueLabel.label, "₫500")
+      XCTAssertEqual(screen.totalTipValueLabel.label, "₫200")
+      XCTAssertEqual(screen.totalAmountPerPersonValueLabel.label, "₫250")
+    }
+    
+    func testResetButton() {
+      screen.enterBill(amount: 300)
+      screen.selectTip(tip: .custom(value: 200))
+      screen.selectInrementButton(numberTap: 1)
+      screen.doubleTapLogoView()
+      XCTAssertEqual(screen.totalBillValueLabel.label, "₫0")
+      XCTAssertEqual(screen.totalTipValueLabel.label, "₫0")
+      XCTAssertEqual(screen.totalAmountPerPersonValueLabel.label, "₫0")
+      XCTAssertEqual(screen.billInPuttextField.label, "")
+      XCTAssertEqual(screen.quantityLabel.label, "1")
+      XCTAssertEqual(screen.customTipButton.label, "Custom Tip")
+    }
+
+    
 }
