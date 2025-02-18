@@ -20,6 +20,10 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
         // when
         let view = LogoView()
         // then
+        /* 1
+        assertSnapshot(of: view, as: .image(size: size), record: true)
+         */
+        // 2
         assertSnapshot(of: view, as: .image(size: size))
     }
     
@@ -30,6 +34,10 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
         let view = ResultView()
        
         // then
+        /* 1
+        assertSnapshot(of: view, as: .image(size: size), record: true)
+         */
+        // 2
         assertSnapshot(of: view, as: .image(size: size))
     }
     
@@ -41,6 +49,10 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
 
         view.configure(rs: rs)
         // then
+        /* 1
+        assertSnapshot(of: view, as: .image(size: size), record: true)
+         */
+        // 2
         assertSnapshot(of: view, as: .image(size: size))
     }
     
@@ -50,6 +62,10 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
         // when
         let view = BillInputView()
         // then
+        /* 1
+        assertSnapshot(of: view, as: .image(size: size), record: true)
+         */
+        // 2
         assertSnapshot(of: view, as: .image(size: size))
     }
     
@@ -61,6 +77,10 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
         let tf = view.allSubViewsOf(type: UITextField.self).first
         tf?.text = "500"
         // then
+        /* 1
+        assertSnapshot(of: view, as: .image(size: size), record: true)
+         */
+        // 2
         assertSnapshot(of: view, as: .image(size: size))
     }
     
@@ -70,6 +90,10 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
         // when
         let view = TipInputView()
         // then
+        /* 1
+        assertSnapshot(of: view, as: .image(size: size), record: true)
+         */
+        // 2
         assertSnapshot(of: view, as: .image(size: size))
     }
     
@@ -81,6 +105,10 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
         let button = view.allSubViewsOf(type: UIButton.self).first
         button?.sendActions(for: .touchUpInside)
         // then
+        /* 1
+        assertSnapshot(of: view, as: .image(size: size), record: true)
+         */
+        // 2
         assertSnapshot(of: view, as: .image(size: size))
     }
     
@@ -90,6 +118,10 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
         // when
         let view = SplitInputView()
         // then
+        /* 1
+        assertSnapshot(of: view, as: .image(size: size), record: true)
+         */
+        // 2
         assertSnapshot(of: view, as: .image(size: size))
     }
     
@@ -101,6 +133,10 @@ final class Tip_learning_Reactive_and_moreSnapShotTest: XCTestCase {
         let button = view.allSubViewsOf(type: UIButton.self).last
         button?.sendActions(for: .touchUpInside)
         // then
+        /* 1
+        assertSnapshot(of: view, as: .image(size: size), record: true)
+         */
+        // 2
         assertSnapshot(of: view, as: .image(size: size))
     }
     
