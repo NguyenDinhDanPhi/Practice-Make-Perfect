@@ -31,7 +31,7 @@ class HomeViewController: UIViewController {
         stackView.spacing = 6
         return stackView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -44,10 +44,11 @@ class HomeViewController: UIViewController {
             stack.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
-
+    
     @objc func showBottomSheet() {
+        let viewModel = CaseViewViewModel()
         let caseViewController = UIViewController()
-        let caseView = CaseView(buttonStyle: .threeButton)
+        let caseView = CaseView(viewModel: viewModel,buttonStyle: .twoButton)
         caseView.backgroundColor = .clear
         caseView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -61,6 +62,16 @@ class HomeViewController: UIViewController {
             caseView.trailingAnchor.constraint(equalTo: caseViewController.view.trailingAnchor, constant: -20)
         ])
         
+        viewModel.onRetryAction = {
+            print("Retry button pressed in BottomSheet")
+        }
+        viewModel.onBackAction = {
+            print("Back button pressed in BottomSheet")
+        }
+        viewModel.onExisteAction = {
+            print("Exit button pressed in BottomSheet")
+        }
+        
         if let sheet = caseViewController.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
@@ -68,8 +79,33 @@ class HomeViewController: UIViewController {
         
         present(caseViewController, animated: true)
     }
-
+    
     @objc func showNavigation() {
-        // Navigation logic here
+        let viewModel = CaseViewViewModel()
+        let caseViewController = UIViewController()
+        let caseView = CaseView(viewModel: viewModel,buttonStyle: .twoButton)
+        caseView.backgroundColor = .white
+        caseView.translatesAutoresizingMaskIntoConstraints = false
+        
+        caseViewController.view.addSubview(caseView)
+        caseViewController.view.backgroundColor = .systemBackground
+        
+        NSLayoutConstraint.activate([
+            caseView.centerXAnchor.constraint(equalTo: caseViewController.view.centerXAnchor),
+            caseView.centerYAnchor.constraint(equalTo: caseViewController.view.centerYAnchor),
+            caseView.leadingAnchor.constraint(equalTo: caseViewController.view.leadingAnchor, constant: 20),
+            caseView.trailingAnchor.constraint(equalTo: caseViewController.view.trailingAnchor, constant: -20)
+        ])
+        viewModel.onRetryAction = {
+            print("Retry button pressed in BottomSheet")
+        }
+        viewModel.onBackAction = {
+            print("Back button pressed in BottomSheet")
+        }
+        viewModel.onExisteAction = {
+            print("Exit button pressed in BottomSheet")
+        }
+        
+        navigationController?.pushViewController(caseViewController, animated: true)
     }
 }
