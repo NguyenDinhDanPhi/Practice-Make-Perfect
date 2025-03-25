@@ -28,6 +28,7 @@ class ShareViewController: UIViewController {
         ShareItem(icon: UIImage(named: "mess"), title: "Messenger", action: shareToMessenger),
         ShareItem(icon: UIImage(named: "tele"), title: "Telegram", action: openTelegram),
         ShareItem(icon: UIImage(named: "insta"), title: "Instagram", action: shareToInstagram),
+        ShareItem(icon: UIImage(named: "sms"), title: "SMS", action: shareToSMS),
         ShareItem(icon: UIImage(systemName: "more"), title: "More", action: openActivityView)
 
     ]
@@ -139,6 +140,10 @@ extension ShareViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
+    @objc func shareToSMS() {
+        openApp(urlScheme: "sms:?&body=", webURL: nil)
+    }
+
     private func openActivityView() {
         let activityVC = UIActivityViewController(activityItems: [URL(string: shareLink) ?? shareLink], applicationActivities: nil)
         
