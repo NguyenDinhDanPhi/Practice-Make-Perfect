@@ -29,7 +29,9 @@ class ShareViewController: UIViewController {
         ShareItem(icon: UIImage(named: "tele"), title: "Telegram", action: openTelegram),
         ShareItem(icon: UIImage(named: "insta"), title: "Instagram", action: shareToInstagram),
         ShareItem(icon: UIImage(named: "sms"), title: "SMS", action: shareToSMS),
+        ShareItem(icon: UIImage(systemName: "hehe"), title: "X", action: shareToTwitter),
         ShareItem(icon: UIImage(systemName: "more"), title: "More", action: openActivityView)
+        
 
     ]
     
@@ -45,6 +47,8 @@ class ShareViewController: UIViewController {
                 return isAppInstalled(urlScheme: "tg://")
             case "Instagram":
                 return isAppInstalled(urlScheme: "instagram://")
+            case "X":
+                return isAppInstalled(urlScheme: "twitter://")
             default:
                 return true // Copy luôn hiển thị
             }
@@ -143,6 +147,8 @@ extension ShareViewController {
     @objc func shareToSMS() {
         openApp(urlScheme: "sms:?&body=", webURL: nil)
     }
+    @objc func shareToTwitter() { openApp(urlScheme: "twitter://post?message=", webURL: "https://twitter.com/intent/tweet?text=") }
+
 
     private func openActivityView() {
         let activityVC = UIActivityViewController(activityItems: [URL(string: shareLink) ?? shareLink], applicationActivities: nil)
