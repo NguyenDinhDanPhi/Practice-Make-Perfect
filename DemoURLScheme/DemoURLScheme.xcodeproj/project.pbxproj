@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D0AB94E12D929F7300C004D1 /* HomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AB94E02D929F6A00C004D1 /* HomViewController.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		D0AB94C62D9291F300C004D1 /* DemoURLScheme.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoURLScheme.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0AB94E02D929F6A00C004D1 /* HomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -45,6 +50,7 @@
 		D0AB94BD2D9291F300C004D1 = {
 			isa = PBXGroup;
 			children = (
+				D0AB94E02D929F6A00C004D1 /* HomViewController.swift */,
 				D0AB94C82D9291F300C004D1 /* DemoURLScheme */,
 				D0AB94C72D9291F300C004D1 /* Products */,
 			);
@@ -132,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0AB94E12D929F7300C004D1 /* HomViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
