@@ -1,9 +1,3 @@
-//
-//  ShareCollectionViewCell.swift
-//  DemoURLScheme
-//
-//  Created by dan phi on 25/3/25.
-//
 import UIKit
 
 struct ShareItem {
@@ -12,15 +6,13 @@ struct ShareItem {
     let action: () -> Void  // Closure để gọi hành động khi nhấn vào
 }
 
-import UIKit
-
 class ShareCollectionViewCell: UICollectionViewCell {
     static let identifier = "ShareCollectionViewCell"
     
     private let iconImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
-        iv.layer.cornerRadius = 20  // Giảm kích thước bo tròn
+        iv.layer.cornerRadius = 20
         iv.clipsToBounds = true
         return iv
     }()
@@ -28,7 +20,7 @@ class ShareCollectionViewCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 10) // Giảm font chữ
+        label.font = UIFont.systemFont(ofSize: 10)
         label.textColor = .black
         return label
     }()
@@ -45,12 +37,12 @@ class ShareCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             iconImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             iconImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            iconImageView.widthAnchor.constraint(equalToConstant: 40),  // Giảm kích thước icon
-            iconImageView.heightAnchor.constraint(equalToConstant: 40), // Giảm kích thước icon
+            iconImageView.widthAnchor.constraint(equalToConstant: 40),
+            iconImageView.heightAnchor.constraint(equalToConstant: 40),
             
             titleLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 2),
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            titleLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 50) // Giới hạn text không bị tràn
+            titleLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 50)
         ])
     }
     

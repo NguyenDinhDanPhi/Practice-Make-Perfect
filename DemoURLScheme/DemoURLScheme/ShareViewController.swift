@@ -1,7 +1,9 @@
 import UIKit
+
 class ShareViewController: UIViewController {
     
     private let shareLink: String
+    
     init(shareLink: String) {
         self.shareLink = shareLink
         super.init(nibName: nil, bundle: nil)
@@ -11,13 +13,40 @@ class ShareViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var shareItems: [ShareItem] = [
+    // Hàm kiểm tra ứng dụng có được cài đặt không
+    private func isAppInstalled(urlScheme: String) -> Bool {
+        if let url = URL(string: urlScheme) {
+            return UIApplication.shared.canOpenURL(url)
+        }
+        return false
+    }
+    
+    // Danh sách tất cả các ứng dụng
+    private lazy var allShareItems: [ShareItem] = [
         ShareItem(icon: UIImage(named: "copyLink"), title: "Copy", action: copyLinkToClipboard),
         ShareItem(icon: UIImage(named: "fb"), title: "Facebook", action: openFacebook),
         ShareItem(icon: UIImage(named: "mess"), title: "Messenger", action: shareToMessenger),
         ShareItem(icon: UIImage(named: "tele"), title: "Telegram", action: openTelegram),
         ShareItem(icon: UIImage(named: "insta"), title: "Instagram", action: shareToInstagram)
     ]
+    
+    // Lọc chỉ giữ lại những ứng dụng đã cài đặt
+    private lazy var shareItems: [ShareItem] = {
+        return allShareItems.filter { item in
+            switch item.title {
+            case "Facebook":
+                return isAppInstalled(urlScheme: "fb://")
+            case "Messenger":
+                return isAppInstalled(urlScheme: "fb-messenger://")
+            case "Telegram":
+                return isAppInstalled(urlScheme: "tg://")
+            case "Instagram":
+                return isAppInstalled(urlScheme: "instagram://")
+            default:
+                return true // Copy luôn hiển thị
+            }
+        }
+    }()
     
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -36,6 +65,7 @@ class ShareViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupCollectionView()
+        collectionView.reloadData()
     }
     
     private func setupCollectionView() {
