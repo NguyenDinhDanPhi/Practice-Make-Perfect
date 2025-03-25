@@ -27,7 +27,9 @@ class ShareViewController: UIViewController {
         ShareItem(icon: UIImage(named: "fb"), title: "Facebook", action: openFacebook),
         ShareItem(icon: UIImage(named: "mess"), title: "Messenger", action: shareToMessenger),
         ShareItem(icon: UIImage(named: "tele"), title: "Telegram", action: openTelegram),
-        ShareItem(icon: UIImage(named: "insta"), title: "Instagram", action: shareToInstagram)
+        ShareItem(icon: UIImage(named: "insta"), title: "Instagram", action: shareToInstagram),
+        ShareItem(icon: UIImage(systemName: "more"), title: "More", action: openActivityView)
+
     ]
     
     // Lọc chỉ giữ lại những ứng dụng đã cài đặt
@@ -137,4 +139,18 @@ extension ShareViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
+    private func openActivityView() {
+        let activityVC = UIActivityViewController(activityItems: [URL(string: shareLink) ?? shareLink], applicationActivities: nil)
+        
+        // Chạy trên main thread để tránh UI lag hoặc crash
+        DispatchQueue.main.async {
+            if let popoverController = activityVC.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                popoverController.permittedArrowDirections = []
+            }
+            self.present(activityVC, animated: true)
+        }
+    }
+
 }
