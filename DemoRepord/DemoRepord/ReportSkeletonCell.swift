@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 class ReportSkeletonCell: UITableViewCell {
     let skeletonTextView = UIView()
@@ -14,16 +15,22 @@ class ReportSkeletonCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        // Enable skeleton loading
+        isSkeletonable = true
+        contentView.isSkeletonable = true
+
         // Thiết lập skeleton cho radio button
         skeletonRadioView.translatesAutoresizingMaskIntoConstraints = false
         skeletonRadioView.backgroundColor = .lightGray.withAlphaComponent(0.3)
         skeletonRadioView.layer.cornerRadius = 12 // Bo tròn (giống icon)
-        
+        skeletonRadioView.isSkeletonable = true
+
         // Thiết lập skeleton cho text label
         skeletonTextView.translatesAutoresizingMaskIntoConstraints = false
         skeletonTextView.backgroundColor = .lightGray.withAlphaComponent(0.3)
         skeletonTextView.layer.cornerRadius = 6
-        
+        skeletonTextView.isSkeletonable = true
+
         contentView.addSubview(skeletonRadioView)
         contentView.addSubview(skeletonTextView)
         
