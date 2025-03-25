@@ -9,8 +9,8 @@ import UIKit
 struct ShareItem {
     let icon: UIImage?
     let title: String
+    let action: () -> Void  // Closure để gọi hành động khi nhấn vào
 }
-
 
 import UIKit
 

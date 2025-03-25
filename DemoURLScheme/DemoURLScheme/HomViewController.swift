@@ -25,9 +25,13 @@ class HomeViewController: UIViewController {
     }
     
     @objc func openShareView() {
-        let shareVC = CustomShareViewController(shareLink: "https://apps.apple.com/app/id6470351765")
+        let shareVC = ShareViewController(shareLink: "https://apps.apple.com/app/id6470351765")
         if let sheet = shareVC.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
+            let customDetent = UISheetPresentationController.Detent.custom { _ in
+                return 161
+            }
+            
+            sheet.detents = [customDetent]
             sheet.prefersGrabberVisible = true
         }
         present(shareVC, animated: true)
