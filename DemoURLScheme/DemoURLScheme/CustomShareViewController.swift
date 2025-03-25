@@ -62,7 +62,10 @@ class CustomShareViewController: UIViewController {
         return button
     }
     
-    @objc func openFacebook() { openApp(urlScheme: "fb://facewebmodal/f?href=", webURL: "https://www.facebook.com/sharer/sharer.php?u=") }
+    @objc func openFacebook() {
+        openApp(urlScheme: "fb://composer?text=", webURL: "https://www.facebook.com/sharer/sharer.php?u=")
+    }
+    
     @objc func openZalo() { openApp(urlScheme: "zalo://send?text=", webURL: "https://zalo.me/share?url=") }
     @objc func shareToMessenger() { openApp(urlScheme: "fb-messenger://share?link=", webURL: "https://www.messenger.com/t/") }
     @objc func shareToSMS() { openApp(urlScheme: "sms:?&body=", webURL: nil) }
