@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-    var link = "https://www.tiktok.com/@pbm2025365/video/7459553572993174830?is_from_webapp=1&sender_device=pc"
+    var link = "https://www.facebook.com/profile.php?id=100032022931572"
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white

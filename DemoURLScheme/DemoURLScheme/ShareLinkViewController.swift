@@ -33,7 +33,7 @@ class ShareLinkViewController: UIViewController {
         SocialNetworkSharing(icon: UIImage(systemName: "hehe"), title: "X", action: shareToTwitter),
         SocialNetworkSharing(icon: UIImage(systemName: "more"), title: "More", action: openActivityView)
         
-
+        
     ]
     
     // Lọc chỉ giữ lại những ứng dụng đã cài đặt
@@ -107,6 +107,9 @@ extension ShareLinkViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         shareItems[indexPath.row].action()
+        //        DispatchQueue.main.async {
+        //                    self.dismiss(animated: true)
+        //        }
     }
 }
 
@@ -124,45 +127,71 @@ extension ShareLinkViewController {
     }
     
     private func openFacebook() {
-        openApp(urlScheme: "fb://composer?text=", webURL: "https://www.facebook.com/sharer/sharer.php?u=")
+        self.dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            self.openApp(urlScheme: "fb://composer?text=", webURL: "https://www.facebook.com/sharer/sharer.php?u=")
+        }
     }
     
     private func openTelegram() {
-        openApp(urlScheme: "tg://msg?text=", webURL: "https://t.me/share/url?url=")
+        self.dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            self.openApp(urlScheme: "tg://msg?text=", webURL: "https://t.me/share/url?url=")
+        }
     }
     
     private func shareToMessenger() {
-        openApp(urlScheme: "fb-messenger://share?link=", webURL: "https://www.messenger.com/t/")
+        self.dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            self.openApp(urlScheme: "fb-messenger://share?link=", webURL: "https://www.messenger.com/t/")
+        }
     }
     
     private func shareToInstagram() {
-        openApp(urlScheme: "instagram://story-camera", webURL: "https://www.instagram.com/")
+        self.dismiss(animated: true) { [weak self] in
+                guard let self else { return }
+            self.openApp(urlScheme: "instagram://story-camera", webURL: "https://www.instagram.com/")
+        }
     }
     
     private func copyLinkToClipboard() {
-        UIPasteboard.general.string = shareLink
-        let alert = UIAlertController(title: "Đã sao chép", message: "Link đã được sao chép vào clipboard!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
-    }
-    @objc func shareToSMS() {
-        openApp(urlScheme: "sms:?&body=", webURL: nil)
-    }
-    @objc func shareToTwitter() { openApp(urlScheme: "twitter://post?message=", webURL: "https://twitter.com/intent/tweet?text=") }
-
-
-    private func openActivityView() {
-        let activityVC = UIActivityViewController(activityItems: [URL(string: shareLink) ?? shareLink], applicationActivities: nil)
-        
-        // Chạy trên main thread để tránh UI lag hoặc crash
-        DispatchQueue.main.async {
-            if let popoverController = activityVC.popoverPresentationController {
-                popoverController.sourceView = self.view
-                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-                popoverController.permittedArrowDirections = []
-            }
-            self.present(activityVC, animated: true)
+        self.dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            UIPasteboard.general.string = shareLink
+            let alert = UIAlertController(title: "Đã sao chép", message: "Link đã được sao chép vào clipboard!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
         }
     }
-
+    @objc func shareToSMS() {
+        self.dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            openApp(urlScheme: "sms:?&body=", webURL: nil)
+        }
+    }
+    @objc func shareToTwitter() {
+        self.dismiss(animated: true) { [weak self] in
+            guard let self else { return }
+            openApp(urlScheme: "twitter://post?message=", webURL: "https://twitter.com/intent/tweet?text=")
+        }
+        
+    }
+    
+    
+    private func openActivityView() {
+        guard let presentingVC = self.presentingViewController else { return }
+        
+        self.dismiss(animated: true) {
+            let activityVC = UIActivityViewController(activityItems: [URL(string: self.shareLink) ?? self.shareLink], applicationActivities: nil)
+            
+            if let popoverController = activityVC.popoverPresentationController {
+                popoverController.sourceView = presentingVC.view
+                popoverController.sourceRect = CGRect(x: presentingVC.view.bounds.midX, y: presentingVC.view.bounds.midY, width: 0, height: 0)
+                popoverController.permittedArrowDirections = []
+            }
+            
+            presentingVC.present(activityVC, animated: true)
+        }
+    }
+    
 }
