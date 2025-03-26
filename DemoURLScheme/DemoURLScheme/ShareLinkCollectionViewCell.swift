@@ -1,13 +1,13 @@
 import UIKit
 
-struct ShareItem {
+struct SocialNetworkSharing {
     let icon: UIImage?
     let title: String
     let action: () -> Void  // Closure để gọi hành động khi nhấn vào
 }
 
-class ShareCollectionViewCell: UICollectionViewCell {
-    static let identifier = "ShareCollectionViewCell"
+class ShareLinkCollectionViewCell: UICollectionViewCell {
+    static let identifier = "ShareLinkCollectionViewCell"
     
     private let iconImageView: UIImageView = {
         let iv = UIImageView()
@@ -50,7 +50,7 @@ class ShareCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with item: ShareItem) {
+    func configure(with item: SocialNetworkSharing) {
         iconImageView.image = item.icon
         titleLabel.text = item.title
     }

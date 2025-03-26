@@ -53,5 +53,12 @@
         </dict>
     </dict>
 
+    <!-- Quyền truy cập và lưu vào thư viện ảnh -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Ứng dụng cần quyền truy cập thư viện ảnh để lưu và chia sẻ video.</string>
+
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Ứng dụng cần quyền lưu video vào thư viện ảnh.</string>
+
 </dict>
 </plist>

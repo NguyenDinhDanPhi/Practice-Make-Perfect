@@ -1,6 +1,7 @@
 import UIKit
+import Photos
 
-class ShareViewController: UIViewController {
+class ShareLinkViewController: UIViewController {
     
     private let shareLink: String
     
@@ -22,21 +23,21 @@ class ShareViewController: UIViewController {
     }
     
     // Danh sách tất cả các ứng dụng
-    private lazy var allShareItems: [ShareItem] = [
-        ShareItem(icon: UIImage(named: "copyLink"), title: "Copy", action: copyLinkToClipboard),
-        ShareItem(icon: UIImage(named: "fb"), title: "Facebook", action: openFacebook),
-        ShareItem(icon: UIImage(named: "mess"), title: "Messenger", action: shareToMessenger),
-        ShareItem(icon: UIImage(named: "tele"), title: "Telegram", action: openTelegram),
-        ShareItem(icon: UIImage(named: "insta"), title: "Instagram", action: shareToInstagram),
-        ShareItem(icon: UIImage(named: "sms"), title: "SMS", action: shareToSMS),
-        ShareItem(icon: UIImage(systemName: "hehe"), title: "X", action: shareToTwitter),
-        ShareItem(icon: UIImage(systemName: "more"), title: "More", action: openActivityView)
+    private lazy var allShareItems: [SocialNetworkSharing] = [
+        SocialNetworkSharing(icon: UIImage(named: "copyLink"), title: "Copy", action: copyLinkToClipboard),
+        SocialNetworkSharing(icon: UIImage(named: "fb"), title: "Facebook", action: openFacebook),
+        SocialNetworkSharing(icon: UIImage(named: "mess"), title: "Messenger", action: shareToMessenger),
+        SocialNetworkSharing(icon: UIImage(named: "tele"), title: "Telegram", action: openTelegram),
+        SocialNetworkSharing(icon: UIImage(named: "insta"), title: "Instagram", action: shareToInstagram),
+        SocialNetworkSharing(icon: UIImage(named: "sms"), title: "SMS", action: shareToSMS),
+        SocialNetworkSharing(icon: UIImage(systemName: "hehe"), title: "X", action: shareToTwitter),
+        SocialNetworkSharing(icon: UIImage(systemName: "more"), title: "More", action: openActivityView)
         
 
     ]
     
     // Lọc chỉ giữ lại những ứng dụng đã cài đặt
-    private lazy var shareItems: [ShareItem] = {
+    private lazy var shareItems: [SocialNetworkSharing] = {
         return allShareItems.filter { item in
             switch item.title {
             case "Facebook":
@@ -78,7 +79,7 @@ class ShareViewController: UIViewController {
     private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(ShareCollectionViewCell.self, forCellWithReuseIdentifier: ShareCollectionViewCell.identifier)
+        collectionView.register(ShareLinkCollectionViewCell.self, forCellWithReuseIdentifier: ShareLinkCollectionViewCell.identifier)
         
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -93,13 +94,13 @@ class ShareViewController: UIViewController {
 }
 
 // MARK: - UICollectionView Delegate & DataSource
-extension ShareViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ShareLinkViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return shareItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShareCollectionViewCell.identifier, for: indexPath) as! ShareCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ShareLinkCollectionViewCell.identifier, for: indexPath) as! ShareLinkCollectionViewCell
         cell.configure(with: shareItems[indexPath.row])
         return cell
     }
@@ -110,7 +111,7 @@ extension ShareViewController: UICollectionViewDelegate, UICollectionViewDataSou
 }
 
 // MARK: - Share Actions
-extension ShareViewController {
+extension ShareLinkViewController {
     private func openApp(urlScheme: String, webURL: String?) {
         let shareURL = shareLink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let appURLString = "\(urlScheme)\(shareURL)"

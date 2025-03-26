@@ -8,6 +8,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    var link = "https://www.tiktok.com/@pbm2025365/video/7459553572993174830?is_from_webapp=1&sender_device=pc"
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -25,7 +26,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc func openShareView() {
-        let shareVC = ShareViewController(shareLink: "https://apps.apple.com/app/id6470351765")
+        let shareVC = ShareLinkViewController(shareLink: link)
         if let sheet = shareVC.sheetPresentationController {
             let customDetent = UISheetPresentationController.Detent.custom { _ in
                 return 161
