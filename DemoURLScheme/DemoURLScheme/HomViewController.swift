@@ -7,8 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
-    var link = "https://www.facebook.com/profile.php?id=100032022931572"
+class HomeViewController: UIViewController, ShareLinkViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -26,7 +25,9 @@ class HomeViewController: UIViewController {
     }
     
     @objc func openShareView() {
+        let link = "https://www.facebook.com/profile.php?id=100032022931572"
         let shareVC = ShareLinkViewController(shareLink: link)
+        shareVC.delegate = self
         if let sheet = shareVC.sheetPresentationController {
             let customDetent = UISheetPresentationController.Detent.custom { _ in
                 return 161
@@ -37,4 +38,14 @@ class HomeViewController: UIViewController {
         }
         present(shareVC, animated: true)
     }
+
+    func didCopyLink(success: Bool) {
+        if success {
+                let alert = UIAlertController(title: "Đã sao chép", message: "Link đã được sao chép vào clipboard!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true)
+            }
+        
+    }
 }
+

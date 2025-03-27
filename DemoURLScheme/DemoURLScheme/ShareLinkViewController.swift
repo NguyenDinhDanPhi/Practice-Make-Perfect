@@ -1,6 +1,12 @@
 import UIKit
+
+protocol ShareLinkViewControllerDelegate: AnyObject {
+    func didCopyLink(success: Bool)
+}
+
 class ShareLinkViewController: UIViewController {
     private let shareLink: String
+    weak var delegate: ShareLinkViewControllerDelegate?
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -57,11 +63,13 @@ class ShareLinkViewController: UIViewController {
             SocialNetworkSharing(icon: UIImage(named: "fb"), title: "Facebook", action: { self.shareToApp(urlScheme: "fb://composer?text=", webURL: "https://www.facebook.com/sharer/sharer.php?u=") }),
             SocialNetworkSharing(icon: UIImage(named: "mess"), title: "Messenger", action: { self.shareToApp(urlScheme: "fb-messenger://share?link=", webURL: "https://www.messenger.com/t/") }),
             SocialNetworkSharing(icon: UIImage(named: "tele"), title: "Telegram", action: { self.shareToApp(urlScheme: "tg://msg?text=", webURL: "https://t.me/share/url?url=") }),
-            SocialNetworkSharing(icon: UIImage(named: "insta"), title: "Instagram", action: { self.shareToApp(urlScheme: "instagram://story-camera", webURL: "https://www.instagram.com/") }),
-            SocialNetworkSharing(icon: UIImage(named: "sms"), title: "SMS", action: { self.shareToApp(urlScheme: "sms:?&body=", webURL: nil) }),
+            
+            SocialNetworkSharing(icon: UIImage(named: "insta"), title: "Instagram", action: { self.shareToCopy(urlScheme: "instagram://")}),
+            
+            SocialNetworkSharing(icon: UIImage(named: "sms"), title: "SMS", action: { self.shareToCopy(urlScheme: "zalo://") }),
             SocialNetworkSharing(icon: UIImage(named: "ic_twitter"), title: "X", action: { self.shareToApp(urlScheme: "twitter://post?message=", webURL: "https://twitter.com/intent/tweet?text=") }),
             SocialNetworkSharing(icon: UIImage(named: "zalo"), title: "Zalo", action: {
-                self.shareToApp(urlScheme: "zalo://send?text=", webURL: "https://zalo.me/share?url=")
+                self.shareToCopy(urlScheme: "zalo://")
             }),
             SocialNetworkSharing(icon: UIImage(named: "ic_whatapp"), title: "WhatsApp", action: {
                 self.shareToApp(urlScheme: "whatsapp://send?text=", webURL: "https://api.whatsapp.com/send?text=")
@@ -89,10 +97,18 @@ class ShareLinkViewController: UIViewController {
     
     private func copyLinkToClipboard() {
         UIPasteboard.general.string = shareLink
-            let alert = UIAlertController(title: "Đã sao chép", message: "Link đã được sao chép vào clipboard!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            self.present(alert, animated: true)
-        
+
+        dismiss(animated: true) { [weak self] in
+            self?.delegate?.didCopyLink(success: true)
+        }
+    }
+    
+    private func shareToCopy(urlScheme: String) {
+        UIPasteboard.general.string = shareLink
+        let appUrl = URL(string: "\(urlScheme)")
+        if let appURL = appUrl, UIApplication.shared.canOpenURL(appURL) {
+            UIApplication.shared.open(appURL)
+        }
     }
     
     @objc private func shareToApp(urlScheme: String, webURL: String?) {
@@ -124,7 +140,6 @@ class ShareLinkViewController: UIViewController {
             presentingVC.present(activityVC, animated: true)
         }
     }
-
 }
 
 // MARK: - UICollectionView Delegate & DataSource
@@ -139,8 +154,8 @@ extension ShareLinkViewController: UICollectionViewDelegate, UICollectionViewDat
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            DispatchQueue.main.async {
+          //  DispatchQueue.main.async {
                 self.shareItems[indexPath.row].action()
-            }
+           // }
         }
 }
