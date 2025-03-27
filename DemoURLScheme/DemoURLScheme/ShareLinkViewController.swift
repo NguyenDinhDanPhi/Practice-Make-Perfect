@@ -73,7 +73,6 @@ class ShareLinkViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupCollectionView()
-        collectionView.reloadData()
     }
     
     private func setupCollectionView() {
