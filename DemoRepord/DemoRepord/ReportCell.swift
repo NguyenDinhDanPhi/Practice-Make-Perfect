@@ -8,18 +8,29 @@
 import UIKit
 
 class ReportCell: UITableViewCell {
-    let reasonLabel = UILabel()
-    let radioImageView = UIImageView()
-
+    
+    lazy var radioImageView: UIImageView = {
+        let imgView = UIImageView(image: UIImage(named: "dont-check"))
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.contentMode = .scaleAspectFit
+        return imgView
+    }()
+    
+    
+    lazy var reasonLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        radioImageView.image = UIImage(named: "dont-check")
-        radioImageView.translatesAutoresizingMaskIntoConstraints = false
-        radioImageView.contentMode = .scaleAspectFit
         
-        reasonLabel.translatesAutoresizingMaskIntoConstraints = false
-        reasonLabel.numberOfLines = 0
+        
         
         contentView.addSubview(radioImageView)
         contentView.addSubview(reasonLabel)
@@ -36,7 +47,7 @@ class ReportCell: UITableViewCell {
             reasonLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ])
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

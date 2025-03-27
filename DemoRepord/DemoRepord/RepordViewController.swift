@@ -8,7 +8,7 @@
 import UIKit
 import SkeletonView
 
-class ViewController: UIViewController {
+class RepordViewController: UIViewController {
     var reasons: [String] = []
     var isLoading = true  // Trạng thái loading
 
@@ -84,7 +84,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
+extension RepordViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return isLoading ? 7 : reasons.count
     }

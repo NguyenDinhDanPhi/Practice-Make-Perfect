@@ -1,7 +1,7 @@
 import UIKit
 
 protocol ShareLinkViewControllerDelegate: AnyObject {
-    func didCopyLink(success: Bool)
+    func didCopyLink()
 }
 
 class ShareLinkViewController: UIViewController {
@@ -78,7 +78,7 @@ class ShareLinkViewController: UIViewController {
 
             SocialNetworkSharing(icon: UIImage(named: "ic_more"), title: "More", action: openActivityView)
         ]
-        return allItems.filter { $0.title == "Copy" || $0.title == "More" || isAppInstalled(urlScheme: urlScheme(for: $0.title)) }
+        return allItems.filter { $0.title == "Copy" || $0.title == "More" || $0.title == "SMS" || isAppInstalled(urlScheme: urlScheme(for: $0.title)) }
     }()
     
     private func urlScheme(for app: String) -> String {
@@ -99,7 +99,7 @@ class ShareLinkViewController: UIViewController {
         UIPasteboard.general.string = shareLink
 
         dismiss(animated: true) { [weak self] in
-            self?.delegate?.didCopyLink(success: true)
+            self?.delegate?.didCopyLink()
         }
     }
     

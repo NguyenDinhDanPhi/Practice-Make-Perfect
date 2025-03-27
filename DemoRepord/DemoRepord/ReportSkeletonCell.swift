@@ -9,8 +9,26 @@ import UIKit
 import SkeletonView
 
 class ReportSkeletonCell: UITableViewCell {
-    let skeletonTextView = UIView()
-    let skeletonRadioView = UIView()
+    private lazy var skeletonTextView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .lightGray.withAlphaComponent(0.3)
+        view.layer.cornerRadius = 6
+        
+        view.isSkeletonable = true
+        return view
+    }()
+    
+    private lazy var skeletonRadioView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .lightGray.withAlphaComponent(0.3)
+        view.layer.cornerRadius = view.frame.width / 2// Bo tròn (giống icon)
+        view.clipsToBounds = true
+        view.isSkeletonable = true
+        return view
+    }()
+    
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -18,18 +36,6 @@ class ReportSkeletonCell: UITableViewCell {
         // Enable skeleton loading
         isSkeletonable = true
         contentView.isSkeletonable = true
-
-        // Thiết lập skeleton cho radio button
-        skeletonRadioView.translatesAutoresizingMaskIntoConstraints = false
-        skeletonRadioView.backgroundColor = .lightGray.withAlphaComponent(0.3)
-        skeletonRadioView.layer.cornerRadius = 12 // Bo tròn (giống icon)
-        skeletonRadioView.isSkeletonable = true
-
-        // Thiết lập skeleton cho text label
-        skeletonTextView.translatesAutoresizingMaskIntoConstraints = false
-        skeletonTextView.backgroundColor = .lightGray.withAlphaComponent(0.3)
-        skeletonTextView.layer.cornerRadius = 6
-        skeletonTextView.isSkeletonable = true
 
         contentView.addSubview(skeletonRadioView)
         contentView.addSubview(skeletonTextView)

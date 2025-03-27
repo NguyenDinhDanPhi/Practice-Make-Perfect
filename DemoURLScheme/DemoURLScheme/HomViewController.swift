@@ -25,7 +25,7 @@ class HomeViewController: UIViewController, ShareLinkViewControllerDelegate {
     }
     
     @objc func openShareView() {
-        let link = "https://www.facebook.com/profile.php?id=100032022931572"
+        let link = "https://www.google.com/"
         let shareVC = ShareLinkViewController(shareLink: link)
         shareVC.delegate = self
         if let sheet = shareVC.sheetPresentationController {
@@ -39,12 +39,10 @@ class HomeViewController: UIViewController, ShareLinkViewControllerDelegate {
         present(shareVC, animated: true)
     }
 
-    func didCopyLink(success: Bool) {
-        if success {
+    func didCopyLink() {
                 let alert = UIAlertController(title: "Đã sao chép", message: "Link đã được sao chép vào clipboard!", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alert, animated: true)
-            }
         
     }
 }
