@@ -88,8 +88,19 @@ class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.reloadData()
     }
 
-    // MARK: - TableView
+    // MARK: - Helper
 
+    private func timeAgoString(from date: Date) -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .short
+        return formatter.localizedString(for: date, relativeTo: Date())
+    }
+}
+
+//MARK: TableView delegate
+
+extension NotifiViewController {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -132,6 +143,12 @@ class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDa
         header.textLabel?.textColor = .black
         header.textLabel?.frame.origin.x = 16
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
+        print("Bạn vừa chọn: \(item.title)")
+    }
     
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
@@ -155,12 +172,4 @@ class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return config
     }
 
-
-    // MARK: - Helper
-
-    private func timeAgoString(from date: Date) -> String {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .short
-        return formatter.localizedString(for: date, relativeTo: Date())
-    }
 }
