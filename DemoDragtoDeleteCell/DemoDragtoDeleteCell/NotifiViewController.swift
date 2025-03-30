@@ -59,7 +59,7 @@ class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDa
             time: now,
             profileImage: UIImage(named: "avatar"),
             overlayImage: UIImage(named: "avatar2"),
-            thumbnailImage: UIImage(named: "thumb")
+            thumbnailImage: UIImage(named: "thum")
         )
 
         let noti2 = NotificationItem(
@@ -67,7 +67,7 @@ class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDa
             time: yesterday,
             profileImage: UIImage(named: "avatar"),
             overlayImage: nil,
-            thumbnailImage: UIImage(named: "thumb")
+            thumbnailImage: UIImage(named: "thum")
         )
 
         let noti3 = NotificationItem(
@@ -75,7 +75,7 @@ class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDa
             time: yesterday,
             profileImage: UIImage(named: "avatar"),
             overlayImage: nil,
-            thumbnailImage: UIImage(named: "thumb3")
+            thumbnailImage: UIImage(named: "thum")
         )
 
         let all = [noti1, noti2, noti3]
@@ -132,6 +132,29 @@ class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDa
         header.textLabel?.textColor = .black
         header.textLabel?.frame.origin.x = 16
     }
+    
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
+            if indexPath.section == 0 {
+                self.todayNotis.remove(at: indexPath.row)
+            } else {
+                self.earlierNotis.remove(at: indexPath.row)
+            }
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            completionHandler(true)
+        }
+
+        deleteAction.image = UIImage(systemName: "trash") // SFSymbol icon
+        deleteAction.backgroundColor = UIColor(red: 0.92, green: 0.23, blue: 0.23, alpha: 1) // màu đỏ
+
+        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+        config.performsFirstActionWithFullSwipe = false
+        return config
+    }
+
 
     // MARK: - Helper
 

@@ -11,24 +11,12 @@ class NotifiCell: UITableViewCell {
     
     static let identifier = "NotifiCell"
     
-    private let overlayAvatarImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.layer.borderColor = UIColor.white.cgColor
-        iv.layer.borderWidth = 2
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
+    private let avatarView: AvatarView = {
+        let view = AvatarView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
-    
-    private let profileImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.layer.cornerRadius = 30 // half of height/width
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
-    }()
+
     
     private let redDotView: UIView = {
         let view = UIView()
@@ -78,32 +66,27 @@ class NotifiCell: UITableViewCell {
     // MARK: - Layout
     
     private func setupViews() {
-        contentView.addSubview(profileImageView)
+        contentView.addSubview(avatarView)
         contentView.addSubview(redDotView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(timeLabel)
         contentView.addSubview(thumbnailImageView)
-        contentView.addSubview(overlayAvatarImageView)
         
+        self.contentView.layer.masksToBounds = false
+        self.layer.masksToBounds = false
         NSLayoutConstraint.activate([
             
-            profileImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            profileImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            profileImageView.widthAnchor.constraint(equalToConstant: 60),
-            profileImageView.heightAnchor.constraint(equalToConstant: 60),
-            
-            overlayAvatarImageView.widthAnchor.constraint(equalToConstant: 42),
-            overlayAvatarImageView.heightAnchor.constraint(equalToConstant: 42),
-            
-            overlayAvatarImageView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor, constant: 18),
-            overlayAvatarImageView.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor, constant: 18),
+            avatarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+                avatarView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                avatarView.widthAnchor.constraint(equalToConstant: 60),
+                avatarView.heightAnchor.constraint(equalToConstant: 60),
             
             redDotView.widthAnchor.constraint(equalToConstant: 10),
             redDotView.heightAnchor.constraint(equalToConstant: 10),
-            redDotView.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: -10),
-            redDotView.topAnchor.constraint(equalTo: profileImageView.topAnchor),
+            redDotView.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: -10),
+            redDotView.topAnchor.constraint(equalTo: avatarView.topAnchor),
             
-            titleLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 12),
+            titleLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 12),
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
             titleLabel.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8),
             
@@ -117,17 +100,10 @@ class NotifiCell: UITableViewCell {
         ])
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
-        overlayAvatarImageView.layer.cornerRadius = overlayAvatarImageView.frame.width / 2
-    }
-    
     // MARK: - Configuration
     
     func configure(profileImage: UIImage?, overlayImage: UIImage?, title: String, time: String, thumbnail: UIImage?) {
-        profileImageView.image = profileImage
-        overlayAvatarImageView.image = overlayImage
+        avatarView.configure(mainImage: profileImage, overlayImage: overlayImage)
         titleLabel.text = title
         timeLabel.text = time
         thumbnailImageView.image = thumbnail
