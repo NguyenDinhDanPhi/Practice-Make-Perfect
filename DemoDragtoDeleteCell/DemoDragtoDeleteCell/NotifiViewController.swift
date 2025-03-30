@@ -19,18 +19,18 @@ class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
+        table.separatorStyle = .none
+        
+        table.register(NotifiCell.self, forCellReuseIdentifier: "NotifiCell")
         return table
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        view.addSubview(tableView)
-        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(NotifiCell.self, forCellReuseIdentifier: "NotifiCell")
+        view.backgroundColor = .white
+        view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -48,7 +48,8 @@ class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NotifiCell", for: indexPath) as! NotifiCell
-        cell.configure(with: activities[indexPath.row])
+       // cell.configure(with: activities[indexPath.row])
+        cell.configure(profileImage: UIImage(named: "avatar"), overlayImage: UIImage(named: "avatar2") ,title: activities[indexPath.row], time: "3 ngày trước", thumbnail: UIImage(named: "thum"))
         return cell
     }
     
@@ -67,5 +68,10 @@ class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDa
         configuration.performsFirstActionWithFullSwipe = false
         return configuration
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 104
+    }
+
 }
 
