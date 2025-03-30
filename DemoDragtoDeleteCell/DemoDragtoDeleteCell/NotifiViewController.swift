@@ -7,71 +7,137 @@
 
 import UIKit
 
-class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var activities: [String] = [
-        "Saian, Tram Nguyen và 3 người khác thích bình luận của bạn",
-        "Long Non VN thích bình luận của bạn",
-        "LoL Esports VN đã trả lời bình luận của bạn",
-        "LoL Esports VN thích bình luận của bạn"
-    ]
-    
-    let tableView: UITableView = {
-        let table = UITableView()
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.separatorStyle = .none
-        
-        table.register(NotifiCell.self, forCellReuseIdentifier: "NotifiCell")
-        return table
-    }()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        view.backgroundColor = .white
-        view.addSubview(tableView)
-        
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
-    }
-    
-    // MARK: - TableView DataSource
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return activities.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NotifiCell", for: indexPath) as! NotifiCell
-       // cell.configure(with: activities[indexPath.row])
-        cell.configure(profileImage: UIImage(named: "avatar"), overlayImage: UIImage(named: "avatar2") ,title: activities[indexPath.row], time: "3 ngày trước", thumbnail: UIImage(named: "thum"))
-        return cell
-    }
-    
-    // MARK: - Swipe to Delete
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Xóa") { _, _, completionHandler in
-            self.activities.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            completionHandler(true)
-        }
-        deleteAction.image = UIImage(systemName: "trash")
-        
-        
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-        configuration.performsFirstActionWithFullSwipe = false
-        return configuration
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 104
-    }
-
+struct NotificationItem {
+    let title: String
+    let time: Date
+    let profileImage: UIImage?
+    let overlayImage: UIImage?
+    let thumbnailImage: UIImage?
 }
 
+import UIKit
+
+class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    private let tableView = UITableView()
+    
+    private var todayNotis: [NotificationItem] = []
+    private var earlierNotis: [NotificationItem] = []
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setupTableView()
+        loadData()
+    }
+
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(NotifiCell.self, forCellReuseIdentifier: NotifiCell.identifier)
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 104
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(tableView)
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
+    }
+
+    private func loadData() {
+        // Dummy data demo
+        let now = Date()
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: now)!
+
+        let noti1 = NotificationItem(
+            title: "Saian, Tram Nguyen và 3 người khác thích bình luận của bạn",
+            time: now,
+            profileImage: UIImage(named: "avatar"),
+            overlayImage: UIImage(named: "avatar2"),
+            thumbnailImage: UIImage(named: "thumb")
+        )
+
+        let noti2 = NotificationItem(
+            title: "LoL Esports VN thích bình luận của bạn",
+            time: yesterday,
+            profileImage: UIImage(named: "avatar"),
+            overlayImage: nil,
+            thumbnailImage: UIImage(named: "thumb")
+        )
+
+        let noti3 = NotificationItem(
+            title: "Long Non VN thích bình luận của bạn",
+            time: yesterday,
+            profileImage: UIImage(named: "avatar"),
+            overlayImage: nil,
+            thumbnailImage: UIImage(named: "thumb3")
+        )
+
+        let all = [noti1, noti2, noti3]
+        let calendar = Calendar.current
+
+        todayNotis = all.filter { calendar.isDateInToday($0.time) }
+        
+        earlierNotis = all.filter { !calendar.isDateInToday($0.time) }
+
+        tableView.reloadData()
+    }
+
+    // MARK: - TableView
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? todayNotis.count : earlierNotis.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NotifiCell.identifier, for: indexPath) as? NotifiCell else {
+            return UITableViewCell()
+        }
+
+        let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
+
+        cell.configure(
+            profileImage: item.profileImage,
+            overlayImage: item.overlayImage,
+            title: item.title,
+            time: timeAgoString(from: item.time),
+            thumbnail: item.thumbnailImage
+        )
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let notiList = section == 0 ? todayNotis : earlierNotis
+        return notiList.isEmpty ? nil : (section == 0 ? "Hôm nay" : "Trước đó")
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        let notiList = section == 0 ? todayNotis : earlierNotis
+        return notiList.isEmpty ? 0 : 32
+    }
+
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        header.textLabel?.textColor = .black
+        header.textLabel?.frame.origin.x = 16
+    }
+
+    // MARK: - Helper
+
+    private func timeAgoString(from date: Date) -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .short
+        return formatter.localizedString(for: date, relativeTo: Date())
+    }
+}
