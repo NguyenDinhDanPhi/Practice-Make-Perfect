@@ -36,12 +36,13 @@ class DropdownMenuViewController: UIViewController {
     private func setupMenu() {
         dropdownMenu.translatesAutoresizingMaskIntoConstraints = false
         dropdownMenu.isHidden = true
+        dropdownMenu.backgroundColor = view.backgroundColor // Set màu nền trùng với viewController
         view.addSubview(dropdownMenu)
 
         NSLayoutConstraint.activate([
             dropdownMenu.topAnchor.constraint(equalTo: dropdownButton.bottomAnchor, constant: 0),
-            dropdownMenu.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0), // full từ trái
-            dropdownMenu.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0), // full tới phải
+            dropdownMenu.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            dropdownMenu.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             dropdownMenu.heightAnchor.constraint(equalToConstant: 220)
         ])
 
