@@ -4,9 +4,7 @@
 //
 //  Created by dan phi on 30/3/25.
 //
-
 import UIKit
-
 
 struct NotificationItem {
     let title: String
@@ -15,8 +13,6 @@ struct NotificationItem {
     let overlayImage: UIImage?
     let thumbnailImage: UIImage?
 }
-
-import UIKit
 
 class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
