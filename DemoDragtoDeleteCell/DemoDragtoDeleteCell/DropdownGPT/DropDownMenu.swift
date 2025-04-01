@@ -18,10 +18,10 @@ class DropdownMenuView: UIView, UITableViewDelegate, UITableViewDataSource {
         super.init(frame: frame)
         backgroundColor = .white
         layer.cornerRadius = 12
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.1
-        layer.shadowOffset = CGSize(width: 0, height: 4)
-        layer.shadowRadius = 8
+    //    layer.shadowColor = UIColor.black.cgColor
+     //   layer.shadowOpacity = 0.1
+      //  layer.shadowOffset = CGSize(width: 0, height: 4)
+       // layer.shadowRadius = 8
 
         setupTable()
     }

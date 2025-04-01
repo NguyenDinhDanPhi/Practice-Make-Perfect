@@ -57,8 +57,25 @@ class DropdownMenuViewController: UIViewController {
 
     @objc private func toggleMenu() {
         isMenuVisible.toggle()
-        UIView.animate(withDuration: 0.2) {
-            self.dropdownMenu.isHidden = !self.isMenuVisible
+
+        if isMenuVisible {
+            dropdownMenu.isHidden = false
+            dropdownMenu.frame.size.height = 0  // Bắt đầu chiều cao của menu là 0
+            dropdownMenu.alpha = 0  // Đặt độ mờ ban đầu thành 0 (ẩn menu)
+
+            UIView.animate(withDuration: 0.3, animations: {
+                self.dropdownMenu.frame.size.height = 220  // Cuộn xuống chiều cao đầy đủ
+                self.dropdownMenu.alpha = 1  // Làm menu trở nên rõ ràng
+            })
+        } else {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.dropdownMenu.frame.size.height = 0  // Cuộn lên chiều cao 0
+                self.dropdownMenu.alpha = 0  // Làm menu mờ dần đi
+            }) { _ in
+                self.dropdownMenu.isHidden = true  // Ẩn menu sau khi cuộn lên
+            }
         }
     }
+
+
 }
