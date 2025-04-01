@@ -6,54 +6,59 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D0AB95092D92AB9400C004D1 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = D0AB95082D92AB9400C004D1 /* SkeletonView */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		D0BC475D2D8C1E9900F906EE /* customBottomSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = customBottomSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0AB94EB2D92A35E00C004D1 /* DemoRepord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoRepord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D0BC476F2D8C1E9B00F906EE /* Exceptions for "customBottomSheet" folder in "customBottomSheet" target */ = {
+		D0AB94FD2D92A36000C004D1 /* Exceptions for "DemoRepord" folder in "DemoRepord" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = D0BC475C2D8C1E9900F906EE /* customBottomSheet */;
+			target = D0AB94EA2D92A35E00C004D1 /* DemoRepord */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D0BC475F2D8C1E9900F906EE /* customBottomSheet */ = {
+		D0AB94ED2D92A35E00C004D1 /* DemoRepord */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D0BC476F2D8C1E9B00F906EE /* Exceptions for "customBottomSheet" folder in "customBottomSheet" target */,
+				D0AB94FD2D92A36000C004D1 /* Exceptions for "DemoRepord" folder in "DemoRepord" target */,
 			);
-			path = customBottomSheet;
+			path = DemoRepord;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D0BC475A2D8C1E9900F906EE /* Frameworks */ = {
+		D0AB94E82D92A35E00C004D1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0AB95092D92AB9400C004D1 /* SkeletonView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D0BC47542D8C1E9900F906EE = {
+		D0AB94E22D92A35E00C004D1 = {
 			isa = PBXGroup;
 			children = (
-				D0BC475F2D8C1E9900F906EE /* customBottomSheet */,
-				D0BC475E2D8C1E9900F906EE /* Products */,
+				D0AB94ED2D92A35E00C004D1 /* DemoRepord */,
+				D0AB94EC2D92A35E00C004D1 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		D0BC475E2D8C1E9900F906EE /* Products */ = {
+		D0AB94EC2D92A35E00C004D1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D0BC475D2D8C1E9900F906EE /* customBottomSheet.app */,
+				D0AB94EB2D92A35E00C004D1 /* DemoRepord.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,64 +66,68 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D0BC475C2D8C1E9900F906EE /* customBottomSheet */ = {
+		D0AB94EA2D92A35E00C004D1 /* DemoRepord */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D0BC47702D8C1E9B00F906EE /* Build configuration list for PBXNativeTarget "customBottomSheet" */;
+			buildConfigurationList = D0AB94FE2D92A36000C004D1 /* Build configuration list for PBXNativeTarget "DemoRepord" */;
 			buildPhases = (
-				D0BC47592D8C1E9900F906EE /* Sources */,
-				D0BC475A2D8C1E9900F906EE /* Frameworks */,
-				D0BC475B2D8C1E9900F906EE /* Resources */,
+				D0AB94E72D92A35E00C004D1 /* Sources */,
+				D0AB94E82D92A35E00C004D1 /* Frameworks */,
+				D0AB94E92D92A35E00C004D1 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D0BC475F2D8C1E9900F906EE /* customBottomSheet */,
+				D0AB94ED2D92A35E00C004D1 /* DemoRepord */,
 			);
-			name = customBottomSheet;
+			name = DemoRepord;
 			packageProductDependencies = (
+				D0AB95082D92AB9400C004D1 /* SkeletonView */,
 			);
-			productName = customBottomSheet;
-			productReference = D0BC475D2D8C1E9900F906EE /* customBottomSheet.app */;
+			productName = DemoRepord;
+			productReference = D0AB94EB2D92A35E00C004D1 /* DemoRepord.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D0BC47552D8C1E9900F906EE /* Project object */ = {
+		D0AB94E32D92A35E00C004D1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
-					D0BC475C2D8C1E9900F906EE = {
+					D0AB94EA2D92A35E00C004D1 = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
 			};
-			buildConfigurationList = D0BC47582D8C1E9900F906EE /* Build configuration list for PBXProject "customBottomSheet" */;
+			buildConfigurationList = D0AB94E62D92A35E00C004D1 /* Build configuration list for PBXProject "DemoRepord" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = D0BC47542D8C1E9900F906EE;
+			mainGroup = D0AB94E22D92A35E00C004D1;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D0AB95072D92AB9400C004D1 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = D0BC475E2D8C1E9900F906EE /* Products */;
+			productRefGroup = D0AB94EC2D92A35E00C004D1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D0BC475C2D8C1E9900F906EE /* customBottomSheet */,
+				D0AB94EA2D92A35E00C004D1 /* DemoRepord */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D0BC475B2D8C1E9900F906EE /* Resources */ = {
+		D0AB94E92D92A35E00C004D1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -128,7 +137,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D0BC47592D8C1E9900F906EE /* Sources */ = {
+		D0AB94E72D92A35E00C004D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -138,7 +147,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		D0BC47712D8C1E9B00F906EE /* Debug */ = {
+		D0AB94FF2D92A36000C004D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -146,7 +155,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = customBottomSheet/Info.plist;
+				INFOPLIST_FILE = DemoRepord/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -156,7 +165,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rphi..customBottomSheet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rphi..DemoRepord;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -164,7 +173,7 @@
 			};
 			name = Debug;
 		};
-		D0BC47722D8C1E9B00F906EE /* Release */ = {
+		D0AB95002D92A36000C004D1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -172,7 +181,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = customBottomSheet/Info.plist;
+				INFOPLIST_FILE = DemoRepord/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -182,7 +191,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rphi..customBottomSheet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rphi..DemoRepord;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -190,7 +199,7 @@
 			};
 			name = Release;
 		};
-		D0BC47732D8C1E9B00F906EE /* Debug */ = {
+		D0AB95012D92A36000C004D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -253,7 +262,7 @@
 			};
 			name = Debug;
 		};
-		D0BC47742D8C1E9B00F906EE /* Release */ = {
+		D0AB95022D92A36000C004D1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -312,25 +321,44 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D0BC47582D8C1E9900F906EE /* Build configuration list for PBXProject "customBottomSheet" */ = {
+		D0AB94E62D92A35E00C004D1 /* Build configuration list for PBXProject "DemoRepord" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D0BC47732D8C1E9B00F906EE /* Debug */,
-				D0BC47742D8C1E9B00F906EE /* Release */,
+				D0AB95012D92A36000C004D1 /* Debug */,
+				D0AB95022D92A36000C004D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D0BC47702D8C1E9B00F906EE /* Build configuration list for PBXNativeTarget "customBottomSheet" */ = {
+		D0AB94FE2D92A36000C004D1 /* Build configuration list for PBXNativeTarget "DemoRepord" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D0BC47712D8C1E9B00F906EE /* Debug */,
-				D0BC47722D8C1E9B00F906EE /* Release */,
+				D0AB94FF2D92A36000C004D1 /* Debug */,
+				D0AB95002D92A36000C004D1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D0AB95072D92AB9400C004D1 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.31.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D0AB95082D92AB9400C004D1 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0AB95072D92AB9400C004D1 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = D0BC47552D8C1E9900F906EE /* Project object */;
+	rootObject = D0AB94E32D92A35E00C004D1 /* Project object */;
 }
