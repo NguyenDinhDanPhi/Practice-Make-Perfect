@@ -1,17 +1,3 @@
-//
-//  ShareLinkViewController.swift
-//  DemoDragtoDeleteCell
-//
-//  Created by dan phi on 2/4/25.
-//
-
-//
-//  ShareLinkViewController.swift
-//  Streaming
-//
-//  Created by dan phi on 26/3/25.
-//
-
 import UIKit
 
 protocol ShareLinkViewControllerDelegate: AnyObject {
@@ -42,6 +28,13 @@ class ShareLinkViewController: UIViewController {
 
     private let containerView = UIView()
     private let grabber = UIView()
+    
+    private let dismissButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.backgroundColor = .clear  // Button không có màu nền
+        button.addTarget(self, action: #selector(dismissSheet), for: .touchUpInside)
+        return button
+    }()
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -71,17 +64,11 @@ class ShareLinkViewController: UIViewController {
         setupBackground()
         setupBottomSheetUI()
         setupCollectionView()
+        setupDismissButton()  // Thiết lập button dismiss
     }
 
     private func setupBackground() {
-     view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
-
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissSheet))
-//        view.addGestureRecognizer(tap)
-    }
-
-    @objc private func dismissSheet() {
-        dismiss(animated: true, completion: nil)
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
     }
 
     private func setupBottomSheetUI() {
@@ -126,6 +113,23 @@ class ShareLinkViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: grabber.bottomAnchor, constant: 16),
             collectionView.heightAnchor.constraint(equalToConstant: metrics.collectionViewHeight)
         ])
+    }
+
+    private func setupDismissButton() {
+        // Đặt dismissButton lên trên toàn bộ màn hình, từ đầu thiết bị đến containerView
+        view.addSubview(dismissButton)
+        dismissButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            dismissButton.topAnchor.constraint(equalTo: view.topAnchor),
+            dismissButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            dismissButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            dismissButton.bottomAnchor.constraint(equalTo: containerView.topAnchor)
+        ])
+    }
+
+    @objc private func dismissSheet() {
+        dismiss(animated: true, completion: nil)
     }
 
     private lazy var shareItems: [SocialNetworkSharing] = {
@@ -230,3 +234,4 @@ extension ShareLinkViewController: UICollectionViewDelegate, UICollectionViewDat
         }
     }
 }
+ 
