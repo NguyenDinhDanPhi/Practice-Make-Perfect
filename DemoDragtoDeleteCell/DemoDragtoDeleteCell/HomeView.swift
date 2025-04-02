@@ -8,6 +8,10 @@
 import UIKit
 
 class HomeView: UIViewController, ShareLinkViewControllerDelegate {
+    func handleDismiss() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     func didCopyLink() {
         print("hehe")
     }

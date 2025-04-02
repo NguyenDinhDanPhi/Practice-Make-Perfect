@@ -2,6 +2,7 @@ import UIKit
 
 protocol ShareLinkViewControllerDelegate: AnyObject {
     func didCopyLink()
+    func handleDismiss()
 }
 
 class ShareLinkViewController: UIViewController {
@@ -141,7 +142,8 @@ class ShareLinkViewController: UIViewController {
     }
 
     @objc private func dismissSheet() {
-        dismiss(animated: true, completion: nil)
+       // dismiss(animated: true, completion: nil)
+        delegate?.handleDismiss()
     }
 }
 
