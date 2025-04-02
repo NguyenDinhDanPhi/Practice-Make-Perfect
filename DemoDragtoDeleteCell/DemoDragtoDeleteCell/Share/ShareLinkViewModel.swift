@@ -1,17 +1,6 @@
-//
-//  ShareLinkViewModel.swift
-//  DemoDragtoDeleteCell
-//
-//  Created by dan phi on 2/4/25.
-//
-
 import UIKit
 
-struct SocialNetworkSharing {
-    let icon: UIImage?
-    let title: String
-    let action: () -> Void
-}
+
 
 final class ShareLinkViewModel {
 
@@ -25,33 +14,31 @@ final class ShareLinkViewModel {
         self.presentingViewController = presentingVC
     }
 
-    lazy var shareItems: [SocialNetworkSharing] = {
-        let items: [SocialNetworkSharing] = [
-            SocialNetworkSharing(icon: UIImage(named: "ic_copyLink"), title: "Copy", action: copyLinkToClipboard),
-            SocialNetworkSharing(icon: UIImage(named: "ic_fb"), title: "Facebook", action: { [weak self] in
-                self?.shareToApp(urlScheme: "fb://composer?text=", webURL: "https://www.facebook.com/sharer/sharer.php?u=")
-            }),
-            SocialNetworkSharing(icon: UIImage(named: "ic_messenger"), title: "Messenger", action: { [weak self] in
-                self?.shareToApp(urlScheme: "fb-messenger://share?link=", webURL: "https://www.messenger.com/t/")
-            }),
-            SocialNetworkSharing(icon: UIImage(named: "ic_telegram"), title: "Telegram", action: { [weak self] in
-                self?.shareToApp(urlScheme: "tg://msg?text=", webURL: "https://t.me/share/url?url=")
-            }),
-            SocialNetworkSharing(icon: UIImage(named: "ic_sms"), title: "SMS", action: { [weak self] in
-                self?.shareToApp(urlScheme: "sms:?&body=", webURL: nil)
-            }),
-            SocialNetworkSharing(icon: UIImage(named: "ic_twitter"), title: "X", action: { [weak self] in
-                self?.shareToApp(urlScheme: "twitter://post?message=", webURL: "https://twitter.com/intent/tweet?text=")
-            }),
-            SocialNetworkSharing(icon: UIImage(named: "ic_whatapp"), title: "WhatsApp", action: { [weak self] in
-                self?.shareToApp(urlScheme: "whatsapp://send?text=", webURL: "https://api.whatsapp.com/send?text=")
-            }),
-            SocialNetworkSharing(icon: UIImage(named: "ic_more"), title: "More", action: { [weak self] in
-                self?.openActivityView()
-            })
-        ]
-        return items.filter {
-            $0.title == "Copy" || $0.title == "More" || $0.title == "SMS" || isAppInstalled(urlScheme: urlScheme(for: $0.title))
+    lazy var shareItems: [SocialNetworkSharingModel] = {
+        return SocialPlatform.allCases.compactMap { platform in
+            if platform.requiresAppInstalled,
+               let scheme = platform.urlScheme,
+               !isAppInstalled(urlScheme: scheme) {
+                return nil
+            }
+
+            let icon = UIImage(named: platform.iconName)
+            let title = platform.title
+
+            let action: () -> Void = { [weak self] in
+                guard let self = self else { return }
+
+                switch platform {
+                case .copy:
+                    self.copyLinkToClipboard()
+                case .more:
+                    self.openActivityView()
+                default:
+                    self.shareToApp(urlScheme: platform.urlScheme, webURL: platform.webURL)
+                }
+            }
+
+            return SocialNetworkSharingModel(icon: icon, title: title, action: action)
         }
     }()
 
@@ -60,25 +47,15 @@ final class ShareLinkViewModel {
         return UIApplication.shared.canOpenURL(url)
     }
 
-    private func urlScheme(for app: String) -> String {
-        switch app {
-        case "Facebook": return "fb://"
-        case "Messenger": return "fb-messenger://"
-        case "Telegram": return "tg://"
-        case "X": return "twitter://"
-        case "WhatsApp": return "whatsapp://"
-        default: return ""
-        }
-    }
-
     private func copyLinkToClipboard() {
         UIPasteboard.general.string = shareLink
         delegate?.didCopyLink()
     }
 
-    private func shareToApp(urlScheme: String, webURL: String?) {
+    private func shareToApp(urlScheme: String?, webURL: String?) {
         let encodedLink = shareLink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let appURL = URL(string: "\(urlScheme)\(encodedLink)")
+        guard let scheme = urlScheme else { return }
+        let appURL = URL(string: "\(scheme)\(encodedLink)")
         let fallbackURL = webURL.flatMap { URL(string: "\($0)\(encodedLink)") }
 
         if let appURL = appURL, UIApplication.shared.canOpenURL(appURL) {
@@ -93,10 +70,10 @@ final class ShareLinkViewModel {
 
         let activityVC = UIActivityViewController(activityItems: [URL(string: shareLink) ?? shareLink], applicationActivities: nil)
 
-        if let popoverController = activityVC.popoverPresentationController {
-            popoverController.sourceView = presentingVC.view
-            popoverController.sourceRect = CGRect(x: presentingVC.view.bounds.midX, y: presentingVC.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
+        if let popover = activityVC.popoverPresentationController {
+            popover.sourceView = presentingVC.view
+            popover.sourceRect = CGRect(x: presentingVC.view.bounds.midX, y: presentingVC.view.bounds.midY, width: 0, height: 0)
+            popover.permittedArrowDirections = []
         }
 
         presentingVC.present(activityVC, animated: true)

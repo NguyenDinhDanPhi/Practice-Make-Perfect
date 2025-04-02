@@ -5,6 +5,8 @@ protocol ShareLinkViewControllerDelegate: AnyObject {
 }
 
 class ShareLinkViewController: UIViewController {
+ 
+    
 
     struct LayoutMetrics {
         let itemSize: CGSize
@@ -68,7 +70,6 @@ class ShareLinkViewController: UIViewController {
         self.shareLink = shareLink
         self.metrics = LayoutMetrics.default
         super.init(nibName: nil, bundle: nil)
-        self.viewModel = ShareLinkViewModel(shareLink: shareLink, delegate: self, presentingVC: self)
     }
 
     required init?(coder: NSCoder) {
@@ -81,6 +82,8 @@ class ShareLinkViewController: UIViewController {
         setupBottomSheetUI()
         setupCollectionView()
         setupDismissButton()
+        viewModel = ShareLinkViewModel(shareLink: shareLink, delegate: delegate, presentingVC: self)
+
     }
 
     private func setupBackground() {
@@ -163,9 +166,9 @@ extension ShareLinkViewController: UICollectionViewDelegate, UICollectionViewDat
 }
 
 // MARK: - Delegate
-extension ShareLinkViewController: ShareLinkViewControllerDelegate {
-    func didCopyLink() {
-        // You can show toast/snackbar or any feedback here
-        print("Link copied!")
-    }
-}
+//extension ShareLinkViewController: ShareLinkViewControllerDelegate {
+//    func didCopyLink() {
+//        // You can show toast/snackbar or any feedback here
+//        print("Link copied!")
+//    }
+//}

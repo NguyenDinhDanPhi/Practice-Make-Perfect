@@ -7,7 +7,11 @@
 
 import UIKit
 
-class HomeView: UIViewController {
+class HomeView: UIViewController, ShareLinkViewControllerDelegate {
+    func didCopyLink() {
+        print("hehe")
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +33,7 @@ class HomeView: UIViewController {
 
     @objc func openBottomSheet() {
         let bottomSheet = ShareLinkViewController(shareLink: "link muốn share")
+        bottomSheet.delegate = self
         bottomSheet.modalPresentationStyle = .overFullScreen
         present(bottomSheet, animated: true)
     }

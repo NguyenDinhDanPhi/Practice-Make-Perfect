@@ -73,7 +73,7 @@ class ShareLinkCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with item: SocialNetworkSharing) {
+    func configure(with item: SocialNetworkSharingModel) {
         iconImageView.image = item.icon
         titleLabel.text = item.title
     }
