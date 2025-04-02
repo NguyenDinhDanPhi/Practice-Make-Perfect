@@ -28,7 +28,7 @@ class HomeView: UIViewController {
     }
 
     @objc func openBottomSheet() {
-        let bottomSheet = ShareLinkViewController(shareLink: "https://www.facebook.com/profile.php?id=100032022931572")
+        let bottomSheet = ShareLinkViewController(shareLink: "link muốn share")
         bottomSheet.modalPresentationStyle = .overFullScreen
         present(bottomSheet, animated: true)
     }

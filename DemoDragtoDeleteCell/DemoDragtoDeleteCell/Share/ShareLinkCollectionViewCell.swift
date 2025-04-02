@@ -7,12 +7,6 @@
 //
 import UIKit
 
-struct SocialNetworkSharing {
-    let icon: UIImage?
-    let title: String
-    let action: () -> Void
-}
-
 class ShareLinkCollectionViewCell: UICollectionViewCell {
     static let identifier = "ShareLinkCollectionViewCell"
     
