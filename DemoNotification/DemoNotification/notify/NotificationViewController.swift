@@ -8,8 +8,8 @@ import UIKit
 
 class NotificationViewController: UIViewController {
     
-    private lazy var notifiListView: EmptyNotificationView = {
-        let view = EmptyNotificationView()
+    private lazy var notifiListView: NotificationNotLogin = {
+        let view = NotificationNotLogin()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -19,18 +19,24 @@ class NotificationViewController: UIViewController {
         view.backgroundColor = .systemBackground
         title = "Notification"
         setUpView()
+        setUpAction()
     }
     
     func setUpView() {
         view.addSubview(notifiListView)
         
-        // Cài đặt Auto Layout cho notifiListView
         NSLayoutConstraint.activate([
             notifiListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             notifiListView.leftAnchor.constraint(equalTo: view.leftAnchor),
             notifiListView.rightAnchor.constraint(equalTo: view.rightAnchor),
             notifiListView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    func setUpAction() {
+        notifiListView.singupAction = { [weak self] in
+            print("hâhhahahah")
+        }
     }
 }
 

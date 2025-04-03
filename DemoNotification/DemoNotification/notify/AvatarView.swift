@@ -64,8 +64,6 @@ class AvatarView: UIView {
         overlayImageView.layer.cornerRadius = overlayImageView.frame.width / 2
     }
 
-    // MARK: - Public API
-
     func configure(mainImage: UIImage?, overlayImage: UIImage?) {
         mainImageView.image = mainImage
 

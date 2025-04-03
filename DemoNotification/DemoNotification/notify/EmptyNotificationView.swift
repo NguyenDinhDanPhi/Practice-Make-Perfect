@@ -11,7 +11,7 @@ class EmptyNotificationView: UIView {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "emptyInboxImage") // Thay thế bằng tên ảnh của bạn
+        imageView.image = UIImage(named: "emptyInboxImage") 
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -33,12 +33,11 @@ class EmptyNotificationView: UIView {
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .gray
         label.textAlignment = .center
-        label.numberOfLines = 0 // Cho phép hiển thị nhiều dòng
+        label.numberOfLines = 0 
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    // Khởi tạo view
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -50,21 +49,17 @@ class EmptyNotificationView: UIView {
     }
     
     private func setupView() {
-        // Cài đặt background và layout
         backgroundColor = .white
         
-        // Thêm các thành phần con vào view chính
         addSubview(imageView)
         addSubview(titleLabel)
         addSubview(descriptionLabel)
         
-        // Cài đặt Auto Layout
         NSLayoutConstraint.activate([
-            //imageView.topAnchor.constraint(equalTo: topAnchor, constant: 50),
             imageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -20),
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            imageView.widthAnchor.constraint(equalToConstant: 150), // Kích thước hình minh họa
+            imageView.widthAnchor.constraint(equalToConstant: 150),
             imageView.heightAnchor.constraint(equalToConstant: 150),
             
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
