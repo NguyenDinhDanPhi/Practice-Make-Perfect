@@ -168,10 +168,3 @@ extension ShareLinkViewController: UICollectionViewDelegate, UICollectionViewDat
     }
 }
 
-// MARK: - Delegate
-//extension ShareLinkViewController: ShareLinkViewControllerDelegate {
-//    func didCopyLink() {
-//        // You can show toast/snackbar or any feedback here
-//        print("Link copied!")
-//    }
-//}
