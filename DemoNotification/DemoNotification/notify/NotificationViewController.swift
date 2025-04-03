@@ -5,6 +5,7 @@ class NotificationViewController: UIViewController {
     private lazy var titleButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Select Option", for: .normal)
+        button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(onShowTableViewButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false

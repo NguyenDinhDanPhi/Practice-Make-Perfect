@@ -1,9 +1,4 @@
-//
-//  EmptyStateViewController.swift
-//  DemoNotification
-//
-//  Created by dan phi on 3/4/25.
-//
+
 
 //
 //  EmptyStateView.swift
