@@ -27,7 +27,7 @@ class DropdownMenuViewController: UIViewController, UITableViewDataSource, UITab
         view.addSubview(tableView)
         
         // Cài đặt transparent view
-        transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        transparentView.backgroundColor = UIColor.red.withAlphaComponent(0.5)
         transparentView.frame = view.bounds
         transparentView.isHidden = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideTableView))
@@ -37,12 +37,16 @@ class DropdownMenuViewController: UIViewController, UITableViewDataSource, UITab
     
     // Tạo và cài đặt UITableView
     func addTableView(frames: CGRect) {
-        transparentView.isHidden = false
-        transparentView.frame = self.view.frame
+        // Cài đặt transparentView
+        transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
-        // Tính chiều cao cho dropdown menu
+        // Tính toán vị trí của transparentView từ bottom của button tới bottom của thiết bị
+        transparentView.frame = CGRect(x: 0, y: frames.origin.y + frames.height, width: self.view.frame.width, height: self.view.frame.height - (frames.origin.y + frames.height))
+        
+        self.view.addSubview(transparentView)
+        
+        // Tính chiều cao của bảng dropdown
         let tableViewHeight = (dataSource.count > 3) ? 120.0 : CGFloat(dataSource.count) * 40
-        
         tableView.frame = CGRect(x: frames.origin.x, y: frames.origin.y + frames.height, width: frames.width, height: tableViewHeight)
         self.view.addSubview(tableView)
         
@@ -61,6 +65,7 @@ class DropdownMenuViewController: UIViewController, UITableViewDataSource, UITab
         tableView.isHidden = false
         transparentView.isHidden = false
     }
+
     
     // Phương thức để hiển thị dropdown menu
     private func showTableView(frames: CGRect) {
