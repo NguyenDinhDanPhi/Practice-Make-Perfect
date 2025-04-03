@@ -2,15 +2,6 @@ import UIKit
 
 class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     
-    private var tableViewButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Select Option", for: .normal)
-        button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(onShowTableViewButtonPressed), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
     private var tableView: UITableView = {
         let table = UITableView()
         table.isHidden = true
@@ -36,6 +27,7 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     ]
     
     // Biến để lưu ràng buộc chiều cao tableView
+    private var tableViewHeightConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,23 +40,15 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
     
     private func setupViews() {
-        addSubview(tableViewButton)
         addSubview(tableView)
         addSubview(transparentView)
         
-        // Cài đặt Auto Layout cho tableViewButton
-        NSLayoutConstraint.activate([
-            tableViewButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            tableViewButton.topAnchor.constraint(equalTo: topAnchor, constant: 100),
-            tableViewButton.widthAnchor.constraint(equalToConstant: 200),
-            tableViewButton.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        
         // Cài đặt Auto Layout cho tableView
+        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 120) // Đặt chiều cao mặc định
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tableView.heightAnchor.constraint(equalToConstant: 224)
+            tableViewHeightConstraint!
         ])
         
         // Cài đặt Auto Layout cho transparentView
@@ -91,12 +75,17 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     func addTableView(frames: CGRect) {
         transparentView.isHidden = false
         
+        // Cập nhật chiều cao cho dropdown menu
+        let tableViewHeight = (items.count > 3) ? 120.0 : CGFloat(items.count) * 40
+        
+        // Cập nhật chiều cao của tableView
+        tableViewHeightConstraint?.constant = tableViewHeight
+        
         // Đặt lại vị trí và kích thước cho tableView
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: tableViewButton.bottomAnchor, constant: 8),
+            tableView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tableView.heightAnchor.constraint(equalToConstant: 224)
         ])
         
         tableView.isHidden = false
@@ -106,11 +95,6 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     @objc private func hideTableView() {
         tableView.isHidden = true
         transparentView.isHidden = true
-    }
-    
-    // Hiển thị dropdown khi nhấn vào nút
-    @objc func onShowTableViewButtonPressed(_ sender: UITapGestureRecognizer) {
-        addTableView(frames: tableViewButton.frame)
     }
     
     // MARK: - TableView DataSource & Delegate Methods
@@ -131,7 +115,9 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedItem = items[indexPath.row]
-        tableViewButton.setTitle(selectedItem.0, for: .normal)  // Cập nhật nút với mục đã chọn
+        if let homeVC = self.superview?.next as? NotificationViewController {
+            homeVC.dropdown.removeFromSuperview() // Loại bỏ DropdownMenuView
+              }
         hideTableView()
     }
 }
