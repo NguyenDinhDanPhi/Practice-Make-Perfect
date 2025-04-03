@@ -1,6 +1,6 @@
 import UIKit
 
-class DropdownMenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     
     private var tableViewButton: UIButton = {
         let button = UIButton(type: .system)
@@ -35,28 +35,44 @@ class DropdownMenuViewController: UIViewController, UITableViewDataSource, UITab
         ("Tương tác", "flame.fill")
     ]
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        
-        // Thêm các thành phần vào view chính
-        view.addSubview(tableViewButton)
-        view.addSubview(tableView)
-        view.addSubview(transparentView)
+    // Biến để lưu ràng buộc chiều cao tableView
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupViews()
+    }
+    
+    private func setupViews() {
+        addSubview(tableViewButton)
+        addSubview(tableView)
+        addSubview(transparentView)
         
         // Cài đặt Auto Layout cho tableViewButton
         NSLayoutConstraint.activate([
-            tableViewButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tableViewButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            tableViewButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            tableViewButton.topAnchor.constraint(equalTo: topAnchor, constant: 100),
             tableViewButton.widthAnchor.constraint(equalToConstant: 200),
             tableViewButton.heightAnchor.constraint(equalToConstant: 40)
         ])
         
+        // Cài đặt Auto Layout cho tableView
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.heightAnchor.constraint(equalToConstant: 224)
+        ])
+        
+        // Cài đặt Auto Layout cho transparentView
         NSLayoutConstraint.activate([
             transparentView.topAnchor.constraint(equalTo: tableView.bottomAnchor),
-            transparentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            transparentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            transparentView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            transparentView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            transparentView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            transparentView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
         // Thêm gesture cho transparent view để ẩn bảng khi nhấn ngoài
@@ -75,22 +91,18 @@ class DropdownMenuViewController: UIViewController, UITableViewDataSource, UITab
     func addTableView(frames: CGRect) {
         transparentView.isHidden = false
         
+        // Đặt lại vị trí và kích thước cho tableView
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: tableViewButton.bottomAnchor, constant: 8),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.heightAnchor.constraint(equalToConstant: 224)
         ])
         
         tableView.isHidden = false
     }
     
-    private func showTableView(frames: CGRect) {
-        tableView.isHidden = false
-        transparentView.isHidden = false
-    }
-    
-    // Ẩn bảng khi nhấn ngoàiitem
+    // Ẩn bảng khi nhấn ngoài
     @objc private func hideTableView() {
         tableView.isHidden = true
         transparentView.isHidden = true
@@ -100,7 +112,7 @@ class DropdownMenuViewController: UIViewController, UITableViewDataSource, UITab
     @objc func onShowTableViewButtonPressed(_ sender: UITapGestureRecognizer) {
         addTableView(frames: tableViewButton.frame)
     }
-
+    
     // MARK: - TableView DataSource & Delegate Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
