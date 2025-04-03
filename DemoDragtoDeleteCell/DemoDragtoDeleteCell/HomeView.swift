@@ -10,8 +10,7 @@ import UIKit
 class HomeView: UIViewController, ShareLinkViewControllerDelegate {
     func handleDismiss() {
        // dismiss(animated: true, completion: nil)
-        navigationController?.popToRootViewController(animated: true)
-
+        
     }
     
     func didCopyLink() {
@@ -39,8 +38,9 @@ class HomeView: UIViewController, ShareLinkViewControllerDelegate {
 
     @objc func openBottomSheet() {
         let bottomSheet = ShareLinkViewController(shareLink: "link muốn share")
-        bottomSheet.delegate = self
-        navigationController?.pushViewController(bottomSheet, animated: true)
+                bottomSheet.delegate = self
+                bottomSheet.modalPresentationStyle = .overFullScreen
+                present(bottomSheet, animated: true)
 
     }
 }
