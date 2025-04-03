@@ -1,8 +1,10 @@
 import UIKit
 
 class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
-    var removeDropdown: (() -> Void)?
     
+    var removeDropdown: (() -> Void)?
+    var didSelectOption: ((Int) -> Void)?
+    var selectedIndex = 0
     private var tableView: UITableView = {
         let table = UITableView()
         table.isHidden = true
@@ -19,38 +21,34 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
         return view
     }()
     
-    // Data source cho dropdown menu
-    private let items = [
+     let items = [
         ("Tất cả hoạt động", "bell.fill"),
         ("LIVE & VOD", "tv.fill"),
         ("Bình luận & Chat", "text.bubble.fill"),
         ("Tương tác", "flame.fill")
     ]
     
-    // Biến để lưu ràng buộc chiều cao tableView
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+        print("hehe \(selectedIndex)")
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupViews()
     }
     
     private func setupViews() {
         addSubview(tableView)
         addSubview(transparentView)
         
-        // Cài đặt Auto Layout cho tableView
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
             tableView.heightAnchor.constraint(equalToConstant: 224)
         ])
         
-        // Cài đặt Auto Layout cho transparentView
         NSLayoutConstraint.activate([
             transparentView.topAnchor.constraint(equalTo: tableView.bottomAnchor),
             transparentView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -58,23 +56,18 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
             transparentView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
-        // Thêm gesture cho transparent view để ẩn bảng khi nhấn ngoài
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideTableView))
         transparentView.addGestureRecognizer(tapGesture)
         
-        // Cài đặt tableViewDataSource và Delegate
         tableView.delegate = self
         tableView.dataSource = self
         
-        // Register DropdownCell class với tableView
         tableView.register(DropdownCell.self, forCellReuseIdentifier: "DropdownCell")
     }
     
-    // Tạo và cài đặt UITableView
     func addTableView(frames: CGRect) {
         transparentView.isHidden = false
         
-        // Đặt lại vị trí và kích thước cho tableView
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -97,8 +90,9 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DropdownCell", for: indexPath) as! DropdownCell
-        let item = items[indexPath.row]
-        cell.configure(title: item.0, iconName: item.1, selected: false)
+        let (title, iconName) = items[indexPath.row]
+        
+        cell.configure(title: title, iconName: iconName, selected: indexPath.row == selectedIndex)
         return cell
     }
 
@@ -108,6 +102,8 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedItem = items[indexPath.row]
+        selectedIndex = indexPath.row
+        didSelectOption?(indexPath.row)
         removeDropdown?()
         hideTableView()
     }

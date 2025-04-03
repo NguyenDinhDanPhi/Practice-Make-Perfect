@@ -4,7 +4,7 @@ class NotificationViewController: UIViewController {
     
     private lazy var titleButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Select Option", for: .normal)
+        button.setTitle("Tất cả hoạt động", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(onShowTableViewButtonPressed), for: .touchUpInside)
@@ -65,6 +65,13 @@ class NotificationViewController: UIViewController {
         
         emptyStateVC.onRetryAction  = { [weak self] in
             print("Retrying...")
+        }
+        
+        dropdown.didSelectOption = { [weak self] index in
+            guard let self = self else { return }
+            let title = self.dropdown.items[index].0
+            self.titleButton.setTitle("\(title) ⌄", for: .normal)
+         //   self.toggleMenu()
         }
     }
     
