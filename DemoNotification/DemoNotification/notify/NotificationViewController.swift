@@ -8,8 +8,8 @@ import UIKit
 
 class NotificationViewController: UIViewController {
     
-    private lazy var notifiListView: NotificationNotLogin = {
-        let view = NotificationNotLogin()
+    private lazy var notifiListView: UIView = {
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -31,12 +31,20 @@ class NotificationViewController: UIViewController {
             notifiListView.rightAnchor.constraint(equalTo: view.rightAnchor),
             notifiListView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        let data = EmptyStateViewData(numberOfButtons: .oneButton,
+                                      titleText: "Không Thể tải danh sách thông báo",
+                                      subtitleText: "vui lòng thử lại",
+                                      imageDetails: "empy",
+                                      textRetryButton: "tải lại", textBackButton: "", textExistButton: "")
+    
+        let emptyStateVC = EmptyStateViewController.createEmptyStateViewController(data: data)
+            emptyStateVC.addToParentViewController(self, in: notifiListView)
     }
     
     func setUpAction() {
-        notifiListView.singupAction = { [weak self] in
-            print("hâhhahahah")
-        }
+//        notifiListView.singupAction = { [weak self] in
+//            print("hâhhahahah")
+        //}
     }
 }
 
