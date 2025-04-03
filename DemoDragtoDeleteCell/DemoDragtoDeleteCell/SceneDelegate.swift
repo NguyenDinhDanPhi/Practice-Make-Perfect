@@ -14,8 +14,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScreen = (scene as? UIWindowScene) else { return }
+
+        // Tạo UINavigationController để bao bọc HomeView
+        let homeViewController = HomeView()
+        let navigationController = UINavigationController(rootViewController: homeViewController)
+
         let window = UIWindow(windowScene: windowScreen)
-        window.rootViewController = HomeView()
+        window.rootViewController = navigationController // Đặt navigation controller làm root
         window.makeKeyAndVisible()
         self.window = window
     }

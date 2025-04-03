@@ -162,7 +162,8 @@ extension ShareLinkViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         DispatchQueue.main.async {
             self.viewModel.shareItems[indexPath.row].action()
-            self.dismiss(animated: true)
+            self.delegate?.handleDismiss()
+
         }
     }
 }
