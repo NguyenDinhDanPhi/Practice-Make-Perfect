@@ -1,6 +1,7 @@
 import UIKit
 
 class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
+    var removeDropdown: (() -> Void)?
     
     private var tableView: UITableView = {
         let table = UITableView()
@@ -27,7 +28,6 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     ]
     
     // Biến để lưu ràng buộc chiều cao tableView
-    private var tableViewHeightConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,11 +44,10 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
         addSubview(transparentView)
         
         // Cài đặt Auto Layout cho tableView
-        tableViewHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 120) // Đặt chiều cao mặc định
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            tableViewHeightConstraint!
+            tableView.heightAnchor.constraint(equalToConstant: 224)
         ])
         
         // Cài đặt Auto Layout cho transparentView
@@ -75,17 +74,12 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     func addTableView(frames: CGRect) {
         transparentView.isHidden = false
         
-        // Cập nhật chiều cao cho dropdown menu
-        let tableViewHeight = (items.count > 3) ? 120.0 : CGFloat(items.count) * 40
-        
-        // Cập nhật chiều cao của tableView
-        tableViewHeightConstraint?.constant = tableViewHeight
-        
         // Đặt lại vị trí và kích thước cho tableView
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.heightAnchor.constraint(equalToConstant: 224)
         ])
         
         tableView.isHidden = false
@@ -93,8 +87,7 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     
     // Ẩn bảng khi nhấn ngoài
     @objc private func hideTableView() {
-        tableView.isHidden = true
-        transparentView.isHidden = true
+        removeDropdown?()
     }
     
     // MARK: - TableView DataSource & Delegate Methods
@@ -115,9 +108,7 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedItem = items[indexPath.row]
-        if let homeVC = self.superview?.next as? NotificationViewController {
-            homeVC.dropdown.removeFromSuperview() // Loại bỏ DropdownMenuView
-              }
+        removeDropdown?()
         hideTableView()
     }
 }

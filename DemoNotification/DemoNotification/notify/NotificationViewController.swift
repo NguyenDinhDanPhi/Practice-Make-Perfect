@@ -29,6 +29,9 @@ class NotificationViewController: UIViewController {
         view.backgroundColor = .systemBackground
         title = "Notification"
         setUpView()
+        dropdown.removeDropdown = { [weak self] in
+                    self?.dropdown.removeFromSuperview()  // Loại bỏ dropdown
+                }
     }
     
     func setUpView() {
