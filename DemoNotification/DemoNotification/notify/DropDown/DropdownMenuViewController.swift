@@ -83,7 +83,6 @@ class DropdownMenuViewController: UIViewController, UITableViewDataSource, UITab
         ])
         
         tableView.isHidden = false
-        tableViewButton.setTitle(items[0].0, for: .normal) // Đặt nút bằng mục đầu tiên trong mảng items
     }
     
     private func showTableView(frames: CGRect) {
@@ -91,7 +90,7 @@ class DropdownMenuViewController: UIViewController, UITableViewDataSource, UITab
         transparentView.isHidden = false
     }
     
-    // Ẩn bảng khi nhấn ngoài
+    // Ẩn bảng khi nhấn ngoàiitem
     @objc private func hideTableView() {
         tableView.isHidden = true
         transparentView.isHidden = true
