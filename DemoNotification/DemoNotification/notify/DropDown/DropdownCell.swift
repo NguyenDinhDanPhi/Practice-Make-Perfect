@@ -20,7 +20,7 @@ class DropdownCell: UITableViewCell {
     private let titleLabel = UILabel()
     private let checkmarkImageView = UIImageView()
 
-    private let spacerView = UIView() // giữ chỗ cho checkmark
+    private let spacerView = UIView() 
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -76,6 +76,6 @@ class DropdownCell: UITableViewCell {
         titleLabel.text = title
         iconImageView.image = UIImage(systemName: iconName)
         checkmarkImageView.isHidden = !selected
-        spacerView.isHidden = selected // nếu có tick thì spacer ẩn, nếu không thì hiện để giữ chỗ
+        spacerView.isHidden = selected
     }
 }

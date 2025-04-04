@@ -15,7 +15,7 @@ class NotificationViewController: UIViewController {
     lazy var dropdown: DropdownMenuView = {
         let view = DropdownMenuView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.isHidden = true  // Đặt mặc định là ẩn
+        view.isHidden = true
         return view
     }()
     
@@ -31,7 +31,7 @@ class NotificationViewController: UIViewController {
         title = "Notification"
         setUpView()
         dropdown.removeDropdown = { [weak self] in
-            self?.dropdown.removeFromSuperview()  // Loại bỏ dropdown
+            self?.dropdown.removeFromSuperview()
         }
     }
     
@@ -52,7 +52,6 @@ class NotificationViewController: UIViewController {
             notifiListView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-//        // Dữ liệu cho EmptyStateView
 //        let data = EmptyStateViewData(numberOfButtons: .oneButton,
 //                                      titleText: "Không Thể tải danh sách thông báo",
 //                                      subtitleText: "vui lòng thử lại",
@@ -75,22 +74,16 @@ class NotificationViewController: UIViewController {
     
     @objc func onShowTableViewButtonPressed() {
         if dropdown.superview == nil {
-            // Nếu DropdownMenuView chưa được thêm vào view, ta thêm vào
             view.addSubview(dropdown)
-            
-            // Cài đặt Auto Layout cho DropdownMenuView khi thêm vào view
             NSLayoutConstraint.activate([
                 dropdown.topAnchor.constraint(equalTo: titleButton.bottomAnchor, constant: 8),
                 dropdown.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                 dropdown.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                 dropdown.bottomAnchor.constraint(equalTo: view.bottomAnchor )
             ])
-            
-            // Hiển thị dropdown
             dropdown.isHidden = false
             dropdown.addTableView(frames: titleButton.frame)
         } else {
-            // Nếu DropdownMenuView đã có trong view, ta sẽ loại bỏ nó
             dropdown.isHidden = true
             dropdown.removeFromSuperview()
         }    }

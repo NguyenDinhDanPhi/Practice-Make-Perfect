@@ -90,7 +90,6 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
            }, completion: nil)
     }
     
-    // Ẩn bảng khi nhấn ngoài
     @objc private func hideTableView() {
         removeDropdown?()
     }
@@ -116,6 +115,7 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
         let selectedItem = items[indexPath.row]
         selectedIndex = indexPath.row
         didSelectOption?(indexPath.row)
+        tableView.reloadData()
         removeDropdown?()
         hideTableView()
     }
