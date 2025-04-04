@@ -7,13 +7,13 @@
 
 import UIKit
 
-class NotificationNotLogin: UIView {
+class NotificationNotLoginView: UIView {
     
     var singupAction: (() -> Void)?
     
     private let logoImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "empy") // Thay thế tên hình ảnh logo của bạn
+        imageView.image = UIImage(named: "empy") 
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -45,7 +45,7 @@ class NotificationNotLogin: UIView {
         button.setTitle("Đăng nhập hoặc Đăng ký", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = UIColor(hex: "#FFC414") // Màu vàng cho nút
+        button.backgroundColor = UIColor(hex: "#FFC414")
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(actionButtonTap), for: .touchUpInside)
@@ -66,15 +66,13 @@ class NotificationNotLogin: UIView {
     private func setupView() {
         backgroundColor = .white
         
-        // Thêm các thành phần con vào view chính
         addSubview(logoImageView)
         addSubview(titleLabel)
         addSubview(descriptionLabel)
         addSubview(signUpButton)
         
-        // Cài đặt Auto Layout
         NSLayoutConstraint.activate([
-            logoImageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -20),
+            logoImageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -50),
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             logoImageView.widthAnchor.constraint(equalToConstant: 150), // Điều chỉnh kích thước logo
             logoImageView.heightAnchor.constraint(equalToConstant: 150),

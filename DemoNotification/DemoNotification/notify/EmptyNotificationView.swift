@@ -56,7 +56,7 @@ class EmptyNotificationView: UIView {
         addSubview(descriptionLabel)
         
         NSLayoutConstraint.activate([
-            imageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -20),
+            imageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -90),
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             
             imageView.widthAnchor.constraint(equalToConstant: 150),
