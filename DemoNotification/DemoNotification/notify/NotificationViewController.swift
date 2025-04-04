@@ -70,7 +70,6 @@ class NotificationViewController: UIViewController {
             guard let self = self else { return }
             let title = self.dropdown.items[index].0
             self.titleButton.setTitle("\(title) ⌄", for: .normal)
-            //   self.toggleMenu()
         }
     }
     

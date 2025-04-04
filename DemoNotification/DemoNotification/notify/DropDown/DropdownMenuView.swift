@@ -68,6 +68,10 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     func addTableView(frames: CGRect) {
         transparentView.isHidden = false
         
+        tableView.transform = CGAffineTransform(translationX: 0, y: -20)
+        tableView.alpha = 0
+        tableView.isHidden = false
+        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -75,7 +79,15 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
             tableView.heightAnchor.constraint(equalToConstant: 224)
         ])
         
-        tableView.isHidden = false
+        UIView.animate(withDuration: 0.8,
+                          delay: 0,
+                          usingSpringWithDamping: 0.8,
+                          initialSpringVelocity: 0.5,
+                          options: [.curveEaseOut],
+                          animations: {
+               self.tableView.transform = .identity
+               self.tableView.alpha = 1
+           }, completion: nil)
     }
     
     // Ẩn bảng khi nhấn ngoài
