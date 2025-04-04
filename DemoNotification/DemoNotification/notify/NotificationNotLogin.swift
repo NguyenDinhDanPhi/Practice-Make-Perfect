@@ -103,7 +103,6 @@ class NotificationNotLogin: UIView {
 }
 
 extension UIColor {
-    // Tiện ích để chuyển đổi mã hex thành UIColor
     convenience init(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         if hexSanitized.hasPrefix("#") {

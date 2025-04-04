@@ -32,7 +32,6 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        print("hehe \(selectedIndex)")
     }
     
     required init?(coder: NSCoder) {
@@ -112,7 +111,6 @@ class DropdownMenuView: UIView, UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedItem = items[indexPath.row]
         selectedIndex = indexPath.row
         didSelectOption?(indexPath.row)
         tableView.reloadData()
