@@ -41,7 +41,7 @@ class NotificationNotLoginView: UIView {
     }()
     
     private let signUpButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("Đăng nhập hoặc Đăng ký", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.setTitleColor(.black, for: .normal)
