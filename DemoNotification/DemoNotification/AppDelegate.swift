@@ -11,13 +11,20 @@ import FirebaseMessaging
 import UserNotificationsUI
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate {
 
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { suscess, _ in
+            guard suscess else { return }
+            print("haha suscess \(suscess)")
+        }
+        application.registerForRemoteNotifications()
         return true
     }
 
@@ -35,6 +42,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        messaging.token { token, _ in
+            guard let token = token else {
+                return
+            }
+            print("haha token \(token)")
+        }
+    }
 
 }
 
