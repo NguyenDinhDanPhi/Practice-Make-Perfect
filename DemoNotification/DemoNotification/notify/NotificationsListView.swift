@@ -27,7 +27,7 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
     var todayNotis: [NotificationItemModel] = []
     var earlierNotis: [NotificationItemModel] = []
     
-    var loading: Bool = false {
+    private var loading: Bool = false {
         didSet {
             tableView.reloadData()
         }
@@ -112,6 +112,10 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .short
         return formatter.localizedString(for: date, relativeTo: Date())
+    }
+    
+    func configure(isLoading: Bool) {
+        loading = isLoading
     }
 }
 

@@ -86,6 +86,12 @@ class NotificationViewController: UIViewController {
         }
     }
     
+    var isLoading: Bool = false {
+        didSet {
+            notifiListView.configure(isLoading: isLoading)
+        }
+    }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -96,10 +102,15 @@ class NotificationViewController: UIViewController {
         dropdown.removeDropdown = { [weak self] in
             self?.dropdown.removeFromSuperview()
         }
-        notifiListView.loading = true
-        notificationViewType = .notLogin
+        isLoading = true
+        notificationViewType = .haveNotification
         fetchNotifications()
         setUpActionSubVIew()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        notifiListView.tableView.reloadData()
     }
 
     // MARK: - Setup
@@ -225,8 +236,8 @@ class NotificationViewController: UIViewController {
 
     func fetchNotifications() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-            self.notifiListView.loading = false
-            self.notificationViewType = .haveNotification
+            self.isLoading = false
+            self.notificationViewType = .emptyNotification
             
             // Hoặc khi có dữ liệu
             // self.notifiListView.update(with: data)

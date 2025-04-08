@@ -28,7 +28,7 @@ class DropdownCell: UITableViewCell {
     private let checkmarkImageView: UIImageView = {
         let img = UIImageView()
         img.image = UIImage(systemName: "checkmark")
-        img.tintColor = .black
+        img.tintColor = UIColor(hex: "#B68A00") 
         img.contentMode = .scaleAspectFit
         img.translatesAutoresizingMaskIntoConstraints = false
         
