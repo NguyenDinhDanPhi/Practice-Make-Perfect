@@ -93,7 +93,7 @@ class NotificationViewController: UIViewController {
             self?.dropdown.removeFromSuperview()
         }
         notifiListView.loading = true
-        notificationViewType = .haveNotification
+        notificationViewType = .notLogin
         fetchNotifications()
         setUpActionSubVIew()
     }
@@ -136,6 +136,8 @@ class NotificationViewController: UIViewController {
             ])
             
         case .errorNotification:
+            titleStackView.isHidden = true
+            tickButton.isHidden = true
             view.addSubview(emptyStateContainerView)
             NSLayoutConstraint.activate([
                 emptyStateContainerView.topAnchor.constraint(equalTo: titleButton.bottomAnchor, constant: 8),
@@ -162,7 +164,8 @@ class NotificationViewController: UIViewController {
             }
             
         case .notLogin:
-            titleButton.isHidden = true
+            titleStackView.isHidden = true
+            tickButton.isHidden = true
             view.addSubview(notificationNotLoginView)
             NSLayoutConstraint.activate([
                 notificationNotLoginView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -210,14 +213,12 @@ class NotificationViewController: UIViewController {
         }
     }
     
-    // MARK: - Simulate API (tuỳ bạn đổi thành thật)
+    // MARK: - Simulate API
 
     func fetchNotifications() {
-        // Ví dụ gọi API xong cập nhật trạng thái
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-            // Giả lập nhận được dữ liệu rỗng
             self.notifiListView.loading = false
-            self.notificationViewType = .haveNotification
+            self.notificationViewType = .errorNotification
             
             // Hoặc khi có dữ liệu
             // self.notifiListView.update(with: data)
@@ -229,16 +230,14 @@ class NotificationViewController: UIViewController {
     }
     
     @objc private func tickButtonTapped() {
-        // Thay đổi trạng thái của các notification item khi nhấn nút
         for i in 0..<notifiListView.todayNotis.count {
-            notifiListView.todayNotis[i].isSelected = true  // Đảo ngược trạng thái isSelected
+            notifiListView.todayNotis[i].isSelected = true
         }
         
         for i in 0..<notifiListView.earlierNotis.count {
-            notifiListView.earlierNotis[i].isSelected = true  // Đảo ngược trạng thái isSelected
+            notifiListView.earlierNotis[i].isSelected = true
         }
         
-        // Reload lại bảng để thay đổi màu nền của các cell
         notifiListView.tableView.reloadData()
     }
 
