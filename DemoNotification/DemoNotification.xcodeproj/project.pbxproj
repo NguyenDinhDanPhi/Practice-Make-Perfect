@@ -6,54 +6,75 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D091C9952DA40C4E000C39EF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D091C9942DA40C4E000C39EF /* FirebaseAnalytics */; };
+		D091C9972DA40C4E000C39EF /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = D091C9962DA40C4E000C39EF /* FirebaseAnalyticsOnDeviceConversion */; };
+		D091C9992DA40C4E000C39EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = D091C9982DA40C4E000C39EF /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		D091C99B2DA40C4E000C39EF /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = D091C99A2DA40C4E000C39EF /* FirebaseAppCheck */; };
+		D091C99D2DA40C4E000C39EF /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = D091C99C2DA40C4E000C39EF /* FirebaseAppDistribution-Beta */; };
+		D091C99F2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = D091C99E2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta */; };
+		D091C9A12DA40C4E000C39EF /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = D091C9A02DA40C4E000C39EF /* FirebaseMessaging */; };
+		D0C550AD2DA4B05F0062A03B /* ESPullToRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = D0C550AC2DA4B05F0062A03B /* ESPullToRefresh */; };
+		D0C550B02DA4B2360062A03B /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = D0C550AF2DA4B2360062A03B /* SkeletonView */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
-		D0B33CF92D9932AE0016E070 /* DemoDragtoDeleteCell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoDragtoDeleteCell.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0984AE22D9E439100E9B906 /* DemoNotification.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoNotification.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D0B33D0B2D9932AF0016E070 /* Exceptions for "DemoDragtoDeleteCell" folder in "DemoDragtoDeleteCell" target */ = {
+		D0984AF42D9E439300E9B906 /* Exceptions for "DemoNotification" folder in "DemoNotification" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = D0B33CF82D9932AE0016E070 /* DemoDragtoDeleteCell */;
+			target = D0984AE12D9E439100E9B906 /* DemoNotification */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D0B33CFB2D9932AE0016E070 /* DemoDragtoDeleteCell */ = {
+		D0984AE42D9E439100E9B906 /* DemoNotification */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D0B33D0B2D9932AF0016E070 /* Exceptions for "DemoDragtoDeleteCell" folder in "DemoDragtoDeleteCell" target */,
+				D0984AF42D9E439300E9B906 /* Exceptions for "DemoNotification" folder in "DemoNotification" target */,
 			);
-			path = DemoDragtoDeleteCell;
+			path = DemoNotification;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D0B33CF62D9932AE0016E070 /* Frameworks */ = {
+		D0984ADF2D9E439100E9B906 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D091C99B2DA40C4E000C39EF /* FirebaseAppCheck in Frameworks */,
+				D091C9952DA40C4E000C39EF /* FirebaseAnalytics in Frameworks */,
+				D091C9A12DA40C4E000C39EF /* FirebaseMessaging in Frameworks */,
+				D091C99D2DA40C4E000C39EF /* FirebaseAppDistribution-Beta in Frameworks */,
+				D091C9992DA40C4E000C39EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				D091C9972DA40C4E000C39EF /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				D0C550AD2DA4B05F0062A03B /* ESPullToRefresh in Frameworks */,
+				D0C550B02DA4B2360062A03B /* SkeletonView in Frameworks */,
+				D091C99F2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D0B33CF02D9932AE0016E070 = {
+		D0984AD92D9E439100E9B906 = {
 			isa = PBXGroup;
 			children = (
-				D0B33CFB2D9932AE0016E070 /* DemoDragtoDeleteCell */,
-				D0B33CFA2D9932AE0016E070 /* Products */,
+				D0984AE42D9E439100E9B906 /* DemoNotification */,
+				D0984AE32D9E439100E9B906 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		D0B33CFA2D9932AE0016E070 /* Products */ = {
+		D0984AE32D9E439100E9B906 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D0B33CF92D9932AE0016E070 /* DemoDragtoDeleteCell.app */,
+				D0984AE22D9E439100E9B906 /* DemoNotification.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,67 +82,78 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D0B33CF82D9932AE0016E070 /* DemoDragtoDeleteCell */ = {
+		D0984AE12D9E439100E9B906 /* DemoNotification */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D0B33D0C2D9932AF0016E070 /* Build configuration list for PBXNativeTarget "DemoDragtoDeleteCell" */;
+			buildConfigurationList = D0984AF52D9E439300E9B906 /* Build configuration list for PBXNativeTarget "DemoNotification" */;
 			buildPhases = (
-				D0B33CF52D9932AE0016E070 /* Sources */,
-				D0B33CF62D9932AE0016E070 /* Frameworks */,
-				D0B33CF72D9932AE0016E070 /* Resources */,
+				D0984ADE2D9E439100E9B906 /* Sources */,
+				D0984ADF2D9E439100E9B906 /* Frameworks */,
+				D0984AE02D9E439100E9B906 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D0B33CFB2D9932AE0016E070 /* DemoDragtoDeleteCell */,
+				D0984AE42D9E439100E9B906 /* DemoNotification */,
 			);
-			name = DemoDragtoDeleteCell;
+			name = DemoNotification;
 			packageProductDependencies = (
+				D091C9942DA40C4E000C39EF /* FirebaseAnalytics */,
+				D091C9962DA40C4E000C39EF /* FirebaseAnalyticsOnDeviceConversion */,
+				D091C9982DA40C4E000C39EF /* FirebaseAnalyticsWithoutAdIdSupport */,
+				D091C99A2DA40C4E000C39EF /* FirebaseAppCheck */,
+				D091C99C2DA40C4E000C39EF /* FirebaseAppDistribution-Beta */,
+				D091C99E2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta */,
+				D091C9A02DA40C4E000C39EF /* FirebaseMessaging */,
+				D0C550AC2DA4B05F0062A03B /* ESPullToRefresh */,
+				D0C550AF2DA4B2360062A03B /* SkeletonView */,
 			);
-			productName = DemoDragtoDeleteCell;
-			productReference = D0B33CF92D9932AE0016E070 /* DemoDragtoDeleteCell.app */;
+			productName = DemoNotification;
+			productReference = D0984AE22D9E439100E9B906 /* DemoNotification.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D0B33CF12D9932AE0016E070 /* Project object */ = {
+		D0984ADA2D9E439100E9B906 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
-					D0B33CF82D9932AE0016E070 = {
+					D0984AE12D9E439100E9B906 = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
 			};
-			buildConfigurationList = D0B33CF42D9932AE0016E070 /* Build configuration list for PBXProject "DemoDragtoDeleteCell" */;
+			buildConfigurationList = D0984ADD2D9E439100E9B906 /* Build configuration list for PBXProject "DemoNotification" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = D0B33CF02D9932AE0016E070;
+			mainGroup = D0984AD92D9E439100E9B906;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				D01C86C22D9BDFAB00236317 /* XCRemoteSwiftPackageReference "DropDown" */,
+				D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D0C550AB2DA4B05F0062A03B /* XCRemoteSwiftPackageReference "pull-to-refresh" */,
+				D0C550AE2DA4B2360062A03B /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = D0B33CFA2D9932AE0016E070 /* Products */;
+			productRefGroup = D0984AE32D9E439100E9B906 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D0B33CF82D9932AE0016E070 /* DemoDragtoDeleteCell */,
+				D0984AE12D9E439100E9B906 /* DemoNotification */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D0B33CF72D9932AE0016E070 /* Resources */ = {
+		D0984AE02D9E439100E9B906 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -131,7 +163,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D0B33CF52D9932AE0016E070 /* Sources */ = {
+		D0984ADE2D9E439100E9B906 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -141,16 +173,17 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		D0B33D0D2D9932AF0016E070 /* Debug */ = {
+		D0984AF62D9E439300E9B906 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DemoNotification/DemoNotification.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FZCMHM49LE;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DemoDragtoDeleteCell/Info.plist;
+				INFOPLIST_FILE = DemoNotification/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -160,7 +193,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rphi..DemoDragtoDeleteCell;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rphi.DemoNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -168,16 +201,17 @@
 			};
 			name = Debug;
 		};
-		D0B33D0E2D9932AF0016E070 /* Release */ = {
+		D0984AF72D9E439300E9B906 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DemoNotification/DemoNotification.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FZCMHM49LE;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DemoDragtoDeleteCell/Info.plist;
+				INFOPLIST_FILE = DemoNotification/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -187,7 +221,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rphi..DemoDragtoDeleteCell;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rphi.DemoNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -195,7 +229,7 @@
 			};
 			name = Release;
 		};
-		D0B33D0F2D9932AF0016E070 /* Debug */ = {
+		D0984AF82D9E439300E9B906 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -258,7 +292,7 @@
 			};
 			name = Debug;
 		};
-		D0B33D102D9932AF0016E070 /* Release */ = {
+		D0984AF92D9E439300E9B906 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -317,20 +351,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D0B33CF42D9932AE0016E070 /* Build configuration list for PBXProject "DemoDragtoDeleteCell" */ = {
+		D0984ADD2D9E439100E9B906 /* Build configuration list for PBXProject "DemoNotification" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D0B33D0F2D9932AF0016E070 /* Debug */,
-				D0B33D102D9932AF0016E070 /* Release */,
+				D0984AF82D9E439300E9B906 /* Debug */,
+				D0984AF92D9E439300E9B906 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D0B33D0C2D9932AF0016E070 /* Build configuration list for PBXNativeTarget "DemoDragtoDeleteCell" */ = {
+		D0984AF52D9E439300E9B906 /* Build configuration list for PBXNativeTarget "DemoNotification" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D0B33D0D2D9932AF0016E070 /* Debug */,
-				D0B33D0E2D9932AF0016E070 /* Release */,
+				D0984AF62D9E439300E9B906 /* Debug */,
+				D0984AF72D9E439300E9B906 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -338,15 +372,79 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D01C86C22D9BDFAB00236317 /* XCRemoteSwiftPackageReference "DropDown" */ = {
+		D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AssistoLab/DropDown.git";
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.5;
+				minimumVersion = 11.11.0;
+			};
+		};
+		D0C550AB2DA4B05F0062A03B /* XCRemoteSwiftPackageReference "pull-to-refresh" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/eggswift/pull-to-refresh.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.3;
+			};
+		};
+		D0C550AE2DA4B2360062A03B /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.31.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D091C9942DA40C4E000C39EF /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		D091C9962DA40C4E000C39EF /* FirebaseAnalyticsOnDeviceConversion */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsOnDeviceConversion;
+		};
+		D091C9982DA40C4E000C39EF /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		D091C99A2DA40C4E000C39EF /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
+		};
+		D091C99C2DA40C4E000C39EF /* FirebaseAppDistribution-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAppDistribution-Beta";
+		};
+		D091C99E2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseInAppMessaging-Beta";
+		};
+		D091C9A02DA40C4E000C39EF /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		D0C550AC2DA4B05F0062A03B /* ESPullToRefresh */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0C550AB2DA4B05F0062A03B /* XCRemoteSwiftPackageReference "pull-to-refresh" */;
+			productName = ESPullToRefresh;
+		};
+		D0C550AF2DA4B2360062A03B /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0C550AE2DA4B2360062A03B /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = D0B33CF12D9932AE0016E070 /* Project object */;
+	rootObject = D0984ADA2D9E439100E9B906 /* Project object */;
 }

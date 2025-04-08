@@ -14,7 +14,7 @@ struct NotificationItem {
     let thumbnailImage: UIImage?
 }
 
-class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NotificationsListView: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     private let tableView = UITableView()
     
@@ -95,7 +95,7 @@ class NotifiViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
 //MARK: TableView delegate
 
-extension NotifiViewController {
+extension NotificationsListView {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2

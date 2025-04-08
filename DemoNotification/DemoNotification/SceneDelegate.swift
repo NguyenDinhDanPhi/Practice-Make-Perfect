@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  DemoDragtoDeleteCell
+//  DemoNotification
 //
-//  Created by dan phi on 30/3/25.
+//  Created by dan phi on 3/4/25.
 //
 
 import UIKit
@@ -14,13 +14,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScreen = (scene as? UIWindowScene) else { return }
-
-        // Tạo UINavigationController để bao bọc HomeView
-        let homeViewController = HomeView()
-        let navigationController = UINavigationController(rootViewController: homeViewController)
-
         let window = UIWindow(windowScene: windowScreen)
-        window.rootViewController = navigationController // Đặt navigation controller làm root
+        window.rootViewController = MainViewController()
         window.makeKeyAndVisible()
         self.window = window
     }
