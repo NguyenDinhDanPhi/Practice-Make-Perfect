@@ -1,5 +1,5 @@
 import UIKit
-
+import ESPullToRefresh
 struct NotificationItem {
     let title: String
     let time: Date
@@ -40,6 +40,21 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
             tableView.rightAnchor.constraint(equalTo: rightAnchor)
         ])
+        
+        //pull to refresh
+        tableView.es.addPullToRefresh {
+            [weak self] in
+            self?.refreshData()
+        }
+    }
+    
+    private func refreshData() {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.loadData()
+            self.tableView.es.stopPullToRefresh()
+        }
+        print("haha")
     }
 
     private func loadData() {

@@ -183,7 +183,7 @@ class NotificationViewController: UIViewController {
         // Ví dụ gọi API xong cập nhật trạng thái
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             // Giả lập nhận được dữ liệu rỗng
-            self.notificationViewType = .emptyNotification
+            self.notificationViewType = .haveNotification
             
             // Hoặc khi có dữ liệu
             // self.notifiListView.update(with: data)

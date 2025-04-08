@@ -14,6 +14,7 @@
 		D091C99D2DA40C4E000C39EF /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = D091C99C2DA40C4E000C39EF /* FirebaseAppDistribution-Beta */; };
 		D091C99F2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = D091C99E2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta */; };
 		D091C9A12DA40C4E000C39EF /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = D091C9A02DA40C4E000C39EF /* FirebaseMessaging */; };
+		D0C550AD2DA4B05F0062A03B /* ESPullToRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = D0C550AC2DA4B05F0062A03B /* ESPullToRefresh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 				D091C99D2DA40C4E000C39EF /* FirebaseAppDistribution-Beta in Frameworks */,
 				D091C9992DA40C4E000C39EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				D091C9972DA40C4E000C39EF /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				D0C550AD2DA4B05F0062A03B /* ESPullToRefresh in Frameworks */,
 				D091C99F2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,6 +104,7 @@
 				D091C99C2DA40C4E000C39EF /* FirebaseAppDistribution-Beta */,
 				D091C99E2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta */,
 				D091C9A02DA40C4E000C39EF /* FirebaseMessaging */,
+				D0C550AC2DA4B05F0062A03B /* ESPullToRefresh */,
 			);
 			productName = DemoNotification;
 			productReference = D0984AE22D9E439100E9B906 /* DemoNotification.app */;
@@ -133,6 +136,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D0C550AB2DA4B05F0062A03B /* XCRemoteSwiftPackageReference "pull-to-refresh" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D0984AE32D9E439100E9B906 /* Products */;
@@ -372,6 +376,14 @@
 				minimumVersion = 11.11.0;
 			};
 		};
+		D0C550AB2DA4B05F0062A03B /* XCRemoteSwiftPackageReference "pull-to-refresh" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/eggswift/pull-to-refresh.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -409,6 +421,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		D0C550AC2DA4B05F0062A03B /* ESPullToRefresh */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0C550AB2DA4B05F0062A03B /* XCRemoteSwiftPackageReference "pull-to-refresh" */;
+			productName = ESPullToRefresh;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
