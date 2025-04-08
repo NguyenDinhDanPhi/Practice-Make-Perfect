@@ -63,9 +63,9 @@ class NotificationViewController: UIViewController {
         dropdown.removeDropdown = { [weak self] in
             self?.dropdown.removeFromSuperview()
         }
-        
+        notifiListView.loading = true
+        notificationViewType = .haveNotification
         // Gán trạng thái ban đầu, sau này có thể đổi từ API
-        notificationViewType = .emptyNotification
         fetchNotifications()
         setUpActionSubVIew()
     }
@@ -181,8 +181,9 @@ class NotificationViewController: UIViewController {
 
     func fetchNotifications() {
         // Ví dụ gọi API xong cập nhật trạng thái
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             // Giả lập nhận được dữ liệu rỗng
+            self.notifiListView.loading = false
             self.notificationViewType = .haveNotification
             
             // Hoặc khi có dữ liệu

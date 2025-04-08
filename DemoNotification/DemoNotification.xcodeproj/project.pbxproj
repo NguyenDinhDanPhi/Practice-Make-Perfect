@@ -15,6 +15,7 @@
 		D091C99F2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = D091C99E2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta */; };
 		D091C9A12DA40C4E000C39EF /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = D091C9A02DA40C4E000C39EF /* FirebaseMessaging */; };
 		D0C550AD2DA4B05F0062A03B /* ESPullToRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = D0C550AC2DA4B05F0062A03B /* ESPullToRefresh */; };
+		D0C550B02DA4B2360062A03B /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = D0C550AF2DA4B2360062A03B /* SkeletonView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 				D091C9992DA40C4E000C39EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				D091C9972DA40C4E000C39EF /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				D0C550AD2DA4B05F0062A03B /* ESPullToRefresh in Frameworks */,
+				D0C550B02DA4B2360062A03B /* SkeletonView in Frameworks */,
 				D091C99F2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,6 +107,7 @@
 				D091C99E2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta */,
 				D091C9A02DA40C4E000C39EF /* FirebaseMessaging */,
 				D0C550AC2DA4B05F0062A03B /* ESPullToRefresh */,
+				D0C550AF2DA4B2360062A03B /* SkeletonView */,
 			);
 			productName = DemoNotification;
 			productReference = D0984AE22D9E439100E9B906 /* DemoNotification.app */;
@@ -137,6 +140,7 @@
 			packageReferences = (
 				D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D0C550AB2DA4B05F0062A03B /* XCRemoteSwiftPackageReference "pull-to-refresh" */,
+				D0C550AE2DA4B2360062A03B /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D0984AE32D9E439100E9B906 /* Products */;
@@ -384,6 +388,14 @@
 				minimumVersion = 2.9.3;
 			};
 		};
+		D0C550AE2DA4B2360062A03B /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.31.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -426,6 +438,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D0C550AB2DA4B05F0062A03B /* XCRemoteSwiftPackageReference "pull-to-refresh" */;
 			productName = ESPullToRefresh;
+		};
+		D0C550AF2DA4B2360062A03B /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0C550AE2DA4B2360062A03B /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

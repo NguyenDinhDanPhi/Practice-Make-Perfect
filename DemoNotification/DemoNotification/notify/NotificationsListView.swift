@@ -14,6 +14,12 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
 
     private var todayNotis: [NotificationItem] = []
     private var earlierNotis: [NotificationItem] = []
+    
+    var loading: Bool = false {
+        didSet {
+            tableView.reloadData()
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,6 +35,8 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(NotifiCell.self, forCellReuseIdentifier: NotifiCell.identifier)
+        tableView.register(NotifiSkeletonCell.self, forCellReuseIdentifier: NotifiSkeletonCell.identifier)
+
         tableView.separatorStyle = .none
         tableView.rowHeight = 104
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -109,37 +117,46 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
 extension NotificationsListView {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return loading ? 1 : 2
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if loading { return 5 }
         return section == 0 ? todayNotis.count : earlierNotis.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NotifiCell.identifier, for: indexPath) as? NotifiCell else {
-            return UITableViewCell()
-        }
+        if loading {
+               let cell = tableView.dequeueReusableCell(withIdentifier: NotifiSkeletonCell.identifier, for: indexPath) as! NotifiSkeletonCell
+            cell.startSkeleton()
+               return cell
+           }
 
-        let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
+           guard let cell = tableView.dequeueReusableCell(withIdentifier: NotifiCell.identifier, for: indexPath) as? NotifiCell else {
+               return UITableViewCell()
+           }
 
-        cell.configure(
-            profileImage: item.profileImage,
-            overlayImage: item.overlayImage,
-            title: item.title,
-            time: timeAgoString(from: item.time),
-            thumbnail: item.thumbnailImage
-        )
-
-        return cell
+           let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
+           cell.configure(
+               profileImage: item.profileImage,
+               overlayImage: item.overlayImage,
+               title: item.title,
+               time: timeAgoString(from: item.time),
+               thumbnail: item.thumbnailImage
+           )
+           return cell
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if loading {
+            return nil
+        }
         let notiList = section == 0 ? todayNotis : earlierNotis
         return notiList.isEmpty ? nil : (section == 0 ? "Hôm nay" : "Trước đó")
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if loading { return 0 }
         let notiList = section == 0 ? todayNotis : earlierNotis
         return notiList.isEmpty ? 0 : 32
     }
