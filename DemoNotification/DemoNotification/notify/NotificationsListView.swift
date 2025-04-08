@@ -147,7 +147,8 @@ extension NotificationsListView {
                overlayImage: item.overlayImage,
                title: item.title,
                time: timeAgoString(from: item.time),
-               thumbnail: item.thumbnailImage
+               thumbnail: item.thumbnailImage,
+               hiddenRed: item.isSelected
            )
            return cell
     }

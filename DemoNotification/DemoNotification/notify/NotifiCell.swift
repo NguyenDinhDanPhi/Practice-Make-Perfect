@@ -102,10 +102,11 @@ class NotifiCell: UITableViewCell {
     
     // MARK: - Configuration
     
-    func configure(profileImage: UIImage?, overlayImage: UIImage?, title: String, time: String, thumbnail: UIImage?) {
+    func configure(profileImage: UIImage?, overlayImage: UIImage?, title: String, time: String, thumbnail: UIImage?, hiddenRed: Bool = false) {
         avatarView.configure(mainImage: profileImage, overlayImage: overlayImage)
         titleLabel.text = title
         timeLabel.text = time
         thumbnailImageView.image = thumbnail
+        redDotView.isHidden = hiddenRed
     }
 }
