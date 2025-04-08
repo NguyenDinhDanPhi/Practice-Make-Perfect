@@ -72,11 +72,11 @@ class DropdownCell: UITableViewCell {
     
     private func setupViews() {
         NSLayoutConstraint.activate([
-            iconImageView.widthAnchor.constraint(equalToConstant: 20),
-            iconImageView.heightAnchor.constraint(equalToConstant: 20),
+            iconImageView.widthAnchor.constraint(equalToConstant: 24),
+            iconImageView.heightAnchor.constraint(equalToConstant: 24),
             
-            checkmarkImageView.widthAnchor.constraint(equalToConstant: 18),
-            checkmarkImageView.heightAnchor.constraint(equalToConstant: 18),
+            checkmarkImageView.widthAnchor.constraint(equalToConstant: 24),
+            checkmarkImageView.heightAnchor.constraint(equalToConstant: 24),
             
             spacerView.widthAnchor.constraint(equalToConstant: 18)
         ])

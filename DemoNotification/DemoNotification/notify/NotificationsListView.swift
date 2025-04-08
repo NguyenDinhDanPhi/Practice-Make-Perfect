@@ -1,6 +1,6 @@
 import UIKit
 import ESPullToRefresh
-struct NotificationItem {
+struct NotificationItemModel {
     let title: String
     let time: Date
     let profileImage: UIImage?
@@ -24,8 +24,8 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
         return table
     }()
 
-    var todayNotis: [NotificationItem] = []
-    var earlierNotis: [NotificationItem] = []
+    var todayNotis: [NotificationItemModel] = []
+    var earlierNotis: [NotificationItemModel] = []
     
     var loading: Bool = false {
         didSet {
@@ -73,7 +73,7 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
         let now = Date()
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: now)!
 
-        let noti1 = NotificationItem(
+        let noti1 = NotificationItemModel(
             title: "Saian, Tram Nguyen và 3 người khác thích bình luận của bạn",
             time: now,
             profileImage: UIImage(named: "avatar"),
@@ -81,7 +81,7 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
             thumbnailImage: UIImage(named: "thum")
         )
 
-        let noti2 = NotificationItem(
+        let noti2 = NotificationItemModel(
             title: "LoL Esports VN thích bình luận của bạn",
             time: yesterday,
             profileImage: UIImage(named: "avatar"),
@@ -89,7 +89,7 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
             thumbnailImage: UIImage(named: "thum")
         )
 
-        let noti3 = NotificationItem(
+        let noti3 = NotificationItemModel(
             title: "Long Non VN thích bình luận của bạn",
             time: yesterday,
             profileImage: UIImage(named: "avatar"),

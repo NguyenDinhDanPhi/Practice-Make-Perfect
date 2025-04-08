@@ -19,6 +19,10 @@ class NotificationViewController: UIViewController {
         imageView.tintColor = .black
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onShowTableViewButtonPressed))
+        imageView.addGestureRecognizer(tapGesture)
+        imageView.isUserInteractionEnabled = true
+        
         return imageView
     }()
     
@@ -127,6 +131,8 @@ class NotificationViewController: UIViewController {
         
         switch notificationViewType {
         case .emptyNotification:
+            titleStackView.isHidden = false
+            tickButton.isHidden = false
             view.addSubview(emptyNotificationView)
             NSLayoutConstraint.activate([
                 emptyNotificationView.topAnchor.constraint(equalTo: titleButton.bottomAnchor, constant: 8),
@@ -175,6 +181,8 @@ class NotificationViewController: UIViewController {
             ])
             
         case .haveNotification:
+            titleStackView.isHidden = false
+            tickButton.isHidden = false
             view.addSubview(notifiListView)
             NSLayoutConstraint.activate([
                 notifiListView.topAnchor.constraint(equalTo: titleButton.bottomAnchor, constant: 8),
@@ -218,7 +226,7 @@ class NotificationViewController: UIViewController {
     func fetchNotifications() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             self.notifiListView.loading = false
-            self.notificationViewType = .errorNotification
+            self.notificationViewType = .haveNotification
             
             // Hoặc khi có dữ liệu
             // self.notifiListView.update(with: data)
