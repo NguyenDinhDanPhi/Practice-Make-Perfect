@@ -14,6 +14,34 @@ class NotificationViewController: UIViewController {
         return button
     }()
     
+    private lazy var arrowImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "ic_arrow_down")?.withRenderingMode(.alwaysTemplate))
+        imageView.tintColor = .black
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private lazy var titleStackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [titleButton, arrowImageView])
+        view.backgroundColor = .clear
+        view.spacing = 5
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var tickButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+        let image = UIImage(named: "checkStatus")?.withTintColor(.black)
+        button.setImage(image, for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.tintColor = .black
+        button.clipsToBounds = true
+        return button
+    }()
+    
     lazy var dropdown: DropdownMenuView = {
         let view = DropdownMenuView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +93,6 @@ class NotificationViewController: UIViewController {
         }
         notifiListView.loading = true
         notificationViewType = .haveNotification
-        // Gán trạng thái ban đầu, sau này có thể đổi từ API
         fetchNotifications()
         setUpActionSubVIew()
     }
@@ -73,16 +100,22 @@ class NotificationViewController: UIViewController {
     // MARK: - Setup
     
     private func setupTitleButton() {
-        view.addSubview(titleButton)
+        view.addSubview(titleStackView)
+        view.addSubview(tickButton)
         NSLayoutConstraint.activate([
-            titleButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            titleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            titleStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            titleStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            tickButton.topAnchor.constraint(equalTo: titleButton.topAnchor),
+            tickButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            tickButton.widthAnchor.constraint(equalToConstant: 34),
+            tickButton.heightAnchor.constraint(equalToConstant: 34)
         ])
         
         dropdown.didSelectOption = { [weak self] index in
             guard let self = self else { return }
             let title = self.dropdown.items[index].0
-            self.titleButton.setTitle("\(title) ⌄", for: .normal)
+            self.titleButton.setTitle("\(title)", for: .normal)
         }
     }
     

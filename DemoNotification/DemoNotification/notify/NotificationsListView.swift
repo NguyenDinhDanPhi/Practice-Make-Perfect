@@ -121,7 +121,7 @@ extension NotificationsListView {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if loading { return 5 }
+        if loading { return 7 }
         return section == 0 ? todayNotis.count : earlierNotis.count
     }
 
