@@ -16,9 +16,9 @@ class NotifiCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
     
-     lazy var redDotView: UIView = {
+    
+    private lazy var redDotView: UIView = {
         let view = UIView()
         view.backgroundColor = .red
         view.layer.cornerRadius = 5
@@ -76,16 +76,16 @@ class NotifiCell: UITableViewCell {
         self.layer.masksToBounds = false
         NSLayoutConstraint.activate([
             
-            avatarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            redDotView.widthAnchor.constraint(equalToConstant: 6),
+            redDotView.heightAnchor.constraint(equalToConstant: 6),
+            redDotView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
+            redDotView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            avatarView.leadingAnchor.constraint(equalTo: redDotView.trailingAnchor, constant: 8),
             avatarView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             avatarView.widthAnchor.constraint(equalToConstant: 60),
             avatarView.heightAnchor.constraint(equalToConstant: 60),
-            
-            redDotView.widthAnchor.constraint(equalToConstant: 10),
-            redDotView.heightAnchor.constraint(equalToConstant: 10),
-            redDotView.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: -10),
-            redDotView.topAnchor.constraint(equalTo: avatarView.topAnchor),
-            
+                        
             titleLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 12),
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
             titleLabel.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8),
