@@ -8,7 +8,16 @@ class NotifiSkeletonCell: UITableViewCell {
     private let avatarView = UIView()
     private let line1 = UIView()  // Skeleton for title
     private let line2 = UIView()  // Skeleton for time
-
+    
+    private let thumbnailImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 10
+        iv.clipsToBounds = true
+        iv.isSkeletonable = true
+        return iv
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         isSkeletonable = true
@@ -30,17 +39,15 @@ class NotifiSkeletonCell: UITableViewCell {
         // Line 1 (Title) skeleton view
         line1.backgroundColor = .lightGray
         line1.layer.cornerRadius = 4
-        line1.clipsToBounds = true
-        line1.isSkeletonable = true
+        line1.isSkeletonable = true // Đảm bảo rằng line1 có thể hiện skeleton
 
         // Line 2 (Time) skeleton view
         line2.backgroundColor = .lightGray
         line2.layer.cornerRadius = 4
-        line1.clipsToBounds = true
-        line2.isSkeletonable = true
+        line2.isSkeletonable = true // Đảm bảo rằng line2 có thể hiện skeleton
 
         // Add subviews
-        [avatarView, line1, line2].forEach {
+        [avatarView, line1, line2, thumbnailImageView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
@@ -53,34 +60,20 @@ class NotifiSkeletonCell: UITableViewCell {
             avatarView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22),
 
             line1.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 12),
-            line1.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             line1.topAnchor.constraint(equalTo: avatarView.topAnchor),
             line1.heightAnchor.constraint(equalToConstant: 20),
+            line1.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2),
 
             line2.leadingAnchor.constraint(equalTo: line1.leadingAnchor),
-            line2.trailingAnchor.constraint(equalTo: line1.trailingAnchor),
             line2.topAnchor.constraint(equalTo: line1.bottomAnchor, constant: 8),
-            line2.heightAnchor.constraint(equalToConstant: 16),
+            line2.heightAnchor.constraint(equalToConstant: 10),
+            line2.widthAnchor.constraint(equalToConstant: 40),
+            
+            thumbnailImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            thumbnailImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            thumbnailImageView.widthAnchor.constraint(equalToConstant: 60),
+            thumbnailImageView.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
 
-    // Function to start skeleton animation for all views
-    func startSkeleton() {
-        [avatarView, line1, line2].forEach {
-            $0.showAnimatedGradientSkeleton()  // Ensure skeleton for avatar, title, and time
-        }
-    }
-
-    // Function to stop skeleton animation
-    func stopSkeleton() {
-        [avatarView, line1, line2].forEach {
-            $0.hideSkeleton()
-        }
-    }
-
-    // Prepare cell for reuse to reset skeleton animation
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        stopSkeleton()
-    }
 }

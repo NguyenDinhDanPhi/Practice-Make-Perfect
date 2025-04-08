@@ -77,9 +77,9 @@ class NotifiCell: UITableViewCell {
         NSLayoutConstraint.activate([
             
             avatarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-                avatarView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                avatarView.widthAnchor.constraint(equalToConstant: 60),
-                avatarView.heightAnchor.constraint(equalToConstant: 60),
+            avatarView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            avatarView.widthAnchor.constraint(equalToConstant: 60),
+            avatarView.heightAnchor.constraint(equalToConstant: 60),
             
             redDotView.widthAnchor.constraint(equalToConstant: 10),
             redDotView.heightAnchor.constraint(equalToConstant: 10),
