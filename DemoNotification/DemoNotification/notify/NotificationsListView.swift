@@ -11,7 +11,18 @@ struct NotificationItem {
 
 class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource {
 
-    let tableView = UITableView()
+    lazy var tableView: UITableView = {
+        let table = UITableView()
+        table.delegate = self
+        table.dataSource = self
+        table.register(NotifiCell.self, forCellReuseIdentifier: NotifiCell.identifier)
+        table.register(NotifiSkeletonCell.self, forCellReuseIdentifier: NotifiSkeletonCell.identifier)
+
+        table.separatorStyle = .none
+        table.rowHeight = 104
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
 
     var todayNotis: [NotificationItem] = []
     var earlierNotis: [NotificationItem] = []
@@ -33,14 +44,6 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
     }
 
     private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(NotifiCell.self, forCellReuseIdentifier: NotifiCell.identifier)
-        tableView.register(NotifiSkeletonCell.self, forCellReuseIdentifier: NotifiSkeletonCell.identifier)
-
-        tableView.separatorStyle = .none
-        tableView.rowHeight = 104
-        tableView.translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(tableView)
         NSLayoutConstraint.activate([
@@ -49,7 +52,6 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
             tableView.rightAnchor.constraint(equalTo: rightAnchor)
         ])
-        
         //pull to refresh
         tableView.es.addPullToRefresh {
             [weak self] in
@@ -173,7 +175,15 @@ extension NotificationsListView {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
+        let section = indexPath.section
+            let row = indexPath.row
+            if section == 0 {
+                todayNotis[row].isSelected = true
+            } else {
+                earlierNotis[row].isSelected = true
+            }
+            
+        tableView.reloadRows(at: [indexPath], with: .automatic)
         let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
         print("Bạn vừa chọn: \(item.title)")
     }

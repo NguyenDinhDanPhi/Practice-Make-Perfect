@@ -18,7 +18,7 @@ class NotifiCell: UITableViewCell {
     }()
 
     
-    private let redDotView: UIView = {
+     lazy var redDotView: UIView = {
         let view = UIView()
         view.backgroundColor = .red
         view.layer.cornerRadius = 5
