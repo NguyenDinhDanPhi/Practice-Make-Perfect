@@ -2,12 +2,32 @@ import UIKit
 import SkeletonView
 
 class NotifiSkeletonCell: UITableViewCell {
-
+    
     static let identifier = "NotifiSkeletonCell"
-
-    private let avatarView = UIView()
-    private let line1 = UIView()  // Skeleton for title
-    private let line2 = UIView()  // Skeleton for time
+    
+    private let avatarView: UIView = {
+        let view = UIView()
+        view.isSkeletonable = true
+        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = 30
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    private let titleLabeliew: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = 4
+        view.isSkeletonable = true
+        return view
+    }()
+    private let timeLabelView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = 4
+        view.isSkeletonable = true
+        return view
+    }()
     
     private let thumbnailImageView: UIImageView = {
         let iv = UIImageView()
@@ -24,50 +44,32 @@ class NotifiSkeletonCell: UITableViewCell {
         contentView.isSkeletonable = true
         setupUI()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupUI() {
-        // Avatar skeleton view
-        avatarView.backgroundColor = .lightGray
-        avatarView.layer.cornerRadius = 30
-        avatarView.clipsToBounds = true
-        avatarView.isSkeletonable = true
-
-        // Line 1 (Title) skeleton view
-        line1.backgroundColor = .lightGray
-        line1.layer.cornerRadius = 4
-        line1.isSkeletonable = true // Đảm bảo rằng line1 có thể hiện skeleton
-
-        // Line 2 (Time) skeleton view
-        line2.backgroundColor = .lightGray
-        line2.layer.cornerRadius = 4
-        line2.isSkeletonable = true // Đảm bảo rằng line2 có thể hiện skeleton
-
-        // Add subviews
-        [avatarView, line1, line2, thumbnailImageView].forEach {
+        
+        [avatarView, titleLabeliew, timeLabelView, thumbnailImageView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
-
-        // Layout constraints
         NSLayoutConstraint.activate([
             avatarView.widthAnchor.constraint(equalToConstant: 60),
             avatarView.heightAnchor.constraint(equalToConstant: 60),
             avatarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             avatarView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22),
-
-            line1.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 12),
-            line1.topAnchor.constraint(equalTo: avatarView.topAnchor),
-            line1.heightAnchor.constraint(equalToConstant: 20),
-            line1.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2),
-
-            line2.leadingAnchor.constraint(equalTo: line1.leadingAnchor),
-            line2.topAnchor.constraint(equalTo: line1.bottomAnchor, constant: 8),
-            line2.heightAnchor.constraint(equalToConstant: 10),
-            line2.widthAnchor.constraint(equalToConstant: 40),
+            
+            titleLabeliew.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 12),
+            titleLabeliew.topAnchor.constraint(equalTo: avatarView.topAnchor, constant: 5),
+            titleLabeliew.heightAnchor.constraint(equalToConstant: 16),
+            titleLabeliew.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2),
+            
+            timeLabelView.leadingAnchor.constraint(equalTo: titleLabeliew.leadingAnchor),
+            timeLabelView.topAnchor.constraint(equalTo: titleLabeliew.bottomAnchor, constant: 8),
+            timeLabelView.heightAnchor.constraint(equalToConstant: 10),
+            timeLabelView.widthAnchor.constraint(equalToConstant: 70),
             
             thumbnailImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             thumbnailImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -75,5 +77,5 @@ class NotifiSkeletonCell: UITableViewCell {
             thumbnailImageView.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
-
+    
 }

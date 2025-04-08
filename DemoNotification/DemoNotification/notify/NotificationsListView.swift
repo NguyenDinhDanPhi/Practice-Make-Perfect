@@ -128,7 +128,6 @@ extension NotificationsListView {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if loading {
                let cell = tableView.dequeueReusableCell(withIdentifier: NotifiSkeletonCell.identifier, for: indexPath) as! NotifiSkeletonCell
-          //  cell.contentView.layoutIfNeeded()
             cell.showAnimatedGradientSkeleton()
             
                return cell
