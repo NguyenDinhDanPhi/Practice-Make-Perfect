@@ -39,6 +39,7 @@ class NotificationViewController: UIViewController {
         button.imageView?.contentMode = .scaleAspectFit
         button.tintColor = .black
         button.clipsToBounds = true
+        button.addTarget(self, action: #selector(tickButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -120,7 +121,6 @@ class NotificationViewController: UIViewController {
     }
     
     private func updateNotificationUI() {
-        // Xoá tất cả subview liên quan đến content cũ
         [emptyNotificationView, emptyStateContainerView, notificationNotLoginView, notifiListView].forEach {
             $0.removeFromSuperview()
         }
@@ -227,6 +227,21 @@ class NotificationViewController: UIViewController {
             // self.notificationViewType = .errorNotification
         }
     }
+    
+    @objc private func tickButtonTapped() {
+        // Thay đổi trạng thái của các notification item khi nhấn nút
+        for i in 0..<notifiListView.todayNotis.count {
+            notifiListView.todayNotis[i].isSelected = true  // Đảo ngược trạng thái isSelected
+        }
+        
+        for i in 0..<notifiListView.earlierNotis.count {
+            notifiListView.earlierNotis[i].isSelected = true  // Đảo ngược trạng thái isSelected
+        }
+        
+        // Reload lại bảng để thay đổi màu nền của các cell
+        notifiListView.tableView.reloadData()
+    }
+
 }
 
 // MARK: - Enum

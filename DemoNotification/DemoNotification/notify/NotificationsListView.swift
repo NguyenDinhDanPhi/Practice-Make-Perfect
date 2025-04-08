@@ -6,14 +6,15 @@ struct NotificationItem {
     let profileImage: UIImage?
     let overlayImage: UIImage?
     let thumbnailImage: UIImage?
+    var isSelected: Bool = false
 }
 
 class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource {
 
-    private let tableView = UITableView()
+    let tableView = UITableView()
 
-    private var todayNotis: [NotificationItem] = []
-    private var earlierNotis: [NotificationItem] = []
+    var todayNotis: [NotificationItem] = []
+    var earlierNotis: [NotificationItem] = []
     
     var loading: Bool = false {
         didSet {
@@ -138,6 +139,7 @@ extension NotificationsListView {
            }
 
            let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
+            cell.contentView.backgroundColor = item.isSelected ? .white : UIColor(red: 1.0, green: 0.99, blue: 0.94, alpha: 1.0)
            cell.configure(
                profileImage: item.profileImage,
                overlayImage: item.overlayImage,
