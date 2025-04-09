@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NotificationNotLoginView: UIView {
+class NoLoginView: UIView {
     
     var singupAction: (() -> Void)?
     

@@ -66,8 +66,8 @@ class NotificationViewController: UIViewController {
         return view
     }()
     
-    private lazy var notificationNotLoginView: NotificationNotLoginView = {
-        let view = NotificationNotLoginView()
+    private lazy var noLoginView: NoLoginView = {
+        let view = NoLoginView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -136,7 +136,7 @@ class NotificationViewController: UIViewController {
     }
     
     private func updateNotificationUI() {
-        [emptyNotificationView, emptyStateContainerView, notificationNotLoginView, notifiListView].forEach {
+        [emptyNotificationView, emptyStateContainerView, noLoginView, notifiListView].forEach {
             $0.removeFromSuperview()
         }
         
@@ -183,12 +183,12 @@ class NotificationViewController: UIViewController {
         case .notLogin:
             titleStackView.isHidden = true
             tickButton.isHidden = true
-            view.addSubview(notificationNotLoginView)
+            view.addSubview(noLoginView)
             NSLayoutConstraint.activate([
-                notificationNotLoginView.topAnchor.constraint(equalTo: view.topAnchor),
-                notificationNotLoginView.leftAnchor.constraint(equalTo: view.leftAnchor),
-                notificationNotLoginView.rightAnchor.constraint(equalTo: view.rightAnchor),
-                notificationNotLoginView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+                noLoginView.topAnchor.constraint(equalTo: view.topAnchor),
+                noLoginView.leftAnchor.constraint(equalTo: view.leftAnchor),
+                noLoginView.rightAnchor.constraint(equalTo: view.rightAnchor),
+                noLoginView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
             
         case .haveNotification:
@@ -227,7 +227,7 @@ class NotificationViewController: UIViewController {
     }
     
     func setUpActionSubVIew() {
-        notificationNotLoginView.singupAction = { [weak self] in
+        noLoginView.singupAction = { [weak self] in
             print("haha")
         }
     }
