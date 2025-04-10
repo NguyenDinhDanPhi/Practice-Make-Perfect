@@ -16,8 +16,6 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
         table.delegate = self
         table.dataSource = self
         table.register(NotifiCell.self, forCellReuseIdentifier: NotifiCell.identifier)
-        table.register(NotifiSkeletonCell.self, forCellReuseIdentifier: NotifiSkeletonCell.identifier)
-
         table.separatorStyle = .none
         table.rowHeight = 104
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -26,12 +24,6 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
 
     var todayNotis: [NotificationItemModel] = []
     var earlierNotis: [NotificationItemModel] = []
-    
-    private var loading: Bool = false {
-        didSet {
-            tableView.reloadData()
-        }
-    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -114,9 +106,7 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
         return formatter.localizedString(for: date, relativeTo: Date())
     }
     
-    func configure(isLoading: Bool) {
-        loading = isLoading
-    }
+   
 }
 
 //MARK: TableView delegate
@@ -124,22 +114,14 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
 extension NotificationsListView {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return loading ? 1 : 2
+       return 2
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if loading { return 7 }
         return section == 0 ? todayNotis.count : earlierNotis.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if loading {
-               let cell = tableView.dequeueReusableCell(withIdentifier: NotifiSkeletonCell.identifier, for: indexPath) as! NotifiSkeletonCell
-            cell.showAnimatedGradientSkeleton()
-            
-               return cell
-           }
-
            guard let cell = tableView.dequeueReusableCell(withIdentifier: NotifiCell.identifier, for: indexPath) as? NotifiCell else {
                return UITableViewCell()
            }
@@ -158,15 +140,11 @@ extension NotificationsListView {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if loading {
-            return nil
-        }
         let notiList = section == 0 ? todayNotis : earlierNotis
         return notiList.isEmpty ? nil : (section == 0 ? "Hôm nay" : "Trước đó")
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if loading { return 0 }
         let notiList = section == 0 ? todayNotis : earlierNotis
         return notiList.isEmpty ? 0 : 32
     }

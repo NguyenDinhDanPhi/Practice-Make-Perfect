@@ -60,6 +60,12 @@ class NotificationViewController: UIViewController {
         return view
     }()
     
+    private lazy var loadingView: NotificationsSkeletonListView = {
+        let view = NotificationsSkeletonListView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var emptyNotificationView: EmptyNotificationView = {
         let view = EmptyNotificationView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -86,11 +92,7 @@ class NotificationViewController: UIViewController {
         }
     }
     
-    var isLoading: Bool = false {
-        didSet {
-            notifiListView.configure(isLoading: isLoading)
-        }
-    }
+    var isLoading: Bool = false
     
     // MARK: - Lifecycle
     
@@ -103,7 +105,7 @@ class NotificationViewController: UIViewController {
             self?.dropdown.removeFromSuperview()
         }
         isLoading = true
-        notificationViewType = .haveNotification
+        notificationViewType = .loading
         fetchNotifications()
         setUpActionSubVIew()
     }
@@ -201,7 +203,14 @@ class NotificationViewController: UIViewController {
                 notifiListView.rightAnchor.constraint(equalTo: view.rightAnchor),
                 notifiListView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
-            
+        case .loading:
+            view.addSubview(loadingView)
+            NSLayoutConstraint.activate([
+                loadingView.topAnchor.constraint(equalTo: titleButton.bottomAnchor, constant: 8),
+                loadingView.leftAnchor.constraint(equalTo: view.leftAnchor),
+                loadingView.rightAnchor.constraint(equalTo: view.rightAnchor),
+                loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
         case .none:
             break
         }
@@ -265,5 +274,5 @@ class NotificationViewController: UIViewController {
 // MARK: - Enum
 
 enum NotificationViewType {
-    case emptyNotification, errorNotification, notLogin, haveNotification
+    case emptyNotification, errorNotification, notLogin, haveNotification, loading
 }
