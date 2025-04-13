@@ -1,9 +1,10 @@
 import UIKit
-
+import Combine
 class NotificationViewController: UIViewController {
     
     // MARK: - UI Elements
-    
+    private var viewModel = NotificationViewModel()
+    private var cancellables = Set<AnyCancellable>()
     private lazy var titleButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Tất cả hoạt động", for: .normal)
@@ -104,15 +105,15 @@ class NotificationViewController: UIViewController {
         dropdown.removeDropdown = { [weak self] in
             self?.dropdown.removeFromSuperview()
         }
-        isLoading = true
-        notificationViewType = .loading
-        fetchNotifications()
+        notificationViewType = .haveNotification
         setUpActionSubVIew()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         notifiListView.tableView.reloadData()
+        viewModel.loadNotificationListFromFile()
+        biding()
     }
 
     // MARK: - Setup
@@ -244,7 +245,6 @@ class NotificationViewController: UIViewController {
     // MARK: - Simulate API
 
     func fetchNotifications() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             self.isLoading = false
             self.notificationViewType = .emptyNotification
             
@@ -254,19 +254,31 @@ class NotificationViewController: UIViewController {
             
             // Hoặc lỗi
             // self.notificationViewType = .errorNotification
-        }
+        
     }
     
     @objc private func tickButtonTapped() {
         for i in 0..<notifiListView.todayNotis.count {
-            notifiListView.todayNotis[i].isSelected = true
+           // notifiListView.todayNotis[i].isSelected = true
         }
         
         for i in 0..<notifiListView.earlierNotis.count {
-            notifiListView.earlierNotis[i].isSelected = true
+           // notifiListView.earlierNotis[i].isSelected = true
         }
         
         notifiListView.tableView.reloadData()
+    }
+    
+    func biding() {
+        viewModel.$inboxNotices
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] notice in
+                if let inboxNotices = notice?.data {
+                    self?.notifiListView.configure(inboxList: inboxNotices)
+                }
+                
+            }
+            .store(in: &cancellables)
     }
 
 }

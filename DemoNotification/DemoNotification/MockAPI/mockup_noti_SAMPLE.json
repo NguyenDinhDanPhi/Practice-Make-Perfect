@@ -1,0 +1,208 @@
+{
+    "code": "1",
+    "data": [
+        {
+            "id": "f3a91d8c-2e67-4e40-91ae-b0b2b593908c",
+            "category": "community",
+            "type_render": "user_action",
+            "message": {
+                "title": "ThanhTXT, TaiMai và 1 người khác",
+                "body": "thích bình luận của bạn",
+                "image": "https://stag-images.fangtv.vn/media/upload/2025/03/13/highlights-kespa-cup-2024-slide-thumb1733645370524_25741905736241152.jpg"
+            },
+            "redirect_url": "https://dev-share.fangtv.vn/video/25396274404528128?cid={comment_id}&rid={reply_id}",
+            "redirect_content": "https://dev-share.fangtv.vn/video/25396274404528128",
+            "status": "unread",
+            "created_at": {
+                "timestamp": 1743482196,
+                "iso_8601": "2025-04-01T11:36:36+07:00"
+            },
+            "attribute": {
+                "from": [
+                    {
+                        "id": "643d7c04-8aeb-4983-b6fe-b5dfcad4177b",
+                        "name": "ThanhTXT",
+                        "redirect_url": "https://dev-share.fangtv.vn/@643d7c04-8aeb-4983-b6fe-b5dfcad4177b",
+                        "image": "https://stag-images.fangtv.vn/media/people/OTT/2025/02/07/1738915114_82M.jpg"
+                    },
+                    {
+                        "id": "ad700672-984e-4deb-8168-2563c68a7555",
+                        "name": "TaiMai",
+                        "redirect_url": "https://dev-share.fangtv.vn/@ad700672-984e-4deb-8168-2563c68a7555",
+                        "image": "https://stag-images.fangtv.vn/media/people/OTT/2025/02/07/1738915114_82M.jpg"
+                    }
+                ],
+                "extra": {
+                    "more": "1 người khác",
+                    "redirect_url": "https://dev-share.fangtv.vn/vod/25396274404528128?cid={comment_id}&rid={reply_id}"
+                }
+            }
+        },
+        {
+            "id": "8e25c6b2-f9e4-47e1-b136-0ab77f2c9c4a",
+            "category": "community",
+            "type_render": "user_action",
+            "message": {
+                "title": "ThanhTXT và 1 người khác",
+                "body": "thích bình luận của bạn",
+                "image": "https://stag-images.fangtv.vn/media/upload/2025/03/13/highlights-kespa-cup-2024-slide-thumb1733645370524_25741905736241152.jpg"
+            },
+            "redirect_url": "https://dev-share.fangtv.vn/video/25396274404528128?cid={comment_id}&rid={reply_id}",
+            "redirect_content": "https://dev-share.fangtv.vn/video/25396274404528128",
+            "status": "unread",
+            "created_at": {
+                "timestamp": 1743482196,
+                "iso_8601": "2025-04-01T11:36:36+07:00"
+            },
+            "attribute": {
+                "from": [
+                    {
+                        "id": "643d7c04-8aeb-4983-b6fe-b5dfcad4177b",
+                        "name": "ThanhTXT",
+                        "redirect_url": "https://dev-share.fangtv.vn/@643d7c04-8aeb-4983-b6fe-b5dfcad4177b",
+                        "image": "https://stag-images.fangtv.vn/media/people/OTT/2025/02/07/1738915114_82M.jpg"
+                    }
+                ],
+                "extra": {
+                    "more": "1 người khác",
+                    "redirect_url": "https://dev-share.fangtv.vn/vod/25396274404528128?cid={comment_id}&rid={reply_id}"
+                }
+            }
+        },
+        {
+            "id": "4c65ef2e-9c79-4d3b-94bb-8a719d369fb4",
+            "category": "community",
+            "type_render": "user_action",
+            "message": {
+                "title": "TaiMai",
+                "body": "thích bình luận của bạn",
+                "image": "https://stag-images.fangtv.vn/media/upload/2025/03/13/highlights-kespa-cup-2024-slide-thumb1733645370524_25741905736241152.jpg"
+            },
+            "redirect_url": "https://dev-share.fangtv.vn/video/25396274404528128?cid={comment_id}&rid={reply_id}",
+            "redirect_content": "https://dev-share.fangtv.vn/video/25396274404528128",
+            "status": "unread",
+            "created_at": {
+                "timestamp": 1743482196,
+                "iso_8601": "2025-04-01T11:36:36+07:00"
+            },
+            "attribute": {
+                "from": [
+                    {
+                        "id": "ad700672-984e-4deb-8168-2563c68a7555",
+                        "name": "TaiMai",
+                        "redirect_url": "https://dev-share.fangtv.vn/@ad700672-984e-4deb-8168-2563c68a7555",
+                        "image": "https://stag-images.fangtv.vn/media/people/OTT/2025/02/07/1738915114_82M.jpg"
+                    }
+                ],
+                "extra": null
+            }
+        },
+        {
+            "id": "{id noti}",
+            "category": "community",
+            "type_render": "user_action",
+            "message": {
+                "title": "Tèovgvgctctctvt, TaiMai và 1 người khác",
+                "body": "đã trả lời bình luận của bạn",
+                "image": "https://stag-images.fangtv.vn/media/upload/2025/03/13/hlsbk11733579617267_25742543874428928.jpg"
+            },
+            "redirect_url": "https://dev-share.fangtv.vn/video/25396353785925632?cid={comment_id}&rid={reply_id}",
+            "redirect_content": "https://dev-share.fangtv.vn/video/25396353785925632",
+            "status": "unread",
+            "created_at": {
+                "timestamp": 1743482196,
+                "iso_8601": "2025-04-01T11:36:36+07:00"
+            },
+            "attribute": {
+                "from": [
+                    {
+                        "id": "ea422944-96c9-4d9a-b839-922774123816",
+                        "name": "Tèovgvgctctctvt",
+                        "redirect_url": "https://dev-share.fangtv.vn/@{ea422944-96c9-4d9a-b839-922774123816}",
+                        "image": "https://stag-images.fangtv.vn/media/people/OTT/2025/02/07/1738915114_82M.jpg"
+                    },
+                    {
+                        "id": "ad700672-984e-4deb-8168-2563c68a7555",
+                        "name": "TaiMai",
+                        "redirect_url": "https://dev-share.fangtv.vn/@ad700672-984e-4deb-8168-2563c68a7555",
+                        "image": "https://stag-images.fangtv.vn/media/people/OTT/2025/02/07/1738915114_82M.jpg"
+                    }
+                ],
+                "extra": {
+                    "more": "1 người khác",
+                    "redirect_url": "https://dev-share.fangtv.vn/video/25396353785925632?cid={comment_id}&rid={reply_id}"
+                }
+            }
+        },
+        {
+            "id": "{id noti}",
+            "category": "community",
+            "type_render": "user_action",
+            "message": {
+                "title": "Tèovgvgctctctvt và 1 người khác",
+                "body": "đã trả lời bình luận của bạn",
+                "image": "https://stag-images.fangtv.vn/media/upload/2025/03/13/hlsbk11733579617267_25742543874428928.jpg"
+            },
+            "redirect_url": "https://dev-share.fangtv.vn/video/25396353785925632?cid={comment_id}&rid={reply_id}",
+            "redirect_content": "https://dev-share.fangtv.vn/video/25396353785925632",
+            "status": "unread",
+            "created_at": {
+                "timestamp": 1743482196,
+                "iso_8601": "2025-04-01T11:36:36+07:00"
+            },
+            "attribute": {
+                "from": [
+                    {
+                        "id": "ea422944-96c9-4d9a-b839-922774123816",
+                        "name": "Tèovgvgctctctvt",
+                        "redirect_url": "https://dev-share.fangtv.vn/@{ea422944-96c9-4d9a-b839-922774123816}",
+                        "image": "https://stag-images.fangtv.vn/media/people/OTT/2025/02/07/1738915114_82M.jpg"
+                    }
+                ],
+                "extra": {
+                    "more": "1 người khác",
+                    "redirect_url": "https://dev-share.fangtv.vn/video/25396353785925632?cid={comment_id}&rid={reply_id}"
+                }
+            }
+        },
+        {
+              "id": "{id noti}",
+              "category": "community",
+              "type_render": "user_action",
+              "message": {
+                "title": "ThanhTXT, Tèovgvgctctctvt và 3 người khác",
+                "body": "đã theo dõi bạn",
+                "image": ""
+              },
+              "redirect_url": "https://fptplay.vn/@ad700672-984e-4deb-8168-2563c68a7555/follower",
+              "redirect_content": "",
+              "status": "unread",
+              "created_at": {
+                "timestamp": 1743482196,
+                "iso_8601": "2025-04-01T11:36:36+07:00"
+              },
+              "attribute": {
+                  "from": [
+                    {
+                      "id": "643d7c04-8aeb-4983-b6fe-b5dfcad4177b",
+                      "name": "ThanhTXT",
+                      "redirect_url": "https://dev-share.fangtv.vn/@643d7c04-8aeb-4983-b6fe-b5dfcad4177b",
+                      "image": "https://stag-images.fangtv.vn/media/people/OTT/2025/02/07/1738915114_82M.jpg"
+                    },
+                    {
+                      "id": "ea422944-96c9-4d9a-b839-922774123816",
+                      "name": "Tèovgvgctctctvt",
+                      "redirect_url": "https://dev-share.fangtv.vn/@{ea422944-96c9-4d9a-b839-922774123816}",
+                      "image": "https://stag-images.fangtv.vn/media/people/OTT/2025/02/07/1738915114_82M.jpg"
+                    }
+                  ],
+                  "extra": {
+                    "more": "3 người khác",
+                    "redirect_url": "https://fptplay.vn/@ad700672-984e-4deb-8168-2563c68a7555/follower"
+                  }
+              }
+        }
+        
+    ]
+
+}

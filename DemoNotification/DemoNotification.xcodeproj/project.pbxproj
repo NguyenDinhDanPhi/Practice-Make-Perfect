@@ -16,6 +16,8 @@
 		D091C9A12DA40C4E000C39EF /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = D091C9A02DA40C4E000C39EF /* FirebaseMessaging */; };
 		D0C550AD2DA4B05F0062A03B /* ESPullToRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = D0C550AC2DA4B05F0062A03B /* ESPullToRefresh */; };
 		D0C550B02DA4B2360062A03B /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = D0C550AF2DA4B2360062A03B /* SkeletonView */; };
+		D0D2A9CA2DAB991800D4EC51 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = D0D2A9C92DAB991800D4EC51 /* SDWebImage */; };
+		D0D2A9CC2DAB991800D4EC51 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D0D2A9CB2DAB991800D4EC51 /* SDWebImageMapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,8 +54,10 @@
 				D091C9952DA40C4E000C39EF /* FirebaseAnalytics in Frameworks */,
 				D091C9A12DA40C4E000C39EF /* FirebaseMessaging in Frameworks */,
 				D091C99D2DA40C4E000C39EF /* FirebaseAppDistribution-Beta in Frameworks */,
+				D0D2A9CA2DAB991800D4EC51 /* SDWebImage in Frameworks */,
 				D091C9992DA40C4E000C39EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				D091C9972DA40C4E000C39EF /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				D0D2A9CC2DAB991800D4EC51 /* SDWebImageMapKit in Frameworks */,
 				D0C550AD2DA4B05F0062A03B /* ESPullToRefresh in Frameworks */,
 				D0C550B02DA4B2360062A03B /* SkeletonView in Frameworks */,
 				D091C99F2DA40C4E000C39EF /* FirebaseInAppMessaging-Beta in Frameworks */,
@@ -108,6 +112,8 @@
 				D091C9A02DA40C4E000C39EF /* FirebaseMessaging */,
 				D0C550AC2DA4B05F0062A03B /* ESPullToRefresh */,
 				D0C550AF2DA4B2360062A03B /* SkeletonView */,
+				D0D2A9C92DAB991800D4EC51 /* SDWebImage */,
+				D0D2A9CB2DAB991800D4EC51 /* SDWebImageMapKit */,
 			);
 			productName = DemoNotification;
 			productReference = D0984AE22D9E439100E9B906 /* DemoNotification.app */;
@@ -141,6 +147,7 @@
 				D091C9932DA40C4E000C39EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				D0C550AB2DA4B05F0062A03B /* XCRemoteSwiftPackageReference "pull-to-refresh" */,
 				D0C550AE2DA4B2360062A03B /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				D0D2A9C82DAB991800D4EC51 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D0984AE32D9E439100E9B906 /* Products */;
@@ -396,6 +403,14 @@
 				minimumVersion = 1.31.0;
 			};
 		};
+		D0D2A9C82DAB991800D4EC51 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -443,6 +458,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D0C550AE2DA4B2360062A03B /* XCRemoteSwiftPackageReference "SkeletonView" */;
 			productName = SkeletonView;
+		};
+		D0D2A9C92DAB991800D4EC51 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0D2A9C82DAB991800D4EC51 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		D0D2A9CB2DAB991800D4EC51 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D0D2A9C82DAB991800D4EC51 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

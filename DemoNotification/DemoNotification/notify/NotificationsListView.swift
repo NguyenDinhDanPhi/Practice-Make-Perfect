@@ -22,13 +22,12 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
         return table
     }()
 
-    var todayNotis: [NotificationItemModel] = []
-    var earlierNotis: [NotificationItemModel] = []
+    var todayNotis: [InboxNotices] = []
+    var earlierNotis: [InboxNotices] = []
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupTableView()
-        loadData()
     }
 
     required init?(coder: NSCoder) {
@@ -54,49 +53,10 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
     private func refreshData() {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.loadData()
             self.tableView.es.stopPullToRefresh()
         }
-        print("haha")
     }
 
-    private func loadData() {
-        // Dummy data demo
-        let now = Date()
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: now)!
-
-        let noti1 = NotificationItemModel(
-            title: "Saian, Tram Nguyen và 3 người khác thích bình luận của bạn",
-            time: now,
-            profileImage: UIImage(named: "avatar"),
-            overlayImage: UIImage(named: "avatar2"),
-            thumbnailImage: UIImage(named: "thum")
-        )
-
-        let noti2 = NotificationItemModel(
-            title: "LoL Esports VN thích bình luận của bạn",
-            time: yesterday,
-            profileImage: UIImage(named: "avatar"),
-            overlayImage: nil,
-            thumbnailImage: UIImage(named: "thum")
-        )
-
-        let noti3 = NotificationItemModel(
-            title: "Long Non VN thích bình luận của bạn",
-            time: yesterday,
-            profileImage: UIImage(named: "avatar"),
-            overlayImage: nil,
-            thumbnailImage: UIImage(named: "thum")
-        )
-
-        let all = [noti1, noti2, noti3]
-        let calendar = Calendar.current
-
-        todayNotis = all.filter { calendar.isDateInToday($0.time) }
-        earlierNotis = all.filter { !calendar.isDateInToday($0.time) }
-
-        tableView.reloadData()
-    }
 
     // MARK: - Helper
 
@@ -127,15 +87,20 @@ extension NotificationsListView {
            }
 
            let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
-            cell.contentView.backgroundColor = item.isSelected ? .white : UIColor(red: 1.0, green: 0.99, blue: 0.94, alpha: 1.0)
-           cell.configure(
-               profileImage: item.profileImage,
-               overlayImage: item.overlayImage,
-               title: item.title,
-               time: timeAgoString(from: item.time),
-               thumbnail: item.thumbnailImage,
-               hiddenRed: item.isSelected
-           )
+        let title = item.message.title + " " + item.message.body
+        let time = timeAgoString(from: Date(timeIntervalSince1970: TimeInterval(item.createdAt.timestamp)))
+        let thumbnailURL = item.message.image
+        let profileURL = item.attribute.from.first?.image
+        cell.configure(profileImage: profileURL, overlayImage: "", title: title, time: time, thumbnail: thumbnailURL)
+//            cell.contentView.backgroundColor = item.isSelected ? .white : UIColor(red: 1.0, green: 0.99, blue: 0.94, alpha: 1.0)
+//           cell.configure(
+//               profileImage: item.profileImage,
+//               overlayImage: item.overlayImage,
+//               title: item.title,
+//               time: timeAgoString(from: item.time),
+//               thumbnail: item.thumbnailImage,
+//               hiddenRed: item.isSelected
+//           )
            return cell
     }
 
@@ -158,17 +123,17 @@ extension NotificationsListView {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let section = indexPath.section
-            let row = indexPath.row
-            if section == 0 {
-                todayNotis[row].isSelected = true
-            } else {
-                earlierNotis[row].isSelected = true
-            }
-            
-        tableView.reloadRows(at: [indexPath], with: .automatic)
-        let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
-        print("Bạn vừa chọn: \(item.title)")
+//        let section = indexPath.section
+//            let row = indexPath.row
+//            if section == 0 {
+//                todayNotis[row].isSelected = true
+//            } else {
+//                earlierNotis[row].isSelected = true
+//            }
+//            
+//        tableView.reloadRows(at: [indexPath], with: .automatic)
+//        let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
+//        print("Bạn vừa chọn: \(item.title)")
     }
     
     func tableView(_ tableView: UITableView,
@@ -191,5 +156,22 @@ extension NotificationsListView {
         let config = UISwipeActionsConfiguration(actions: [deleteAction])
         config.performsFirstActionWithFullSwipe = false
         return config
+    }
+    
+    
+    func configure(inboxList: [InboxNotices]) {
+        let calendar = Calendar.current
+
+        todayNotis = inboxList.filter {
+            let date = Date(timeIntervalSince1970: TimeInterval($0.createdAt.timestamp))
+            return calendar.isDateInToday(date)
+        }
+
+        earlierNotis = inboxList.filter {
+            let date = Date(timeIntervalSince1970: TimeInterval($0.createdAt.timestamp))
+            return !calendar.isDateInToday(date)
+        }
+
+        tableView.reloadData()
     }
 }

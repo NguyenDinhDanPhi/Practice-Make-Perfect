@@ -1,14 +1,18 @@
 //
 //  AvatarView.swift
-//  DemoNotification
+//  Streaming
 //
-//  Created by dan phi on 3/4/25.
+//  Created by Dan Phi on 10/4/25.
 //
-
 
 import UIKit
-
+import SDWebImage
 class AvatarView: UIView {
+    
+    struct LayoutMetrics {
+        static let imageSize: CGFloat = 36
+        static let marginImage: CGFloat = 18
+    }
 
     private let mainImageView: UIImageView = {
         let iv = UIImageView()
@@ -51,10 +55,10 @@ class AvatarView: UIView {
             mainImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             mainImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            overlayImageView.widthAnchor.constraint(equalToConstant: 36),
-            overlayImageView.heightAnchor.constraint(equalToConstant: 36),
-            overlayImageView.centerXAnchor.constraint(equalTo: mainImageView.centerXAnchor, constant: 18),
-            overlayImageView.centerYAnchor.constraint(equalTo: mainImageView.centerYAnchor, constant: 18)
+            overlayImageView.widthAnchor.constraint(equalToConstant: LayoutMetrics.imageSize),
+            overlayImageView.heightAnchor.constraint(equalToConstant: LayoutMetrics.imageSize),
+            overlayImageView.centerXAnchor.constraint(equalTo: mainImageView.centerXAnchor, constant: LayoutMetrics.marginImage),
+            overlayImageView.centerYAnchor.constraint(equalTo: mainImageView.centerYAnchor, constant: LayoutMetrics.marginImage)
         ])
     }
 
@@ -64,14 +68,21 @@ class AvatarView: UIView {
         overlayImageView.layer.cornerRadius = overlayImageView.frame.width / 2
     }
 
-    func configure(mainImage: UIImage?, overlayImage: UIImage?) {
-        mainImageView.image = mainImage
+    func configure(mainImage: String?, overlayImage: String?) {
+        
+        mainImageView.sd_setImage(with: convertStringToURL(urlString:"https://images.fptplay53.net/media/OTT/VOD/2025/03/18/chi-em-tranh-dau-fpt-play-1742291882787_Landscape.jpg"))
 
-        if let overlay = overlayImage {
+        if let overlay = overlayImage, !overlay.isEmpty {
             overlayImageView.isHidden = false
-            overlayImageView.image = overlay
+            overlayImageView.sd_setImage(with: convertStringToURL(urlString: overlay))
         } else {
             overlayImageView.isHidden = true
         }
+    }
+    
+    func convertStringToURL(urlString: String) -> URL?{
+        let url =  URL(string: urlString)
+        
+        return url
     }
 }

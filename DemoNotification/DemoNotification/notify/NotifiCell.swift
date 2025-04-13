@@ -102,11 +102,17 @@ class NotifiCell: UITableViewCell {
     
     // MARK: - Configuration
     
-    func configure(profileImage: UIImage?, overlayImage: UIImage?, title: String, time: String, thumbnail: UIImage?, hiddenRed: Bool = false) {
-        avatarView.configure(mainImage: profileImage, overlayImage: overlayImage)
+    func configure(profileImage: String?, overlayImage: String?, title: String, time: String, thumbnail: String, hiddenRed: Bool = false) {
+        avatarView.configure(mainImage: profileImage, overlayImage: "")
         titleLabel.text = title
         timeLabel.text = time
-        thumbnailImageView.image = thumbnail
+        thumbnailImageView.sd_setImage(with: convertUrlToImgae(urlString: "https://images.fptplay53.net/media/OTT/VOD/2025/03/18/chi-em-tranh-dau-fpt-play-1742291882787_Landscape.jpg") )
         redDotView.isHidden = hiddenRed
     }
+    
+    func convertUrlToImgae(urlString: String) -> URL?{
+        let url =  URL(string: urlString)
+        return url
+    }
+
 }
