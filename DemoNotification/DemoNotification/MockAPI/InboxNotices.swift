@@ -9,9 +9,9 @@
 struct InboxNotices: Codable {
     let id: String
     let category: String
-    let typeRender: RenderType?
+    let typeRender: RenderType
     let message: NoticeMessage
-    let redirectURL: String?
+    let redirectURL: String
     let redirectContent: String?
     let status: String
     let createdAt: CreatedAt
@@ -38,9 +38,9 @@ enum RenderType: String, Codable {
 
 // MARK: - NoticeMessage
 struct NoticeMessage: Codable {
-    let title: String
-    let body: String
-    let image: String
+    let title: String?
+    let body: String?
+    let image: String?
 }
 
 // MARK: - CreatedAt
@@ -57,7 +57,7 @@ struct CreatedAt: Codable {
 // MARK: - Attribute
 struct Attribute: Codable {
     let from: [UserProfile]
-    let extra: ExtraInfoMock?
+    let extra: ExtraInfo?
 }
 
 // MARK: - UserProfile
@@ -76,7 +76,7 @@ struct UserProfile: Codable {
 }
 
 // MARK: - ExtraInfo
-struct ExtraInfoMock: Codable {
+struct ExtraInfo: Codable {
     let more: String?
     let redirectURL: String?
 
