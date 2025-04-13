@@ -2,6 +2,63 @@
     "code": "1",
     "data": [
         {
+              "id": "{id noti}",
+              "category": "community", 
+              "type_render": "common",
+              "message": {
+                "title": "Tài khoản bị giới hạn do vi phạm tiêu chuẩn cộng đồng của chúng tôi",
+                "body": "",
+                "image": ""
+              },
+              "redirect_url": "https://fptplay.vn/policy/nguyen-tac-cong-dong",
+              "redirect_content": "",
+              "status": "unread",
+              "created_at": {
+                "timestamp": 1743482196,
+                "iso_8601": "2025-04-01T11:36:36+07:00"
+              },
+              "attribute": {
+                  "from": [
+                    {
+                      "id": "",
+                      "name": "",
+                      "redirect_url": "",
+                      "image": "https://images.fptplay53.net/media/OTT/VOD/2025/03/18/chi-em-tranh-dau-fpt-play-1742291882787_Landscape.jpg"
+                    }
+                  ],
+                  "extra": null
+              }
+        }
+        ,{
+              "id": "{id noti}",
+              "category": "community",
+              "type_render": "common",
+              "message": {
+                "title": "Bình luận bị xóa vì vi phạm tiêu chuẩn cộng đồng",
+                "body": "",
+                "image": "https://stag-images.fangtv.vn/media/upload/2025/03/13/hlsbk11733579617267_25742543874428928.jpg"
+              },
+              "redirect_url": "https://dev-share.fangtv.vn/video/25396353785925632?cid={comment_id}&rid={reply_id}",
+              "redirect_content": "https://dev-share.fangtv.vn/video/25396353785925632",
+              "status": "unread",
+              "created_at": {
+                "timestamp": 1743482196,
+                "iso_8601": "2025-04-01T11:36:36+07:00"
+              },
+              "attribute": {
+                  "from": [
+                    {
+                      "id": "",
+                      "name": "",
+                      "redirect_url": "",
+                      "image": "https://images.fptplay53.net/media/OTT/VOD/2025/03/18/chi-em-tranh-dau-fpt-play-1742291882787_Landscape.jpg"
+                    }
+                  ],
+                  "extra": null
+              }
+        }
+
+        ,{
             "id": "f3a91d8c-2e67-4e40-91ae-b0b2b593908c",
             "category": "community",
             "type_render": "user_action",

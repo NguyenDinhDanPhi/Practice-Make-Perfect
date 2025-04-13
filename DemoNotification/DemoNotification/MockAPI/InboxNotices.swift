@@ -38,7 +38,7 @@ enum RenderType: String, Codable {
 
 // MARK: - NoticeMessage
 struct NoticeMessage: Codable {
-    let title: String?
+    let title: String
     let body: String?
     let image: String?
 }

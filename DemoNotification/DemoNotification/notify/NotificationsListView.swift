@@ -87,11 +87,16 @@ extension NotificationsListView {
            }
 
            let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
-        let title = item.message.title + " " + item.message.body
+        let title = item.message.title + " " + (item.message.body ?? "")
         let time = timeAgoString(from: Date(timeIntervalSince1970: TimeInterval(item.createdAt.timestamp)))
-        let thumbnailURL = item.message.image
-        let profileURL = item.attribute.from.first?.image
-        cell.configure(profileImage: profileURL, overlayImage: "", title: title, time: time, thumbnail: thumbnailURL)
+        let thumbnailURL = item.message.image ?? ""
+        
+        let fromList = item.attribute.from
+        let profileURL = fromList.first?.image
+        let overlayImage = fromList.count > 1 ? fromList[1].image : ""
+
+        let typeRender = item.typeRender
+        cell.configure(profileImage: profileURL, overlayImage: overlayImage, title: title, time: time, thumbnail: thumbnailURL, typeRender: typeRender)
 //            cell.contentView.backgroundColor = item.isSelected ? .white : UIColor(red: 1.0, green: 0.99, blue: 0.94, alpha: 1.0)
 //           cell.configure(
 //               profileImage: item.profileImage,

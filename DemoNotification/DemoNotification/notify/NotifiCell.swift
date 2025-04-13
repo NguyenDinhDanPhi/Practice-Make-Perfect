@@ -102,8 +102,17 @@ class NotifiCell: UITableViewCell {
     
     // MARK: - Configuration
     
-    func configure(profileImage: String?, overlayImage: String?, title: String, time: String, thumbnail: String, hiddenRed: Bool = false) {
-        avatarView.configure(mainImage: profileImage, overlayImage: "")
+    func configure(profileImage: String?, overlayImage: String?, title: String, time: String, thumbnail: String,typeRender: RenderType ,hiddenRed: Bool = false) {
+        
+        switch typeRender {
+        case .userAction:
+            print("haha user action")
+        case .common:
+            print("haha common")
+        }
+        print("image profile \(profileImage)")
+        print("image overlay \(overlayImage)")
+        avatarView.configure(mainImage: profileImage, overlayImage: overlayImage)
         titleLabel.text = title
         timeLabel.text = time
         thumbnailImageView.sd_setImage(with: convertUrlToImgae(urlString: "https://images.fptplay53.net/media/OTT/VOD/2025/03/18/chi-em-tranh-dau-fpt-play-1742291882787_Landscape.jpg") )

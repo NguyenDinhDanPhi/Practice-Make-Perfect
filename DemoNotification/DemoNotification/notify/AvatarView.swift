@@ -55,8 +55,8 @@ class AvatarView: UIView {
             mainImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             mainImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
-            overlayImageView.widthAnchor.constraint(equalToConstant: LayoutMetrics.imageSize),
-            overlayImageView.heightAnchor.constraint(equalToConstant: LayoutMetrics.imageSize),
+            overlayImageView.widthAnchor.constraint(equalToConstant: 50),
+            overlayImageView.heightAnchor.constraint(equalToConstant: 50),
             overlayImageView.centerXAnchor.constraint(equalTo: mainImageView.centerXAnchor, constant: LayoutMetrics.marginImage),
             overlayImageView.centerYAnchor.constraint(equalTo: mainImageView.centerYAnchor, constant: LayoutMetrics.marginImage)
         ])
@@ -74,7 +74,7 @@ class AvatarView: UIView {
 
         if let overlay = overlayImage, !overlay.isEmpty {
             overlayImageView.isHidden = false
-            overlayImageView.sd_setImage(with: convertStringToURL(urlString: overlay))
+            overlayImageView.image = UIImage(named: "avatar2")
         } else {
             overlayImageView.isHidden = true
         }
