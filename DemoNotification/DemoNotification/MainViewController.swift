@@ -6,7 +6,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         // Tạo các view controllers cho từng tab
-        let homeViewController = HomeViewController()
+        let homeViewController = ViolationWarningViewController()
         let notificationViewController = NotificationViewController()
         
         // Tạo Tab Bar Items
