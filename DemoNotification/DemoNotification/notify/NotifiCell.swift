@@ -1,15 +1,16 @@
 import UIKit
+import SDWebImage
 
 class NotifiCell: UITableViewCell {
-    
+
     static let identifier = "NotifiCell"
-    
+
     private let avatarView: AvatarView = {
         let view = AvatarView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     private lazy var redDotView: UIView = {
         let view = UIView()
         view.backgroundColor = .red
@@ -17,17 +18,15 @@ class NotifiCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    private let titleTextView: UITextView = {
-        let textView = UITextView()
-        textView.isEditable = false
-        textView.isSelectable = true
-        textView.backgroundColor = .clear
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.isScrollEnabled = false
-        return textView
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.isUserInteractionEnabled = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
-    
+
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
@@ -35,8 +34,8 @@ class NotifiCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    private let thumbnailImageView: UIImageView = {
+
+    private lazy var thumbnailImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 10
@@ -44,143 +43,126 @@ class NotifiCell: UITableViewCell {
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
-    
-    // Các biến thuộc tính cho titleRange và messRange
+
     private var titleRange: NSRange!
     private var messRange: NSRange!
     private var urlRedict: String = ""
-    private var fromUrlRedic: String = ""
-    // MARK: - Init
-    
+    private var fromUrlRedict: String = ""
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = UIColor(red: 1.0, green: 0.99, blue: 0.94, alpha: 1.0) // màu kem
+        contentView.backgroundColor = UIColor(red: 1.0, green: 0.99, blue: 0.94, alpha: 1.0)
         setupViews()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Layout
-    
+
     private func setupViews() {
         contentView.addSubview(avatarView)
         contentView.addSubview(redDotView)
-        contentView.addSubview(titleTextView)
+        contentView.addSubview(titleLabel)
         contentView.addSubview(timeLabel)
         contentView.addSubview(thumbnailImageView)
-        
-        self.contentView.layer.masksToBounds = false
-        self.layer.masksToBounds = false
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
+        titleLabel.addGestureRecognizer(tapGesture)
+
         NSLayoutConstraint.activate([
-            
             redDotView.widthAnchor.constraint(equalToConstant: 6),
             redDotView.heightAnchor.constraint(equalToConstant: 6),
             redDotView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
             redDotView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            
+
             avatarView.leadingAnchor.constraint(equalTo: redDotView.trailingAnchor, constant: 8),
             avatarView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             avatarView.widthAnchor.constraint(equalToConstant: 60),
             avatarView.heightAnchor.constraint(equalToConstant: 60),
-            
-            titleTextView.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 12),
-            titleTextView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
-            titleTextView.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8),
-            
-            timeLabel.leadingAnchor.constraint(equalTo: titleTextView.leadingAnchor),
-            timeLabel.topAnchor.constraint(equalTo: titleTextView.bottomAnchor, constant: 4),
-            
+
+            titleLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 12),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            titleLabel.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8),
+
+            timeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            timeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+
             thumbnailImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             thumbnailImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             thumbnailImageView.widthAnchor.constraint(equalToConstant: 60),
             thumbnailImageView.heightAnchor.constraint(equalToConstant: 60),
         ])
-        titleTextView.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
-    
-    // MARK: - Configuration
-    
+
     func configure(inboxNotice: InboxNotices) {
         let thumbnailURL = inboxNotice.message.image ?? ""
         urlRedict = inboxNotice.redirectURL ?? ""
         let titleText = inboxNotice.message.title
         let bodyText = inboxNotice.message.body ?? ""
-        
-        // Tạo NSMutableAttributedString từ title và body
-        let fullText = NSMutableAttributedString(string: titleText + " " + bodyText)
-        
-        // Lưu các phạm vi của title và body
+
+        fromUrlRedict = inboxNotice.attribute.from.first?.redirectURL ?? ""
+
+        let fullString = titleText + " " + bodyText
+        let attributedString = NSMutableAttributedString(string: fullString)
+
         titleRange = NSRange(location: 0, length: titleText.count)
-        messRange = NSRange(location: titleText.count, length: bodyText.count+1)
-        
-        // Thêm thuộc tính font cho từng phần của văn bản
-        fullText.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .medium), range: titleRange)
-        fullText.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .regular), range: messRange)
-        
-        // Thêm các thuộc tính nhận diện cho title và body
-        fullText.addAttribute(.foregroundColor, value: UIColor.black, range: titleRange)
-        fullText.addAttribute(.foregroundColor, value: UIColor.gray, range: messRange)
-        
-        // Thêm gesture chung cho cả title và body
-        titleTextView.isUserInteractionEnabled = true
-        titleTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap))) // Một gesture duy nhất
-        
-        // Set text cho UITextView
-        titleTextView.attributedText = fullText
-        fromUrlRedic = inboxNotice.attribute.from.first?.redirectURL ?? ""
-        // Cấu hình Avatar
+        messRange = NSRange(location: titleText.count + 1, length: bodyText.count)
+
+        attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .medium), range: titleRange)
+        attributedString.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .regular), range: messRange)
+        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: titleRange)
+        attributedString.addAttribute(.foregroundColor, value: UIColor.gray, range: messRange)
+
+        titleLabel.attributedText = attributedString
+
         let fromList = inboxNotice.attribute.from
         let profileURL = fromList.first?.image
         let overlayImage = fromList.count > 1 ? fromList[1].image : ""
-        let avataRedirect = inboxNotice.attribute.from.first?.redirectURL ?? ""
+        let avataRedirect = fromList.first?.redirectURL ?? ""
         avatarView.configure(mainImage: profileURL, overlayImage: overlayImage, redictUrl: avataRedirect)
-        
-        // Set ảnh thumbnail
+
         if !thumbnailURL.isEmpty {
             thumbnailImageView.isHidden = false
-            titleTextView.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8).isActive = true
-            thumbnailImageView.sd_setImage(with: convertUrlToImgae(urlString:thumbnailURL))
+            titleLabel.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8).isActive = true
+            thumbnailImageView.sd_setImage(with: convertUrlToImage(urlString: thumbnailURL))
         } else {
             thumbnailImageView.isHidden = true
-            titleTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
 
         }
     }
-    
-    func convertUrlToImgae(urlString: String) -> URL? {
-        let url = URL(string: urlString)
-        return url
+
+    func convertUrlToImage(urlString: String) -> URL? {
+        return URL(string: urlString)
     }
-    
-    // Duy nhất một gesture
-    @objc private func handleTap(sender: UITapGestureRecognizer) {
-        let location = sender.location(in: titleTextView)
-        
-        let textStorage = NSTextStorage(attributedString: titleTextView.attributedText!)
+
+    @objc private func handleLabelTap(_ sender: UITapGestureRecognizer) {
+        guard let label = sender.view as? UILabel,
+              let attributedText = label.attributedText else { return }
+
+        let textStorage = NSTextStorage(attributedString: attributedText)
         let layoutManager = NSLayoutManager()
-        
-        let containerSize = titleTextView.bounds.size
-        layoutManager.addTextContainer(NSTextContainer(size: containerSize))
+        let textContainer = NSTextContainer(size: label.bounds.size)
+        textContainer.lineFragmentPadding = 0
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        textContainer.lineBreakMode = label.lineBreakMode
+
+        layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
-        
-        let index = layoutManager.glyphIndex(for: location, in: layoutManager.textContainers.first!)
-        
+
+        let location = sender.location(in: label)
+        let index = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+
         if NSLocationInRange(index, titleRange) {
-            print("Title tapped!")
-            if !fromUrlRedic.isEmpty {
-                let url = URL(string: fromUrlRedic)
-                UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+            print("🔗 Tapped on title")
+            if let url = URL(string: fromUrlRedict) {
+                UIApplication.shared.open(url)
             }
-            // Handle title tap logic
         } else if NSLocationInRange(index, messRange) {
-            print("Body tapped!")
-            if !urlRedict.isEmpty {
-                let url = URL(string: urlRedict)
-                UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+            print("🔗 Tapped on body")
+            if let url = URL(string: urlRedict) {
+                UIApplication.shared.open(url)
             }
-            
         }
     }
 }

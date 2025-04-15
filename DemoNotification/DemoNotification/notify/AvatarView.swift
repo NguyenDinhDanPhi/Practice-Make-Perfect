@@ -16,7 +16,6 @@ class AvatarView: UIView {
         iv.isUserInteractionEnabled = true // Đảm bảo image view có thể nhận sự tương tác
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(avatarTapped))
         iv.addGestureRecognizer(tapGesture)
-        iv.backgroundColor = .red // Đặt màu nền để kiểm tra xem UIImageView có đúng vị trí
         return iv
     }()
 

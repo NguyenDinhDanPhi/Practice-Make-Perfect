@@ -24,7 +24,7 @@ class NotificationsListView: UIView, UITableViewDelegate, UITableViewDataSource 
 
     var todayNotis: [InboxNotices] = []
     var earlierNotis: [InboxNotices] = []
-
+    var redirectUrl: String = ""
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupTableView()
@@ -88,15 +88,7 @@ extension NotificationsListView {
 
            let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
             cell.configure(inboxNotice: item)
-//            cell.contentView.backgroundColor = item.isSelected ? .white : UIColor(red: 1.0, green: 0.99, blue: 0.94, alpha: 1.0)
-//           cell.configure(
-//               profileImage: item.profileImage,
-//               overlayImage: item.overlayImage,
-//               title: item.title,
-//               time: timeAgoString(from: item.time),
-//               thumbnail: item.thumbnailImage,
-//               hiddenRed: item.isSelected
-//           )
+        redirectUrl = item.redirectURL ?? ""
            return cell
     }
 
@@ -119,6 +111,10 @@ extension NotificationsListView {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if redirectUrl.isEmpty { return }
+        guard let url = URL(string: redirectUrl) else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
 //        let section = indexPath.section
 //            let row = indexPath.row
 //            if section == 0 {
