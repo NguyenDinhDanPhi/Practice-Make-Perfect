@@ -2,7 +2,7 @@ import UIKit
 import SDWebImage
 
 class NotifiCell: UITableViewCell {
-
+    var markAsRead: (() -> Void)?
     static let identifier = "NotifiCell"
 
     private let avatarView: AvatarView = {
@@ -41,13 +41,16 @@ class NotifiCell: UITableViewCell {
         iv.layer.cornerRadius = 10
         iv.clipsToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapThumbnail))
+        iv.addGestureRecognizer(tapGesture)
         return iv
     }()
 
     private var titleRange: NSRange!
     private var messRange: NSRange!
-    private var urlRedict: String = ""
-    private var fromUrlRedict: String = ""
+    private var redirectUrl: String = ""
+    private var fromRedirectUrl: String = ""
+    private var redirectContent: String = ""
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -96,12 +99,13 @@ class NotifiCell: UITableViewCell {
 
     func configure(inboxNotice: InboxNotices) {
         let thumbnailURL = inboxNotice.message.image ?? ""
-        urlRedict = inboxNotice.redirectURL ?? ""
         let titleText = inboxNotice.message.title
         let bodyText = inboxNotice.message.body ?? ""
-
-        fromUrlRedict = inboxNotice.attribute.from.first?.redirectURL ?? ""
-
+        
+        redirectUrl = inboxNotice.redirectURL ?? ""
+        fromRedirectUrl = inboxNotice.attribute.from.first?.redirectURL ?? ""
+        redirectContent = inboxNotice.redirectContent ?? ""
+        
         let fullString = titleText + " " + bodyText
         let attributedString = NSMutableAttributedString(string: fullString)
 
@@ -155,14 +159,24 @@ class NotifiCell: UITableViewCell {
 
         if NSLocationInRange(index, titleRange) {
             print("🔗 Tapped on title")
-            if let url = URL(string: fromUrlRedict) {
+            markAsRead?()
+            if let url = URL(string: fromRedirectUrl) {
                 UIApplication.shared.open(url)
             }
         } else if NSLocationInRange(index, messRange) {
             print("🔗 Tapped on body")
-            if let url = URL(string: urlRedict) {
+            markAsRead?()
+            if let url = URL(string: redirectUrl) {
                 UIApplication.shared.open(url)
             }
         }
+    }
+    
+    @objc func tapThumbnail() {
+        markAsRead?()
+        if let url = URL(string: redirectContent) {
+            UIApplication.shared.open(url)
+        }
+
     }
 }

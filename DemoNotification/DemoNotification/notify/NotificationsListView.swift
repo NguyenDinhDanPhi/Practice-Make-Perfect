@@ -89,6 +89,9 @@ extension NotificationsListView {
            let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
             cell.configure(inboxNotice: item)
         redirectUrl = item.redirectURL ?? ""
+        cell.markAsRead = {
+              //TODO: call api mark
+           }
            return cell
     }
 
@@ -115,6 +118,10 @@ extension NotificationsListView {
         if redirectUrl.isEmpty { return }
         guard let url = URL(string: redirectUrl) else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        if let cell = tableView.cellForRow(at: indexPath) as? NotifiCell {
+                cell.markAsRead?() // Gọi lại callback khi chọn cell
+            }
+        
 //        let section = indexPath.section
 //            let row = indexPath.row
 //            if section == 0 {
