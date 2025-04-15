@@ -112,7 +112,7 @@ class NotifiCell: UITableViewCell {
         
         // Lưu các phạm vi của title và body
         titleRange = NSRange(location: 0, length: titleText.count)
-        messRange = NSRange(location: titleText.count, length: bodyText.count)
+        messRange = NSRange(location: titleText.count, length: bodyText.count+1)
         
         // Thêm thuộc tính font cho từng phần của văn bản
         fullText.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .medium), range: titleRange)
