@@ -136,7 +136,15 @@ class NotifiCell: UITableViewCell {
         avatarView.configure(mainImage: profileURL, overlayImage: overlayImage)
         
         // Set ảnh thumbnail
-        thumbnailImageView.sd_setImage(with: convertUrlToImgae(urlString: thumbnailURL))
+        if !thumbnailURL.isEmpty {
+            thumbnailImageView.isHidden = false
+            titleTextView.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8).isActive = true
+            thumbnailImageView.sd_setImage(with: convertUrlToImgae(urlString:thumbnailURL))
+        } else {
+            thumbnailImageView.isHidden = true
+            titleTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
+
+        }
     }
     
     func convertUrlToImgae(urlString: String) -> URL? {
