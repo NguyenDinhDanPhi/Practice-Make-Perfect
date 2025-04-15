@@ -1,10 +1,3 @@
-//
-//  NotifiCell.swift
-//  DemoNotification
-//
-//  Created by dan phi on 3/4/25.
-//
-
 import UIKit
 
 class NotifiCell: UITableViewCell {
@@ -17,7 +10,6 @@ class NotifiCell: UITableViewCell {
         return view
     }()
     
-    
     private lazy var redDotView: UIView = {
         let view = UIView()
         view.backgroundColor = .red
@@ -26,12 +18,13 @@ class NotifiCell: UITableViewCell {
         return view
     }()
     
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 2
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    private let titleTextView: UITextView = {
+        let textView = UITextView()
+        textView.isEditable = false
+        textView.isSelectable = true
+        textView.backgroundColor = .clear
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
     }()
     
     private let timeLabel: UILabel = {
@@ -51,6 +44,10 @@ class NotifiCell: UITableViewCell {
         return iv
     }()
     
+    // Các biến thuộc tính cho titleRange và messRange
+    private var titleRange: NSRange!
+    private var messRange: NSRange!
+    
     // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -68,7 +65,7 @@ class NotifiCell: UITableViewCell {
     private func setupViews() {
         contentView.addSubview(avatarView)
         contentView.addSubview(redDotView)
-        contentView.addSubview(titleLabel)
+        contentView.addSubview(titleTextView)
         contentView.addSubview(timeLabel)
         contentView.addSubview(thumbnailImageView)
         
@@ -86,61 +83,85 @@ class NotifiCell: UITableViewCell {
             avatarView.widthAnchor.constraint(equalToConstant: 60),
             avatarView.heightAnchor.constraint(equalToConstant: 60),
             
-            titleLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 12),
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
-            titleLabel.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8),
+            titleTextView.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 12),
+            titleTextView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
+            titleTextView.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8),
             
-            timeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            timeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            timeLabel.leadingAnchor.constraint(equalTo: titleTextView.leadingAnchor),
+            timeLabel.topAnchor.constraint(equalTo: titleTextView.bottomAnchor, constant: 4),
             
             thumbnailImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             thumbnailImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             thumbnailImageView.widthAnchor.constraint(equalToConstant: 60),
             thumbnailImageView.heightAnchor.constraint(equalToConstant: 60),
         ])
+        titleTextView.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
     // MARK: - Configuration
     
     func configure(inboxNotice: InboxNotices) {
-        //let time = timeAgoString(from: Date(timeIntervalSince1970: TimeInterval(item.createdAt.timestamp)))
         let thumbnailURL = inboxNotice.message.image ?? ""
         
         let titleText = inboxNotice.message.title
         let bodyText = inboxNotice.message.body ?? ""
+        
         // Tạo NSMutableAttributedString từ title và body
         let fullText = NSMutableAttributedString(string: titleText + " " + bodyText)
-        let titleRange = NSRange(location: 0, length: titleText.count)
-        let messRange = NSRange(location: titleText.count, length: bodyText.count)
+        
+        // Lưu các phạm vi của title và body
+        titleRange = NSRange(location: 0, length: titleText.count)
+        messRange = NSRange(location: titleText.count, length: bodyText.count)
+        
+        // Thêm thuộc tính font cho từng phần của văn bản
         fullText.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .medium), range: titleRange)
-        fullText.addAttribute(.font, value:  UIFont.systemFont(ofSize: 14, weight: .regular), range: messRange)
+        fullText.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .regular), range: messRange)
+        
+        // Thêm các thuộc tính nhận diện cho title và body
+        fullText.addAttribute(.foregroundColor, value: UIColor.black, range: titleRange)
+        fullText.addAttribute(.foregroundColor, value: UIColor.gray, range: messRange)
+        
+        // Thêm gesture chung cho cả title và body
+        titleTextView.isUserInteractionEnabled = true
+        titleTextView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTap))) // Một gesture duy nhất
+        
+        // Set text cho UITextView
+        titleTextView.attributedText = fullText
+        
+        // Cấu hình Avatar
         let fromList = inboxNotice.attribute.from
         let profileURL = fromList.first?.image
         let overlayImage = fromList.count > 1 ? fromList[1].image : ""
-        
         avatarView.configure(mainImage: profileURL, overlayImage: overlayImage)
-        titleLabel.attributedText = fullText
         
+        // Set ảnh thumbnail
         thumbnailImageView.sd_setImage(with: convertUrlToImgae(urlString: thumbnailURL))
-        
-//        switch typeRender {
-//        case .userAction:
-//            print("haha user action")
-//        case .common:
-//            print("haha common")
-//        }
-//        print("image profile \(profileImage)")
-//        print("image overlay \(overlayImage)")
-//        avatarView.configure(mainImage: profileImage, overlayImage: overlayImage)
-//        titleLabel.text = title
-//        timeLabel.text = time
-//        thumbnailImageView.sd_setImage(with: convertUrlToImgae(urlString: "https://images.fptplay53.net/media/OTT/VOD/2025/03/18/chi-em-tranh-dau-fpt-play-1742291882787_Landscape.jpg") )
-//        redDotView.isHidden = hiddenRed
     }
     
-    func convertUrlToImgae(urlString: String) -> URL?{
-        let url =  URL(string: urlString)
+    func convertUrlToImgae(urlString: String) -> URL? {
+        let url = URL(string: urlString)
         return url
     }
-
+    
+    // Duy nhất một gesture
+    @objc private func handleTap(sender: UITapGestureRecognizer) {
+        let location = sender.location(in: titleTextView)
+        
+        let textStorage = NSTextStorage(attributedString: titleTextView.attributedText!)
+        let layoutManager = NSLayoutManager()
+        
+        let containerSize = titleTextView.bounds.size
+        layoutManager.addTextContainer(NSTextContainer(size: containerSize))
+        textStorage.addLayoutManager(layoutManager)
+        
+        let index = layoutManager.glyphIndex(for: location, in: layoutManager.textContainers.first!)
+        
+        if NSLocationInRange(index, titleRange) {
+            print("Title tapped!")
+            // Handle title tap logic
+        } else if NSLocationInRange(index, messRange) {
+            print("Body tapped!")
+            // Handle body tap logic
+        }
+    }
 }
