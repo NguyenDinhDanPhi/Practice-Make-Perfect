@@ -161,13 +161,15 @@ class NotifiCell: UITableViewCell {
             print("🔗 Tapped on title")
             markAsRead?()
             if let url = URL(string: fromRedirectUrl) {
-                UIApplication.shared.open(url)
+                openUrl(url: url)
+            } else {
+                openUrl(url: URL(string: redirectUrl)!)
             }
         } else if NSLocationInRange(index, messRange) {
             print("🔗 Tapped on body")
             markAsRead?()
             if let url = URL(string: redirectUrl) {
-                UIApplication.shared.open(url)
+                openUrl(url: url)
             }
         }
     }
@@ -178,5 +180,9 @@ class NotifiCell: UITableViewCell {
             UIApplication.shared.open(url)
         }
 
+    }
+    
+    func openUrl(url: URL) {
+        UIApplication.shared.open(url)
     }
 }
