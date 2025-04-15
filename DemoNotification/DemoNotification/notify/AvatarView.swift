@@ -70,11 +70,11 @@ class AvatarView: UIView {
 
     func configure(mainImage: String?, overlayImage: String?) {
         
-        mainImageView.sd_setImage(with: convertStringToURL(urlString:"https://images.fptplay53.net/media/OTT/VOD/2025/03/18/chi-em-tranh-dau-fpt-play-1742291882787_Landscape.jpg"))
+        mainImageView.sd_setImage(with: convertStringToURL(urlString: mainImage ?? ""))
 
         if let overlay = overlayImage, !overlay.isEmpty {
             overlayImageView.isHidden = false
-            overlayImageView.image = UIImage(named: "avatar2")
+            overlayImageView.sd_setImage(with: convertStringToURL(urlString: overlay))
         } else {
             overlayImageView.isHidden = true
         }

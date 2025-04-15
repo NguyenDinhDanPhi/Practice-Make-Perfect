@@ -24,6 +24,7 @@ class NotifiCell: UITableViewCell {
         textView.isSelectable = true
         textView.backgroundColor = .clear
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.isScrollEnabled = false
         return textView
     }()
     
