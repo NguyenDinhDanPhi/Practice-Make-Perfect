@@ -8,19 +8,22 @@
 import UIKit
 import SDWebImage
 class AvatarView: UIView {
-    
+    var redictUrlImage: String = ""
     struct LayoutMetrics {
         static let imageSize: CGFloat = 36
         static let marginImage: CGFloat = 18
     }
 
     private let mainImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
-    }()
+            let iv = UIImageView()
+            iv.contentMode = .scaleAspectFill
+            iv.clipsToBounds = true
+            iv.translatesAutoresizingMaskIntoConstraints = false
+            iv.isUserInteractionEnabled = true // Đảm bảo image view có thể nhận sự tương tác
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(avatarTapped))
+            iv.addGestureRecognizer(tapGesture)
+            return iv
+        }()
 
     private let overlayImageView: UIImageView = {
         let iv = UIImageView()
@@ -68,9 +71,10 @@ class AvatarView: UIView {
         overlayImageView.layer.cornerRadius = overlayImageView.frame.width / 2
     }
 
-    func configure(mainImage: String?, overlayImage: String?) {
+    func configure(mainImage: String?, overlayImage: String?, redictUrl: String) {
+        redictUrlImage = redictUrl
         
-        mainImageView.sd_setImage(with: convertStringToURL(urlString: mainImage ?? ""))
+        mainImageView.sd_setImage(with: convertStringToURL(urlString: "https://images.fptplay53.net/media/OTT/VOD/2025/03/18/chi-em-tranh-dau-fpt-play-1742291882787_Landscape.jpg"))
 
         if let overlay = overlayImage, !overlay.isEmpty {
             overlayImageView.isHidden = false
@@ -85,4 +89,16 @@ class AvatarView: UIView {
         
         return url
     }
+    
+    @objc func avatarTapped() {
+           print("avatarTapped called")
+           
+           if !redictUrlImage.isEmpty {
+               guard let url = URL(string: redictUrlImage) else { return  }
+               print("Opening URL: \(redictUrlImage)") // Debug log
+               UIApplication.shared.open(url, options: [:], completionHandler: nil)
+           } else {
+               print("No redirect URL set")
+           }
+       }
 }

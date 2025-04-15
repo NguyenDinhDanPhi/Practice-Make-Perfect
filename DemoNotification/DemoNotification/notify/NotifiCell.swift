@@ -48,7 +48,8 @@ class NotifiCell: UITableViewCell {
     // Các biến thuộc tính cho titleRange và messRange
     private var titleRange: NSRange!
     private var messRange: NSRange!
-    
+    private var urlRedict: String = ""
+    private var fromUrlRedic: String = ""
     // MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -103,7 +104,7 @@ class NotifiCell: UITableViewCell {
     
     func configure(inboxNotice: InboxNotices) {
         let thumbnailURL = inboxNotice.message.image ?? ""
-        
+        urlRedict = inboxNotice.redirectURL ?? ""
         let titleText = inboxNotice.message.title
         let bodyText = inboxNotice.message.body ?? ""
         
@@ -128,12 +129,13 @@ class NotifiCell: UITableViewCell {
         
         // Set text cho UITextView
         titleTextView.attributedText = fullText
-        
+        fromUrlRedic = inboxNotice.attribute.from.first?.redirectURL ?? ""
         // Cấu hình Avatar
         let fromList = inboxNotice.attribute.from
         let profileURL = fromList.first?.image
         let overlayImage = fromList.count > 1 ? fromList[1].image : ""
-        avatarView.configure(mainImage: profileURL, overlayImage: overlayImage)
+        let avataRedirect = inboxNotice.attribute.from.first?.redirectURL ?? ""
+        avatarView.configure(mainImage: profileURL, overlayImage: overlayImage, redictUrl: avataRedirect)
         
         // Set ảnh thumbnail
         if !thumbnailURL.isEmpty {
@@ -167,10 +169,18 @@ class NotifiCell: UITableViewCell {
         
         if NSLocationInRange(index, titleRange) {
             print("Title tapped!")
+            if !fromUrlRedic.isEmpty {
+                let url = URL(string: fromUrlRedic)
+                UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+            }
             // Handle title tap logic
         } else if NSLocationInRange(index, messRange) {
             print("Body tapped!")
-            // Handle body tap logic
+            if !urlRedict.isEmpty {
+                let url = URL(string: urlRedict)
+                UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+            }
+            
         }
     }
 }
