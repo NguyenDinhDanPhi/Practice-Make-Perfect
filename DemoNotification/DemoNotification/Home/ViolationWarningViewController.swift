@@ -14,7 +14,7 @@ class ViolationWarningViewController: UIViewController {
     private lazy var stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 16
+        stack.spacing = 14
         stack.alignment = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
