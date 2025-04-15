@@ -89,7 +89,6 @@ extension NotificationsListView {
            let item = indexPath.section == 0 ? todayNotis[indexPath.row] : earlierNotis[indexPath.row]
             cell.configure(inboxNotice: item)
         redirectUrl = item.redirectURL 
-        UIApplication.shared.open(URL(string: redirectUrl)!)
         cell.markAsRead = {
               //TODO: call api mark
            }
