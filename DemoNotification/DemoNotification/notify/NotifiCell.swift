@@ -85,7 +85,7 @@ class NotifiCell: UITableViewCell {
             avatarView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             avatarView.widthAnchor.constraint(equalToConstant: 60),
             avatarView.heightAnchor.constraint(equalToConstant: 60),
-                        
+            
             titleLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 12),
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
             titleLabel.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8),
@@ -102,21 +102,40 @@ class NotifiCell: UITableViewCell {
     
     // MARK: - Configuration
     
-    func configure(profileImage: String?, overlayImage: String?, title: String, time: String, thumbnail: String,typeRender: RenderType ,hiddenRed: Bool = false) {
+    func configure(inboxNotice: InboxNotices) {
+        //let time = timeAgoString(from: Date(timeIntervalSince1970: TimeInterval(item.createdAt.timestamp)))
+        let thumbnailURL = inboxNotice.message.image ?? ""
         
-        switch typeRender {
-        case .userAction:
-            print("haha user action")
-        case .common:
-            print("haha common")
-        }
-        print("image profile \(profileImage)")
-        print("image overlay \(overlayImage)")
-        avatarView.configure(mainImage: profileImage, overlayImage: overlayImage)
-        titleLabel.text = title
-        timeLabel.text = time
-        thumbnailImageView.sd_setImage(with: convertUrlToImgae(urlString: "https://images.fptplay53.net/media/OTT/VOD/2025/03/18/chi-em-tranh-dau-fpt-play-1742291882787_Landscape.jpg") )
-        redDotView.isHidden = hiddenRed
+        let titleText = inboxNotice.message.title
+        let bodyText = inboxNotice.message.body ?? ""
+        // Tạo NSMutableAttributedString từ title và body
+        let fullText = NSMutableAttributedString(string: titleText + " " + bodyText)
+        let titleRange = NSRange(location: 0, length: titleText.count)
+        let messRange = NSRange(location: titleText.count, length: bodyText.count)
+        fullText.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .medium), range: titleRange)
+        fullText.addAttribute(.font, value:  UIFont.systemFont(ofSize: 14, weight: .regular), range: messRange)
+        let fromList = inboxNotice.attribute.from
+        let profileURL = fromList.first?.image
+        let overlayImage = fromList.count > 1 ? fromList[1].image : ""
+        
+        avatarView.configure(mainImage: profileURL, overlayImage: overlayImage)
+        titleLabel.attributedText = fullText
+        
+        thumbnailImageView.sd_setImage(with: convertUrlToImgae(urlString: thumbnailURL))
+        
+//        switch typeRender {
+//        case .userAction:
+//            print("haha user action")
+//        case .common:
+//            print("haha common")
+//        }
+//        print("image profile \(profileImage)")
+//        print("image overlay \(overlayImage)")
+//        avatarView.configure(mainImage: profileImage, overlayImage: overlayImage)
+//        titleLabel.text = title
+//        timeLabel.text = time
+//        thumbnailImageView.sd_setImage(with: convertUrlToImgae(urlString: "https://images.fptplay53.net/media/OTT/VOD/2025/03/18/chi-em-tranh-dau-fpt-play-1742291882787_Landscape.jpg") )
+//        redDotView.isHidden = hiddenRed
     }
     
     func convertUrlToImgae(urlString: String) -> URL?{
