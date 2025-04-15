@@ -49,9 +49,17 @@ class ViolationWarningViewController: UIViewController {
     
     private lazy var footerLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hãy đọc Tiêu chuẩn Cộng đồng của chúng tôi"
-        label.font = .italicSystemFont(ofSize: 13)
-        label.textColor = .gray
+        
+        let fullText = "Hãy đọc Tiêu chuẩn Cộng đồng của chúng tôi"
+        let attributedString = NSMutableAttributedString(string: fullText)
+        // Tìm vị trí "Tiêu chuẩn Cộng đồng" trong chuỗi và áp dụng các thuộc tính
+        let targetText = "Tiêu chuẩn Cộng đồng"
+        let range = (fullText as NSString).range(of: targetText)
+        // Định dạng cho từ "Tiêu chuẩn Cộng đồng"
+        attributedString.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 13), range: range)  // In đậm
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: range)  // Gạch chân
+        label.font = .systemFont(ofSize: 13)
+        label.attributedText = attributedString
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -84,7 +92,7 @@ class ViolationWarningViewController: UIViewController {
             
             footerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             footerLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            footerLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -12)
+            footerLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
     }
     
