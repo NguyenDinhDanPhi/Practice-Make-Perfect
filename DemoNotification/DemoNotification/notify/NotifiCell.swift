@@ -118,42 +118,12 @@ class NotifiCell: UITableViewCell {
         let moreString = inboxNotice.attribute.extra?.more ?? ""
         let bodyString = inboxNotice.message.body ?? ""
         
-        let fullText = "\(firstPersonString), \(secondPersonString) \(moreString) \(bodyString)"
-        let attributedText = NSMutableAttributedString(string: fullText)
-        
-        let personStart = 0
-        let personLength = firstPersonString.count        
-        let commaAndSpace = 2
-        
-        let seconStart = personStart + personLength + commaAndSpace
-        let seconLength = secondPersonString.count
-        
-        let spaceBetweenSecondAndMore = 1
-        let moreStart = seconStart + seconLength + spaceBetweenSecondAndMore
-        let moreLength = moreString.count
-        
-        let spaceBetweenMoreAndBody = 1
-        let bodyStart = moreStart + moreLength + spaceBetweenMoreAndBody
-        let bodyLength = bodyString.count
-        
-        // Gán NSRange chính xác
-        personRange = NSRange(location: personStart, length: personLength)
-        seconRange = NSRange(location: seconStart, length: seconLength)
-        moreRange = NSRange(location: moreStart, length: moreLength)
-        bodyRange = NSRange(location: bodyStart, length: bodyLength)
-        
-        // Set font và màu
-        attributedText.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .medium), range: personRange)
-        attributedText.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .medium), range: seconRange)
-        attributedText.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .medium), range: moreRange)
-        attributedText.addAttribute(.font, value: UIFont.systemFont(ofSize: 14, weight: .regular), range: bodyRange)
-        
-        attributedText.addAttribute(.foregroundColor, value: UIColor.black, range: personRange)
-        attributedText.addAttribute(.foregroundColor, value: UIColor.black, range: seconRange)
-        attributedText.addAttribute(.foregroundColor, value: UIColor.black, range: moreRange)
-        attributedText.addAttribute(.foregroundColor, value: UIColor.gray, range: bodyRange)
-        
-        titleLabel.attributedText = attributedText
+        titleLabel.attributedText = buildAttributedText(
+                person: firstPersonString,
+                second: secondPersonString,
+                more: moreString,
+                body: bodyString
+            )
     
         redirectUrl = inboxNotice.redirectURL ?? ""
         fromRedirectUrl = inboxNotice.attribute.from.first?.redirectURL ?? ""
@@ -178,6 +148,56 @@ class NotifiCell: UITableViewCell {
     func convertUrlToImage(urlString: String) -> URL? {
         return URL(string: urlString)
     }
+    
+    private func buildAttributedText(person: String, second: String, more: String, body: String) -> NSAttributedString {
+        let fullText = "\(person), \(second) \(more) \(body)"
+        let attributedText = NSMutableAttributedString(string: fullText)
+
+        let personStart = 0
+        let personLength = person.count
+        let commaAndSpace = 2
+
+        let seconStart = personStart + personLength + commaAndSpace
+        let seconLength = second.count
+
+        let spaceBetweenSecondAndMore = 1
+        let moreStart = seconStart + seconLength + spaceBetweenSecondAndMore
+        let moreLength = more.count
+
+        let spaceBetweenMoreAndBody = 1
+        let bodyStart = moreStart + moreLength + spaceBetweenMoreAndBody
+        let bodyLength = body.count
+
+        // Gán lại range vào biến instance (nếu cần dùng khi tap)
+        personRange = NSRange(location: personStart, length: personLength)
+        seconRange = NSRange(location: seconStart, length: seconLength)
+        moreRange = NSRange(location: moreStart, length: moreLength)
+        bodyRange = NSRange(location: bodyStart, length: bodyLength)
+
+        // Set font và màu
+        attributedText.addAttributes([
+            .font: UIFont.systemFont(ofSize: 14, weight: .medium),
+            .foregroundColor: UIColor.black
+        ], range: personRange)
+
+        attributedText.addAttributes([
+            .font: UIFont.systemFont(ofSize: 14, weight: .medium),
+            .foregroundColor: UIColor.black
+        ], range: seconRange)
+
+        attributedText.addAttributes([
+            .font: UIFont.systemFont(ofSize: 14, weight: .medium),
+            .foregroundColor: UIColor.black
+        ], range: moreRange)
+
+        attributedText.addAttributes([
+            .font: UIFont.systemFont(ofSize: 14, weight: .regular),
+            .foregroundColor: UIColor.gray
+        ], range: bodyRange)
+
+        return attributedText
+    }
+
     
     @objc private func handleLabelTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel,
@@ -216,7 +236,7 @@ class NotifiCell: UITableViewCell {
             print("🟢 personRange tapped")
             markAsRead?()
             if let url = URL(string: fromRedirectUrl) {
-                openUrl(url: url)
+                //openUrl(url: url)
             }
         } else if NSLocationInRange(index, seconRange) {
             print("🟡 seconRange tapped")
@@ -232,7 +252,7 @@ class NotifiCell: UITableViewCell {
             print("🟣 bodyRange tapped")
             markAsRead?()
             if let url = URL(string: redirectUrl) {
-                openUrl(url: url)
+                //openUrl(url: url)
             }
         } else {
             print("⚪️ Outside target ranges")
