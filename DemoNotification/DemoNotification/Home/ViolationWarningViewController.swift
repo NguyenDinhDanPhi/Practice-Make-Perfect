@@ -62,6 +62,9 @@ class ViolationWarningViewController: UIViewController {
         label.attributedText = attributedString
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true  
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap))
+        label.addGestureRecognizer(tapGesture)
         return label
     }()
     
@@ -120,5 +123,11 @@ class ViolationWarningViewController: UIViewController {
             Nội dung của bạn vi phạm Tiêu chuẩn Cộng đồng của chúng tôi. Tiêu chuẩn này bao gồm quy tắc và chuẩn mực về việc sử dụng FangTV, áp dụng cho tất cả mọi người và mọi nội dung trên nền tảng của chúng tôi.
             """
         ))
+    }
+    
+    
+    @objc func handleLabelTap() {
+        print("haha")
+        navigationController?.pushViewController(CommunityStandardViewController(), animated: true)
     }
 }

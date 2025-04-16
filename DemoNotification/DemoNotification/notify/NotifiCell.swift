@@ -151,7 +151,7 @@ class NotifiCell: UITableViewCell {
             thumbnailImageView.sd_setImage(with: convertUrlToImage(urlString: thumbnailURL))
         } else {
             thumbnailImageView.isHidden = true
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -18).isActive = true
             
         }
     }
@@ -166,12 +166,10 @@ class NotifiCell: UITableViewCell {
         let fullText = "\(personSecondText)\(moreText) \(body)"
         let attributedText = NSMutableAttributedString(string: fullText)
 
-        // 1. person
         let personStart = 0
         let personLength = person.count
         personRange = NSRange(location: personStart, length: personLength)
 
-        // 2. second
         var seconStart = 0
         if !second.isEmpty {
             seconStart = person.count + 2 // ", "
@@ -180,7 +178,6 @@ class NotifiCell: UITableViewCell {
             seconRange = NSRange(location: 0, length: 0)
         }
 
-        // 3. more
         var moreStart = 0
         if !more.isEmpty {
             moreStart = personSecondText.count + 4 // " và " = 4 ký tự
@@ -189,12 +186,10 @@ class NotifiCell: UITableViewCell {
             moreRange = NSRange(location: 0, length: 0)
         }
 
-        // 4. body
         let spaceBeforeBody = 1
         let bodyStart = fullText.count - body.count
         bodyRange = NSRange(location: bodyStart, length: body.count)
 
-        // Gán attributed
         attributedText.addAttributes([
             .font: UIFont.systemFont(ofSize: 14, weight: .medium),
             .foregroundColor: UIColor.black
@@ -216,7 +211,7 @@ class NotifiCell: UITableViewCell {
 
         attributedText.addAttributes([
             .font: UIFont.systemFont(ofSize: 14, weight: .regular),
-            .foregroundColor: UIColor.gray
+            .foregroundColor: UIColor.black
         ], range: bodyRange)
 
         return attributedText
@@ -237,7 +232,9 @@ class NotifiCell: UITableViewCell {
             switch index {
             case _ where NSLocationInRange(index, personRange):
                 print("🟢 personRange tapped")
-
+                if let url = URL(string: fromRedirectUrl) {
+                    openUrl(url: url)
+                }
             case _ where NSLocationInRange(index, seconRange):
                 print("🟡 seconRange tapped")
 
@@ -245,7 +242,9 @@ class NotifiCell: UITableViewCell {
                 print("🔵 moreRange tapped")
 
             case _ where NSLocationInRange(index, bodyRange):
-                print("🟣 bodyRange tapped")
+                if let url = URL(string: redirectContent) {
+                    openUrl(url: url)
+                }
 
             default:
                 print("⚪️ Outside target ranges")
