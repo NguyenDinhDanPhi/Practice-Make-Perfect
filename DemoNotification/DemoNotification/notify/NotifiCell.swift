@@ -26,6 +26,7 @@ class NotifiCell: UITableViewCell {
         label.numberOfLines = 0
         label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
     
@@ -48,13 +49,12 @@ class NotifiCell: UITableViewCell {
         return iv
     }()
     
-    private var titleRange: NSRange!
-    private var messRange: NSRange!
-    
     private var personRange: NSRange!
     private var seconRange: NSRange!
     private var moreRange: NSRange!
     private var bodyRange: NSRange!
+    
+    private var renderType: RenderType?
     
     private var redirectUrl: String = ""
     private var fromRedirectUrl: String = ""
@@ -112,19 +112,30 @@ class NotifiCell: UITableViewCell {
         
         let thumbnailURL = inboxNotice.message.image ?? ""
         let fromList = inboxNotice.attribute.from
+        renderType = inboxNotice.typeRender
+        switch renderType {
+        case .userAction:
+            let firstPersonString = fromList.first?.name ?? ""
+            let secondPersonString = fromList.count > 1 ? fromList[1].name ?? "" : ""
+            let moreString = inboxNotice.attribute.extra?.more ?? ""
+            let bodyString = inboxNotice.message.body ?? ""
+            
+            
+            
+            titleLabel.attributedText = buildAttributedText(
+                    person: firstPersonString,
+                    second: secondPersonString,
+                    more: moreString,
+                    body: bodyString
+                )
         
-        let firstPersonString = fromList.first?.name ?? ""
-        let secondPersonString = fromList.count > 1 ? fromList[1].name ?? "" : ""
-        let moreString = inboxNotice.attribute.extra?.more ?? ""
-        let bodyString = inboxNotice.message.body ?? ""
-        
-        titleLabel.attributedText = buildAttributedText(
-                person: firstPersonString,
-                second: secondPersonString,
-                more: moreString,
-                body: bodyString
-            )
-    
+        case .common:
+            let string = inboxNotice.message.title ?? ""
+            titleLabel.text = string
+        case .none:
+            break
+        }
+       
         redirectUrl = inboxNotice.redirectURL ?? ""
         fromRedirectUrl = inboxNotice.attribute.from.first?.redirectURL ?? ""
         redirectContent = inboxNotice.redirectContent ?? ""
@@ -150,45 +161,58 @@ class NotifiCell: UITableViewCell {
     }
     
     private func buildAttributedText(person: String, second: String, more: String, body: String) -> NSAttributedString {
-        let fullText = "\(person), \(second) \(more) \(body)"
+        let personSecondText = second.isEmpty ? person : "\(person), \(second)"
+        let moreText = more.isEmpty ? "" : " và \(more)"
+        let fullText = "\(personSecondText)\(moreText) \(body)"
         let attributedText = NSMutableAttributedString(string: fullText)
 
+        // 1. person
         let personStart = 0
         let personLength = person.count
-        let commaAndSpace = 2
-
-        let seconStart = personStart + personLength + commaAndSpace
-        let seconLength = second.count
-
-        let spaceBetweenSecondAndMore = 1
-        let moreStart = seconStart + seconLength + spaceBetweenSecondAndMore
-        let moreLength = more.count
-
-        let spaceBetweenMoreAndBody = 1
-        let bodyStart = moreStart + moreLength + spaceBetweenMoreAndBody
-        let bodyLength = body.count
-
-        // Gán lại range vào biến instance (nếu cần dùng khi tap)
         personRange = NSRange(location: personStart, length: personLength)
-        seconRange = NSRange(location: seconStart, length: seconLength)
-        moreRange = NSRange(location: moreStart, length: moreLength)
-        bodyRange = NSRange(location: bodyStart, length: bodyLength)
 
-        // Set font và màu
+        // 2. second
+        var seconStart = 0
+        if !second.isEmpty {
+            seconStart = person.count + 2 // ", "
+            seconRange = NSRange(location: seconStart, length: second.count)
+        } else {
+            seconRange = NSRange(location: 0, length: 0)
+        }
+
+        // 3. more
+        var moreStart = 0
+        if !more.isEmpty {
+            moreStart = personSecondText.count + 4 // " và " = 4 ký tự
+            moreRange = NSRange(location: moreStart, length: more.count)
+        } else {
+            moreRange = NSRange(location: 0, length: 0)
+        }
+
+        // 4. body
+        let spaceBeforeBody = 1
+        let bodyStart = fullText.count - body.count
+        bodyRange = NSRange(location: bodyStart, length: body.count)
+
+        // Gán attributed
         attributedText.addAttributes([
             .font: UIFont.systemFont(ofSize: 14, weight: .medium),
             .foregroundColor: UIColor.black
         ], range: personRange)
 
-        attributedText.addAttributes([
-            .font: UIFont.systemFont(ofSize: 14, weight: .medium),
-            .foregroundColor: UIColor.black
-        ], range: seconRange)
+        if seconRange.length > 0 {
+            attributedText.addAttributes([
+                .font: UIFont.systemFont(ofSize: 14, weight: .medium),
+                .foregroundColor: UIColor.black
+            ], range: seconRange)
+        }
 
-        attributedText.addAttributes([
-            .font: UIFont.systemFont(ofSize: 14, weight: .medium),
-            .foregroundColor: UIColor.black
-        ], range: moreRange)
+        if moreRange.length > 0 {
+            attributedText.addAttributes([
+                .font: UIFont.systemFont(ofSize: 14, weight: .medium),
+                .foregroundColor: UIColor.black
+            ], range: moreRange)
+        }
 
         attributedText.addAttributes([
             .font: UIFont.systemFont(ofSize: 14, weight: .regular),
@@ -198,28 +222,39 @@ class NotifiCell: UITableViewCell {
         return attributedText
     }
 
+
+
+
     @objc private func handleLabelTap(_ sender: UITapGestureRecognizer) {
-        guard let label = sender.view as? UILabel,
-              let attributedText = label.attributedText else { return }
+        switch renderType {
+        case .userAction:
+            guard let label = sender.view as? UILabel,
+                  let attributedText = label.attributedText else { return }
 
-        let index = characterIndexTapped(in: label, sender: sender, attributedText: attributedText)
-        print("👉 Tap index:", index)
+            let index = characterIndexTapped(in: label, sender: sender, attributedText: attributedText)
+            print("👉 Tap index:", index)
 
-        switch index {
-        case _ where NSLocationInRange(index, personRange):
-            print("🟢 personRange tapped")
+            switch index {
+            case _ where NSLocationInRange(index, personRange):
+                print("🟢 personRange tapped")
 
-        case _ where NSLocationInRange(index, seconRange):
-            print("🟡 seconRange tapped")
+            case _ where NSLocationInRange(index, seconRange):
+                print("🟡 seconRange tapped")
 
-        case _ where NSLocationInRange(index, moreRange):
-            print("🔵 moreRange tapped")
+            case _ where NSLocationInRange(index, moreRange):
+                print("🔵 moreRange tapped")
 
-        case _ where NSLocationInRange(index, bodyRange):
-            print("🟣 bodyRange tapped")
+            case _ where NSLocationInRange(index, bodyRange):
+                print("🟣 bodyRange tapped")
 
-        default:
-            print("⚪️ Outside target ranges")
+            default:
+                print("⚪️ Outside target ranges")
+            }
+
+        case .common:
+            print("hehe")
+        case nil:
+            break
         }
     }
     
