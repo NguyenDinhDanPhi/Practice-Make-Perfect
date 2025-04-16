@@ -198,66 +198,56 @@ class NotifiCell: UITableViewCell {
         return attributedText
     }
 
-    
     @objc private func handleLabelTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel,
               let attributedText = label.attributedText else { return }
-        
-        // Bắt buộc layout xong label
-        label.layoutIfNeeded()
-        
-        let textStorage = NSTextStorage(attributedString: attributedText)
-        let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: label.bounds.size)
-        textContainer.lineFragmentPadding = 0
-        textContainer.maximumNumberOfLines = label.numberOfLines
-        textContainer.lineBreakMode = label.lineBreakMode
-        
-        layoutManager.addTextContainer(textContainer)
-        textStorage.addLayoutManager(layoutManager)
-        
-        // Vị trí tap trong label
-        let locationOfTouchInLabel = sender.location(in: label)
-        
-        // Tính offset giữa label và textContainer
-        let textBoundingBox = layoutManager.usedRect(for: textContainer)
-        let xOffset = (label.bounds.width - textBoundingBox.width) / 2.0 - textBoundingBox.origin.x
-        let yOffset = (label.bounds.height - textBoundingBox.height) / 2.0 - textBoundingBox.origin.y
-        let locationInTextContainer = CGPoint(x: locationOfTouchInLabel.x - xOffset,
-                                              y: locationOfTouchInLabel.y - yOffset)
-        
-        let index = layoutManager.characterIndex(for: locationInTextContainer,
-                                                 in: textContainer,
-                                                 fractionOfDistanceBetweenInsertionPoints: nil)
-        
+
+        let index = characterIndexTapped(in: label, sender: sender, attributedText: attributedText)
         print("👉 Tap index:", index)
-        
-        if NSLocationInRange(index, personRange) {
+
+        switch index {
+        case _ where NSLocationInRange(index, personRange):
             print("🟢 personRange tapped")
-            markAsRead?()
-            if let url = URL(string: fromRedirectUrl) {
-                //openUrl(url: url)
-            }
-        } else if NSLocationInRange(index, seconRange) {
+
+        case _ where NSLocationInRange(index, seconRange):
             print("🟡 seconRange tapped")
-            markAsRead?()
-            // thêm URL nếu có
-            
-        } else if NSLocationInRange(index, moreRange) {
+
+        case _ where NSLocationInRange(index, moreRange):
             print("🔵 moreRange tapped")
-            markAsRead?()
-            // thêm xử lý more nếu có
-            
-        } else if NSLocationInRange(index, bodyRange) {
+
+        case _ where NSLocationInRange(index, bodyRange):
             print("🟣 bodyRange tapped")
-            markAsRead?()
-            if let url = URL(string: redirectUrl) {
-                //openUrl(url: url)
-            }
-        } else {
+
+        default:
             print("⚪️ Outside target ranges")
         }
     }
+    
+    private func characterIndexTapped(in label: UILabel, sender: UITapGestureRecognizer, attributedText: NSAttributedString) -> Int {
+        label.layoutIfNeeded()
+
+        let textStorage = NSTextStorage(attributedString: attributedText)
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: label.bounds.size)
+
+        textContainer.lineFragmentPadding = 0
+        textContainer.maximumNumberOfLines = label.numberOfLines
+        textContainer.lineBreakMode = label.lineBreakMode
+
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+
+        let touchPoint = sender.location(in: label)
+        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+
+        let xOffset = (label.bounds.width - textBoundingBox.width) / 2.0 - textBoundingBox.origin.x
+        let yOffset = (label.bounds.height - textBoundingBox.height) / 2.0 - textBoundingBox.origin.y
+        let location = CGPoint(x: touchPoint.x - xOffset, y: touchPoint.y - yOffset)
+
+        return layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+    }
+
+
     
     
     @objc func tapThumbnail() {
