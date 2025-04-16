@@ -1,9 +1,7 @@
 import UIKit
 import SDWebImage
 
-enum testType {
-    case oneLabel, multipleLabel
-}
+
 
 class NotifiCell: UITableViewCell {
     var markAsRead: (() -> Void)?
@@ -24,30 +22,6 @@ class NotifiCell: UITableViewCell {
     }()
 
     private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.isUserInteractionEnabled = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var personLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.isUserInteractionEnabled = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var morePersonLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.isUserInteractionEnabled = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var bodyLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.isUserInteractionEnabled = true
@@ -79,12 +53,10 @@ class NotifiCell: UITableViewCell {
     private var redirectUrl: String = ""
     private var fromRedirectUrl: String = ""
     private var redirectContent: String = ""
-    private var testType: testType?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = UIColor(red: 1.0, green: 0.99, blue: 0.94, alpha: 1.0)
-        testType = .multipleLabel
         setupViews()
     }
 
@@ -99,47 +71,25 @@ class NotifiCell: UITableViewCell {
         contentView.addSubview(timeLabel)
         contentView.addSubview(thumbnailImageView)
         
-        switch testType {
-        case .oneLabel:
+     
             contentView.addSubview(titleLabel)
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
             titleLabel.addGestureRecognizer(tapGesture)
-            NSLayoutConstraint.activate([
-                titleLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 8),
-                titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-                titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-                
-                timeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-                timeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4)
-            ])
-        case .multipleLabel:
-            contentView.addSubview(personLabel)
-            contentView.addSubview(morePersonLabel)
-            contentView.addSubview(bodyLabel)
-            NSLayoutConstraint.activate([
-                personLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 8),
-                personLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-                personLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-                
-                morePersonLabel.leadingAnchor.constraint(equalTo: personLabel.trailingAnchor),
-                morePersonLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-                
-                bodyLabel.leadingAnchor.constraint(equalTo: morePersonLabel.trailingAnchor),
-                bodyLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-                
-                timeLabel.leadingAnchor.constraint(equalTo: bodyLabel.leadingAnchor),
-                timeLabel.topAnchor.constraint(equalTo: personLabel.bottomAnchor, constant: 4)
-            ])
-        case nil:
-            break
-        }
+               
+
 
         NSLayoutConstraint.activate([
             redDotView.widthAnchor.constraint(equalToConstant: 6),
             redDotView.heightAnchor.constraint(equalToConstant: 6),
             redDotView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
             redDotView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-
+            
+            titleLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 8),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            
+            timeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            timeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             avatarView.leadingAnchor.constraint(equalTo: redDotView.trailingAnchor, constant: 8),
             avatarView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             avatarView.widthAnchor.constraint(equalToConstant: 60),
@@ -153,7 +103,10 @@ class NotifiCell: UITableViewCell {
     }
 
     func configure(inboxNotice: InboxNotices) {
+        
         let thumbnailURL = inboxNotice.message.image ?? ""
+        
+        //MARK: chỗ này là lấy message.title và message.body
         let titleText = inboxNotice.message.title
         let bodyText = inboxNotice.message.body ?? ""
         
@@ -161,8 +114,7 @@ class NotifiCell: UITableViewCell {
         fromRedirectUrl = inboxNotice.attribute.from.first?.redirectURL ?? ""
         redirectContent = inboxNotice.redirectContent ?? ""
         
-        switch testType {
-        case .oneLabel:
+        //MARK: chỗ này set attribute
             let fullString = titleText + " " + bodyText
             let attributedString = NSMutableAttributedString(string: fullString)
 
@@ -175,18 +127,8 @@ class NotifiCell: UITableViewCell {
             attributedString.addAttribute(.foregroundColor, value: UIColor.gray, range: messRange)
 
             titleLabel.attributedText = attributedString
-        case .multipleLabel:
-            let fromList = inboxNotice.attribute.from
-            let profileURL = fromList.first?.name
-            let overlayImage = fromList.count ?? 0 > 1 ? fromList[1].name : ""
-                personLabel.text = profileURL
-                morePersonLabel.text = overlayImage
-                bodyLabel.text = inboxNotice.message.body
-            personLabel.text = inboxNotice.attribute.from.first?.name
-        case nil:
-            break
-        }
-        
+
+       
 
         let fromList = inboxNotice.attribute.from
         let profileURL = fromList.first?.image
@@ -194,15 +136,15 @@ class NotifiCell: UITableViewCell {
         let avataRedirect = fromList.first?.redirectURL ?? ""
         avatarView.configure(mainImage: profileURL, overlayImage: overlayImage, redictUrl: avataRedirect)
 
-//        if !thumbnailURL.isEmpty {
-//            thumbnailImageView.isHidden = false
-//            titleLabel.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8).isActive = true
-//            thumbnailImageView.sd_setImage(with: convertUrlToImage(urlString: thumbnailURL))
-//        } else {
-//            thumbnailImageView.isHidden = true
-//            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
-//
-//        }
+        if !thumbnailURL.isEmpty {
+            thumbnailImageView.isHidden = false
+            titleLabel.trailingAnchor.constraint(equalTo: thumbnailImageView.leadingAnchor, constant: -8).isActive = true
+            thumbnailImageView.sd_setImage(with: convertUrlToImage(urlString: thumbnailURL))
+        } else {
+            thumbnailImageView.isHidden = true
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8).isActive = true
+
+        }
     }
 
     func convertUrlToImage(urlString: String) -> URL? {
