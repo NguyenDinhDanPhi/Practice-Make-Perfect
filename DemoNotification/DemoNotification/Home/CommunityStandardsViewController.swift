@@ -27,10 +27,21 @@ class CommunityStandardViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        if let bgColor = UIColor(named: "background2") {
+            view.backgroundColor = bgColor
+        } else {
+            view.backgroundColor = .red
+        }
+  
         navigationItem.title = "Tiêu chuẩn cộng đồng"
         navigationItem.backButtonTitle = "Quay lại"
+        
         navigationController?.navigationBar.tintColor = .black
+        let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
         setupLayout()
     }
 
