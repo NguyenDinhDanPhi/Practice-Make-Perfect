@@ -49,6 +49,8 @@ class NotifiCell: UITableViewCell {
         return iv
     }()
     
+    //MARK: thêm vào prj
+    
     private var personRange: NSRange!
     private var seconRange: NSRange!
     private var moreRange: NSRange!
@@ -62,7 +64,7 @@ class NotifiCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = UIColor(red: 1.0, green: 0.99, blue: 0.94, alpha: 1.0)
+        //contentView.backgroundColor = UIColor(red: 1.0, green: 0.99, blue: 0.94, alpha: 1.0)
         setupViews()
     }
     
@@ -107,7 +109,7 @@ class NotifiCell: UITableViewCell {
             thumbnailImageView.heightAnchor.constraint(equalToConstant: 60),
         ])
     }
-    
+    //MARK: thêm vào prj tới hết
     func configure(inboxNotice: InboxNotices) {
         
         let thumbnailURL = inboxNotice.message.image ?? ""
@@ -138,7 +140,7 @@ class NotifiCell: UITableViewCell {
        
         redirectUrl = inboxNotice.redirectURL ?? ""
         fromRedirectUrl = inboxNotice.attribute.from.first?.redirectURL ?? ""
-        redirectContent = inboxNotice.redirectContent ?? ""
+        redirectContent = "https://dev-share.fangtv.vn/video/25396274404528128" //inboxNotice.redirectContent ?? ""
         
         let profileURL = fromList.first?.image
         let overlayImage = fromList.count > 1 ? fromList[1].image : ""

@@ -128,6 +128,9 @@ class ViolationWarningViewController: UIViewController {
     
     @objc func handleLabelTap() {
         print("haha")
-        navigationController?.pushViewController(CommunityStandardViewController(), animated: true)
+        let vc = CommunityStandardViewControlle2r()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+
     }
 }
