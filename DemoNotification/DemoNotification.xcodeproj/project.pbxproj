@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D032FAA72DB2098F00C2AB5E /* NotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D032FAA02DB2098F00C2AB5E /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D032FAAE2DB209B700C2AB5E /* NotificationService.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = D032FAA02DB2098F00C2AB5E /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D091C9952DA40C4E000C39EF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D091C9942DA40C4E000C39EF /* FirebaseAnalytics */; };
 		D091C9972DA40C4E000C39EF /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = D091C9962DA40C4E000C39EF /* FirebaseAnalyticsOnDeviceConversion */; };
 		D091C9992DA40C4E000C39EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = D091C9982DA40C4E000C39EF /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -20,11 +22,53 @@
 		D0D2A9CC2DAB991800D4EC51 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D0D2A9CB2DAB991800D4EC51 /* SDWebImageMapKit */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D032FAA52DB2098F00C2AB5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0984ADA2D9E439100E9B906 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D032FA9F2DB2098F00C2AB5E;
+			remoteInfo = NotificationService;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D032FAAC2DB2098F00C2AB5E /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D032FAA72DB2098F00C2AB5E /* NotificationService.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D032FAAD2DB209A800C2AB5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D032FAAE2DB209B700C2AB5E /* NotificationService.appex in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		D032FAA02DB2098F00C2AB5E /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0984AE22D9E439100E9B906 /* DemoNotification.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoNotification.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D032FAAB2DB2098F00C2AB5E /* Exceptions for "NotificationService" folder in "NotificationService" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D032FA9F2DB2098F00C2AB5E /* NotificationService */;
+		};
 		D0984AF42D9E439300E9B906 /* Exceptions for "DemoNotification" folder in "DemoNotification" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -35,6 +79,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		D032FAA12DB2098F00C2AB5E /* NotificationService */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D032FAAB2DB2098F00C2AB5E /* Exceptions for "NotificationService" folder in "NotificationService" target */,
+			);
+			path = NotificationService;
+			sourceTree = "<group>";
+		};
 		D0984AE42D9E439100E9B906 /* DemoNotification */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -46,6 +98,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D032FA9D2DB2098F00C2AB5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0984ADF2D9E439100E9B906 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -71,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				D0984AE42D9E439100E9B906 /* DemoNotification */,
+				D032FAA12DB2098F00C2AB5E /* NotificationService */,
 				D0984AE32D9E439100E9B906 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				D0984AE22D9E439100E9B906 /* DemoNotification.app */,
+				D032FAA02DB2098F00C2AB5E /* NotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -86,6 +147,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D032FA9F2DB2098F00C2AB5E /* NotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D032FAA82DB2098F00C2AB5E /* Build configuration list for PBXNativeTarget "NotificationService" */;
+			buildPhases = (
+				D032FA9C2DB2098F00C2AB5E /* Sources */,
+				D032FA9D2DB2098F00C2AB5E /* Frameworks */,
+				D032FA9E2DB2098F00C2AB5E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D032FAA12DB2098F00C2AB5E /* NotificationService */,
+			);
+			name = NotificationService;
+			packageProductDependencies = (
+			);
+			productName = NotificationService;
+			productReference = D032FAA02DB2098F00C2AB5E /* NotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		D0984AE12D9E439100E9B906 /* DemoNotification */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0984AF52D9E439300E9B906 /* Build configuration list for PBXNativeTarget "DemoNotification" */;
@@ -93,10 +176,13 @@
 				D0984ADE2D9E439100E9B906 /* Sources */,
 				D0984ADF2D9E439100E9B906 /* Frameworks */,
 				D0984AE02D9E439100E9B906 /* Resources */,
+				D032FAAC2DB2098F00C2AB5E /* Embed Foundation Extensions */,
+				D032FAAD2DB209A800C2AB5E /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D032FAA62DB2098F00C2AB5E /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				D0984AE42D9E439100E9B906 /* DemoNotification */,
@@ -129,6 +215,9 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					D032FA9F2DB2098F00C2AB5E = {
+						CreatedOnToolsVersion = 16.2;
+					};
 					D0984AE12D9E439100E9B906 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -155,11 +244,19 @@
 			projectRoot = "";
 			targets = (
 				D0984AE12D9E439100E9B906 /* DemoNotification */,
+				D032FA9F2DB2098F00C2AB5E /* NotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D032FA9E2DB2098F00C2AB5E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0984AE02D9E439100E9B906 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -170,6 +267,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D032FA9C2DB2098F00C2AB5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0984ADE2D9E439100E9B906 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -179,7 +283,65 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D032FAA62DB2098F00C2AB5E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D032FA9F2DB2098F00C2AB5E /* NotificationService */;
+			targetProxy = D032FAA52DB2098F00C2AB5E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		D032FAA92DB2098F00C2AB5E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rphi.DemoNotification.NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D032FAAA2DB2098F00C2AB5E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rphi.DemoNotification.NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		D0984AF62D9E439300E9B906 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -188,7 +350,7 @@
 				CODE_SIGN_ENTITLEMENTS = DemoNotification/DemoNotification.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FZCMHM49LE;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DemoNotification/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -216,7 +378,7 @@
 				CODE_SIGN_ENTITLEMENTS = DemoNotification/DemoNotification.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = FZCMHM49LE;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DemoNotification/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -358,6 +520,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D032FAA82DB2098F00C2AB5E /* Build configuration list for PBXNativeTarget "NotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D032FAA92DB2098F00C2AB5E /* Debug */,
+				D032FAAA2DB2098F00C2AB5E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D0984ADD2D9E439100E9B906 /* Build configuration list for PBXProject "DemoNotification" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

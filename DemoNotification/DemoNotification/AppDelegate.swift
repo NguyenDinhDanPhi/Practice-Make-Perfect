@@ -53,6 +53,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                   willPresent notification: UNNotification,
                                   withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let content = notification.request.content
+        let userInfo = content.userInfo
+
+        let title = content.title
+        let body = content.body
+        let imageUrl = userInfo["image"] as? String ?? "No image"
+
+        print("haha [Foreground] Push received")
+        print("haha Title: \(title)")
+        print("haha Body: \(body)")
+        print("haha Image: \(imageUrl)")
+        print("haha Payload: \(userInfo)")
         completionHandler([.banner, .sound])
       }
 }
