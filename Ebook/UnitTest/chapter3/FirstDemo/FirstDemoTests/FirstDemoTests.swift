@@ -6,12 +6,17 @@ import XCTest
 @testable import FirstDemo
 
 class FirstDemoTests: XCTestCase {
+    
+    var blogger: Blogger!
 
   override func setUpWithError() throws {
+      blogger = Blogger()
+
     // Put setup code here. This method is called before the invocation of each test method in the class.
   }
 
   override func tearDownWithError() throws {
+      blogger = nil
     // Put teardown code here. This method is called after the invocation of each test method in the class.
   }
 
@@ -30,9 +35,19 @@ class FirstDemoTests: XCTestCase {
 
     DDHAssertEqual(dict1, dict2)
   }
-    func
-    test_makeHeadline_shouldCapitalisePassedInString() {
-    let blogger = Blogger()
+    func test_makeHeadline_shouldCapitalisePassedInString() {
+        let input = "the accessibility inspector"
+        	
+        let result = blogger.makeHeadline(from: "the Accessibility inspector")
+        let expected = "The Accessibility Inspector"
+        XCTAssertEqual(result, expected)
+    }
+    
+    func test_makeHeadline_shouldCapitalisePassedInString_2() {
+        let input = "The contextual action menu"
+        let result = blogger.makeHeadline(from: input)
+        let expected = "The Contextual Action Menu"
+        XCTAssertEqual(result, expected)
     }
 }
 
