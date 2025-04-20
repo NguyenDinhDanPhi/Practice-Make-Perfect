@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D0C6EB452DB4F6790087C23D /* ToDoItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C6EB442DB4F6780087C23D /* ToDoItemTests.swift */; };
 		D0C6EB472DB4F7170087C23D /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C6EB462DB4F7170087C23D /* ToDoItem.swift */; };
+		D0C6EB492DB51AFF0087C23D /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C6EB482DB51AFF0087C23D /* Location.swift */; };
+		D0C6EB4F2DB51C2D0087C23D /* LocationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C6EB4E2DB51C280087C23D /* LocationTests.swift */; };
 		F20D252327045FA500546FC9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20D252227045FA500546FC9 /* AppDelegate.swift */; };
 		F20D252527045FA500546FC9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20D252427045FA500546FC9 /* SceneDelegate.swift */; };
 		F20D252727045FA500546FC9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20D252627045FA500546FC9 /* ViewController.swift */; };
@@ -40,6 +42,8 @@
 /* Begin PBXFileReference section */
 		D0C6EB442DB4F6780087C23D /* ToDoItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemTests.swift; sourceTree = "<group>"; };
 		D0C6EB462DB4F7170087C23D /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
+		D0C6EB482DB51AFF0087C23D /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		D0C6EB4E2DB51C280087C23D /* LocationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTests.swift; sourceTree = "<group>"; };
 		F20D251F27045FA500546FC9 /* ToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F20D252227045FA500546FC9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F20D252427045FA500546FC9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +107,7 @@
 		F20D252127045FA500546FC9 /* ToDo */ = {
 			isa = PBXGroup;
 			children = (
+				D0C6EB482DB51AFF0087C23D /* Location.swift */,
 				D0C6EB462DB4F7170087C23D /* ToDoItem.swift */,
 				F20D252227045FA500546FC9 /* AppDelegate.swift */,
 				F20D252427045FA500546FC9 /* SceneDelegate.swift */,
@@ -118,6 +123,7 @@
 		F20D253827045FA600546FC9 /* ToDoTests */ = {
 			isa = PBXGroup;
 			children = (
+				D0C6EB4E2DB51C280087C23D /* LocationTests.swift */,
 				F24630FB2735313500D0AF57 /* ToDoTests.swift */,
 				D0C6EB442DB4F6780087C23D /* ToDoItemTests.swift */,
 			);
@@ -266,6 +272,7 @@
 			files = (
 				F20D252727045FA500546FC9 /* ViewController.swift in Sources */,
 				F20D252327045FA500546FC9 /* AppDelegate.swift in Sources */,
+				D0C6EB492DB51AFF0087C23D /* Location.swift in Sources */,
 				D0C6EB472DB4F7170087C23D /* ToDoItem.swift in Sources */,
 				F20D252527045FA500546FC9 /* SceneDelegate.swift in Sources */,
 			);
@@ -276,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0C6EB452DB4F6790087C23D /* ToDoItemTests.swift in Sources */,
+				D0C6EB4F2DB51C2D0087C23D /* LocationTests.swift in Sources */,
 				F24630FC2735313500D0AF57 /* ToDoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
