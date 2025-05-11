@@ -19,9 +19,9 @@ class ToDoItemStoreTests: XCTestCase {
     
     override func tearDownWithError() throws {
         sut = nil
-        if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("dummy_store") {
-            try? FileManager.default.removeItem(at: url)
-        }
+        let url = FileManager.default
+            .documentsURL(name: "dummy_store")
+        try? FileManager.default.removeItem(at: url)
     }
     
     func test_add_shouldPublishChange() throws {
@@ -64,6 +64,27 @@ class ToDoItemStoreTests: XCTestCase {
         token.cancel()
         XCTAssertEqual(result, [todoItem])
         
+    }
+    func test_init_whenItemIsChecked_shouldLoadPreviousToDoItems() throws {
+        var sut1: ToDoItemStore? =
+        ToDoItemStore(fileName: "dummy_store")
+        let publisherExpectation = expectation(
+            description: "Wait for publisher in \(#file)"
+        )
+        let toDoItem = ToDoItem(title: "Dummy Title")
+        sut1?.add(toDoItem)
+        sut1?.check(toDoItem)
+        sut1 = nil
+        let sut2 = ToDoItemStore(fileName: "dummy_store")
+        var result: [ToDoItem]?
+        let token = sut2.itemPublisher
+            .sink { value in
+                result = value
+                publisherExpectation.fulfill()
+            }
+        wait(for: [publisherExpectation], timeout: 1)
+        token.cancel()
+        XCTAssertEqual(result?.first?.done, true)
     }
 }
 

@@ -33,6 +33,7 @@ class ToDoItemStore {
         mutableItem.done = true
         if let index = items.firstIndex(of: item) {
             items[index] = mutableItem
+            saveItems()
         }
     }
     
@@ -47,16 +48,16 @@ class ToDoItemStore {
         }
     }
     
-    func loadItems() {
-        if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(fileName) {
-            do {
-                let data = try Data(contentsOf: url)
-                items = try JSONDecoder().decode([ToDoItem].self, from: data)
-            } catch {
-                print("error \(error)")
-            }
+    private func loadItems() {
+        let url = FileManager.default
+            .documentsURL(name: fileName)
+        do {
+            let data = try Data(contentsOf: url)
+            items = try JSONDecoder()
+                .decode([ToDoItem].self, from: data)
+        } catch {
+            print("error: \(error)")
         }
-        
     }
 }
 
