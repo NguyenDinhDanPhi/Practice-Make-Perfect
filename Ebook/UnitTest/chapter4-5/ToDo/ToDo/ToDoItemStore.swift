@@ -37,13 +37,13 @@ class ToDoItemStore {
     }
     
     private func saveItems() {
-        if let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(fileName) {
-            do {
-                let data = try JSONEncoder().encode(items)
-                try data.write(to: url)
-            } catch {
-                print("error \(error)")
-            }
+        let url = FileManager.default
+            .documentsURL(name: fileName)
+        do {
+            let data = try JSONEncoder().encode(items)
+            try data.write(to: url)
+        } catch {
+            print("error: \(error)")
         }
     }
     
