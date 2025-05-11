@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct ToDoItem: Equatable {
+struct ToDoItem: Equatable, Codable {
     let id: UUID
     let title: String
     let itemDescription: String?

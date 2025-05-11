@@ -11,8 +11,17 @@ import Combine
 
 class ToDoItemStoreTests: XCTestCase {
     
+    var sut: ToDoItemStore!
+    
+    override func setUpWithError() throws {
+        sut = ToDoItemStore()
+    }
+    
+    override func tearDownWithError() throws {
+        sut = nil
+    }
+    
     func test_add_shouldPublishChange() throws {
-        let sut = ToDoItemStore()
         let toDoItem = ToDoItem(title: "Dummy")
         let receivedItems = try wait(for: sut.itemPublisher)
         {
@@ -22,7 +31,6 @@ class ToDoItemStoreTests: XCTestCase {
     }
     
     func test_check_shouldPublishChangeInDoneItems() throws {
-        let sut = ToDoItemStore()
         let toDoItem = ToDoItem(title: "Dummy")
         sut.add(toDoItem)
         sut.add(ToDoItem(title: "Dummy 2"))
@@ -32,6 +40,27 @@ class ToDoItemStoreTests: XCTestCase {
         }
         let doneItems = receivedItems.filter({ $0.done })
         XCTAssertEqual(doneItems, [toDoItem])
+    }
+    
+    func test_init_shouldLoadPreviousToDoItems() throws {
+        var sut1: ToDoItemStore? = ToDoItemStore(fileName: "dummy_store")
+        let publisherExpectation = expectation(description: "Wait for publisher in \(#file)")
+        
+        let todoItem = ToDoItem(title: "Dummy Titile")
+        sut1?.add(todoItem)
+        sut1 = nil
+        let sut2 = ToDoItemStore(fileName: "dummy_store")
+        var result: [ToDoItem]?
+        let token = sut2.itemPublisher
+            .sink { items in
+                result = items
+                publisherExpectation.fulfill()
+            }
+        
+        wait(for: [publisherExpectation], timeout: 1)
+        token.cancel()
+        XCTAssertEqual(result, [todoItem])
+        
     }
 }
 
