@@ -14,7 +14,7 @@ class ToDoItemStoreTests: XCTestCase {
     var sut: ToDoItemStore!
     
     override func setUpWithError() throws {
-        sut = ToDoItemStore()
+        sut = ToDoItemStore(fileName: "dummy_store")
     }
     
     override func tearDownWithError() throws {
