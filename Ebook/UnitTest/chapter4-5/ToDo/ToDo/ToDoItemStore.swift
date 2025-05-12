@@ -9,7 +9,11 @@
 import Foundation
 import Combine
 
-class ToDoItemStore {
+protocol ToDoItemStoreProtocol {
+    var itemPublisher: CurrentValueSubject<[ToDoItem], Never> { get set }
+    func check(_: ToDoItem)
+}
+class ToDoItemStore: ToDoItemStoreProtocol {
     var itemPublisher =
     CurrentValueSubject<[ToDoItem], Never>([])
     private var items: [ToDoItem] = [] {
