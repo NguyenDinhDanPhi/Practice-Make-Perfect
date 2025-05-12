@@ -7,6 +7,11 @@
 
 import UIKit
 import Combine
+
+protocol ToDoItemsListViewControllerProtocol {
+    func selectToDoItem(_ viewController: UIViewController, toDoItem: ToDoItem)
+}
+
 class ToDoItemsListViewController: UIViewController  {
     
     @IBOutlet weak var tableView: UITableView!
@@ -20,6 +25,8 @@ class ToDoItemsListViewController: UIViewController  {
         case todo
         case done
     }
+    
+    var delegate: ToDoItemsListViewControllerProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +50,7 @@ class ToDoItemsListViewController: UIViewController  {
                 self?.items = items
                 self?.update(with: items)
             })
+        tableView.delegate = self
         tableView.register(ToDoItemCell.self, forCellReuseIdentifier: "ToDoItemCell")
     }
     
@@ -60,21 +68,11 @@ class ToDoItemsListViewController: UIViewController  {
     }
 }
 
-//extension ToDoItemsListViewController: UITableViewDataSource {
-//        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//            return items.count
-//        }
-//        
-//        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//            let cell = tableView.dequeueReusableCell(
-//                withIdentifier: "ToDoItemCell", for: indexPath) as! ToDoItemCell
-//            let item = items[indexPath.row]
-//            if let timestamp = items[indexPath.row].timestamp {
-//                let date = Date(timeIntervalSince1970: timestamp)
-//                cell.dateLabel.text = dateFormatter.string(from: date)
-//            }
-//            cell.titleLabel.text = item.title
-//            return cell
-//        }
-//        
-//    }
+extension ToDoItemsListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = items[indexPath.row]
+        delegate?.selectToDoItem(self, toDoItem: item)
+    }
+}
+

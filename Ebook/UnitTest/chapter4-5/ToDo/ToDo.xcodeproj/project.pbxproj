@@ -12,6 +12,7 @@
 		D000AAAB2DD19DA9007A1FA7 /* ToDoItemStoreProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D000AAAA2DD19DA7007A1FA7 /* ToDoItemStoreProtocolMock.swift */; };
 		D000AAAD2DD1A43D007A1FA7 /* ToDoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D000AAAC2DD1A433007A1FA7 /* ToDoItemCell.swift */; };
 		D000AAAF2DD1A82D007A1FA7 /* ToDoItemCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D000AAAE2DD1A82C007A1FA7 /* ToDoItemCellTests.swift */; };
+		D000AAB12DD1D32C007A1FA7 /* ToDoItemsListViewControllerProtocolMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D000AAB02DD1D32B007A1FA7 /* ToDoItemsListViewControllerProtocolMock.swift */; };
 		D01E027A2DBC767A003EB11B /* ToDoItemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01E02792DBC7675003EB11B /* ToDoItemStoreTests.swift */; };
 		D01E027E2DBC7D1E003EB11B /* ToDoItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01E027D2DBC7D1E003EB11B /* ToDoItemStore.swift */; };
 		D0AC200A2DD0CE4A00ED0B05 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AC20092DD0CE4800ED0B05 /* Coordinate.swift */; };
@@ -54,6 +55,7 @@
 		D000AAAA2DD19DA7007A1FA7 /* ToDoItemStoreProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemStoreProtocolMock.swift; sourceTree = "<group>"; };
 		D000AAAC2DD1A433007A1FA7 /* ToDoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemCell.swift; sourceTree = "<group>"; };
 		D000AAAE2DD1A82C007A1FA7 /* ToDoItemCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemCellTests.swift; sourceTree = "<group>"; };
+		D000AAB02DD1D32B007A1FA7 /* ToDoItemsListViewControllerProtocolMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemsListViewControllerProtocolMock.swift; sourceTree = "<group>"; };
 		D01E02792DBC7675003EB11B /* ToDoItemStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemStoreTests.swift; sourceTree = "<group>"; };
 		D01E027D2DBC7D1E003EB11B /* ToDoItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemStore.swift; sourceTree = "<group>"; };
 		D0AC20092DD0CE4800ED0B05 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 		F20D253827045FA600546FC9 /* ToDoTests */ = {
 			isa = PBXGroup;
 			children = (
+				D000AAB02DD1D32B007A1FA7 /* ToDoItemsListViewControllerProtocolMock.swift */,
 				D000AAAE2DD1A82C007A1FA7 /* ToDoItemCellTests.swift */,
 				D000AAAA2DD19DA7007A1FA7 /* ToDoItemStoreProtocolMock.swift */,
 				D0C6EB4E2DB51C280087C23D /* LocationTests.swift */,
@@ -321,6 +324,7 @@
 				D0C6EB4F2DB51C2D0087C23D /* LocationTests.swift in Sources */,
 				D000AAAF2DD1A82D007A1FA7 /* ToDoItemCellTests.swift in Sources */,
 				F24630FC2735313500D0AF57 /* ToDoTests.swift in Sources */,
+				D000AAB12DD1D32C007A1FA7 /* ToDoItemsListViewControllerProtocolMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
