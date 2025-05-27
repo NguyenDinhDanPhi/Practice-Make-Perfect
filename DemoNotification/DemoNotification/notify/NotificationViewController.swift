@@ -100,7 +100,6 @@ class NotificationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "Notification"
         setupTitleButton()
         dropdown.removeDropdown = { [weak self] in
             self?.dropdown.removeFromSuperview()
@@ -220,18 +219,22 @@ class NotificationViewController: UIViewController {
     // MARK: - Dropdown Action
     
     @objc private func onShowTableViewButtonPressed() {
+        let container = view.window!
+        
         if dropdown.superview == nil {
-            view.addSubview(dropdown)
+            container.addSubview(dropdown)
+            dropdown.translatesAutoresizingMaskIntoConstraints = false
+            
             NSLayoutConstraint.activate([
-                dropdown.topAnchor.constraint(equalTo: titleButton.bottomAnchor, constant: 8),
-                dropdown.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                dropdown.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                dropdown.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+                dropdown.topAnchor.constraint(equalTo: titleButton.bottomAnchor),
+                dropdown.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+                dropdown.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+                dropdown.bottomAnchor.constraint(equalTo: container.bottomAnchor)
             ])
+
             dropdown.isHidden = false
             dropdown.addTableView(frames: titleButton.frame)
         } else {
-            dropdown.isHidden = true
             dropdown.removeFromSuperview()
         }
     }
