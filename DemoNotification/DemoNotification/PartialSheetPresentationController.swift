@@ -5,12 +5,21 @@
 //  Created by Dan Phi on 27/5/25.
 //
 import UIKit
-import UIKit
 
+/// Custom presentation controller allowing configurable height ratio
 class PartialSheetPresentationController: UIPresentationController {
-    private let heightRatio: CGFloat = 0.1
+    /// Ratio of container height the sheet should occupy (0.0...1.0)
+    private let heightRatio: CGFloat
 
-    // MARK: – Dimming view để bắt tap bên ngoài
+    init(presentedViewController: UIViewController,
+         presenting presentingViewController: UIViewController?,
+         heightRatio: CGFloat) {
+        self.heightRatio = heightRatio
+        super.init(presentedViewController: presentedViewController,
+                   presenting: presentingViewController)
+    }
+
+    // MARK: – Dimming view for background tap
     private lazy var dimmingView: UIView = {
         let v = UIView(frame: containerView?.bounds ?? .zero)
         v.backgroundColor = UIColor.black.withAlphaComponent(0.4)
@@ -20,25 +29,25 @@ class PartialSheetPresentationController: UIPresentationController {
         return v
     }()
 
-    // MARK: – Presentation
+    // MARK: – Presentation lifecycle
     override func presentationTransitionWillBegin() {
         guard let container = containerView else { return }
-        // Thêm dimming view
+        // Insert dimming view
         dimmingView.frame = container.bounds
         container.addSubview(dimmingView)
 
-        // Fade in dimming
+        // Fade-in animation
         presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in
             self.dimmingView.alpha = 1
         }, completion: nil)
 
-        // Thêm pan gesture cho swipe-down
+        // Add pan gesture for swipe-down
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         presentedView?.addGestureRecognizer(pan)
     }
 
-    // MARK: – Dismissal
     override func dismissalTransitionWillBegin() {
+        // Fade-out animation
         presentedViewController.transitionCoordinator?.animate(alongsideTransition: { _ in
             self.dimmingView.alpha = 0
         }, completion: { _ in
@@ -46,7 +55,7 @@ class PartialSheetPresentationController: UIPresentationController {
         })
     }
 
-    // MARK: – Khung của sheet
+    // MARK: – Frame of sheet
     override var frameOfPresentedViewInContainerView: CGRect {
         guard let container = containerView else { return .zero }
         let height = container.bounds.height * heightRatio
@@ -58,12 +67,12 @@ class PartialSheetPresentationController: UIPresentationController {
         )
     }
 
-    // MARK: – Tap ngoài để dismiss
+    // MARK: – Handle dimming tap
     @objc private func handleDimmingTap() {
         presentedViewController.dismiss(animated: true, completion: nil)
     }
 
-    // MARK: – Swipe-down to dismiss
+    // MARK: – Handle swipe-down
     @objc private func handlePan(_ pan: UIPanGestureRecognizer) {
         guard let presented = presentedView else { return }
         let translation = pan.translation(in: presented)
@@ -89,8 +98,14 @@ class PartialSheetPresentationController: UIPresentationController {
     }
 }
 
+/// Transitioning delegate that creates PartialSheetPresentationController with given ratio
 class PartialSheetTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
-    // Trả về custom presentation controller
+    private let heightRatio: CGFloat
+
+    init(heightRatio: CGFloat) {
+        self.heightRatio = heightRatio
+    }
+
     func presentationController(
         forPresented presented: UIViewController,
         presenting: UIViewController?,
@@ -98,11 +113,8 @@ class PartialSheetTransitioningDelegate: NSObject, UIViewControllerTransitioning
     ) -> UIPresentationController? {
         return PartialSheetPresentationController(
             presentedViewController: presented,
-            presenting: presenting
+            presenting: presenting,
+            heightRatio: heightRatio
         )
     }
-
-    // Nếu muốn custom animation thêm, có thể override:
-    // func animationController(forPresented:…, presenting:…, source:…) -> UIViewControllerAnimatedTransitioning? { … }
-    // func animationController(forDismissed:) -> UIViewControllerAnimatedTransitioning? { … }
 }

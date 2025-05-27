@@ -62,7 +62,7 @@ class ViolationWarningViewController: UIViewController {
             time: "Đăng ngày 27/03/2025 lúc 09:42"
         )
     }()
-    private let sheetTransitioningDelegate = PartialSheetTransitioningDelegate()
+    private let sheetTransitioningDelegate = PartialSheetTransitioningDelegate(heightRatio: 0.3)
 
     private lazy var infoReasonBoxView: InfoBoxView = {
         return InfoBoxView(
