@@ -62,7 +62,8 @@ class ViolationWarningViewController: UIViewController {
             time: "Đăng ngày 27/03/2025 lúc 09:42"
         )
     }()
-    
+    private let sheetTransitioningDelegate = PartialSheetTransitioningDelegate(heightRatio: 0.3)
+
     private lazy var infoReasonBoxView: InfoBoxView = {
         return InfoBoxView(
             title: "Lý do vi phạm",
@@ -128,10 +129,9 @@ class ViolationWarningViewController: UIViewController {
     }
     
     @objc func handleLabelTap() {
-        print("haha")
-        let vc = CommunityStandardViewControlle2r()
-        vc.modalPresentationStyle = .fullScreen
+        let vc = TestViewController()
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = sheetTransitioningDelegate
         present(vc, animated: true, completion: nil)
-        
     }
 }
