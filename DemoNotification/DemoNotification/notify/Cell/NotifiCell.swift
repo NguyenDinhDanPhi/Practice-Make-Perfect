@@ -162,60 +162,68 @@ class NotifiCell: UITableViewCell {
         return URL(string: urlString)
     }
     
-    private func buildAttributedText(person: String, second: String, more: String, body: String) -> NSAttributedString {
+    private func buildAttributedText(person: String,
+                                     second: String,
+                                     more: String,
+                                     body: String) -> NSAttributedString {
+        
         let personSecondText = second.isEmpty ? person : "\(person), \(second)"
         let moreText = more.isEmpty ? "" : " và \(more)"
         let fullText = "\(personSecondText)\(moreText) \(body)"
-        let attributedText = NSMutableAttributedString(string: fullText)
-
-        let personStart = 0
-        let personLength = person.count
-        personRange = NSRange(location: personStart, length: personLength)
-
-        var seconStart = 0
+        
+        let fullNSString = fullText as NSString
+        let personNSString = person as NSString
+        let secondNSString = second as NSString
+        let moreNSString   = more as NSString
+        let bodyNSString   = body as NSString
+        
+        personRange = NSRange(location: 0, length: personNSString.length)
+        
         if !second.isEmpty {
-            seconStart = person.count + 2 // ", "
-            seconRange = NSRange(location: seconStart, length: second.count)
+            let separator1 = ", " as NSString
+            let offsetToSecond = personNSString.length + separator1.length
+            seconRange = NSRange(location: offsetToSecond, length: secondNSString.length)
         } else {
             seconRange = NSRange(location: 0, length: 0)
         }
-
-        var moreStart = 0
+        
         if !more.isEmpty {
-            moreStart = personSecondText.count + 4 // " và " = 4 ký tự
-            moreRange = NSRange(location: moreStart, length: more.count)
+            let personSecondNSString = personSecondText as NSString
+            let separator2 = " và " as NSString
+            let offsetToMore = personSecondNSString.length + separator2.length
+            moreRange = NSRange(location: offsetToMore, length: moreNSString.length)
         } else {
             moreRange = NSRange(location: 0, length: 0)
         }
-
-        let spaceBeforeBody = 1
-        let bodyStart = fullText.count - body.count
-        bodyRange = NSRange(location: bodyStart, length: body.count)
-
+        
+        let offsetToBody = fullNSString.length - bodyNSString.length
+        bodyRange = NSRange(location: offsetToBody, length: bodyNSString.length)
+        
+        let attributedText = NSMutableAttributedString(string: fullText)
         attributedText.addAttributes([
             .font: UIFont.systemFont(ofSize: 14, weight: .medium),
             .foregroundColor: UIColor.black
         ], range: personRange)
-
+        
         if seconRange.length > 0 {
             attributedText.addAttributes([
                 .font: UIFont.systemFont(ofSize: 14, weight: .medium),
                 .foregroundColor: UIColor.black
             ], range: seconRange)
         }
-
+        
         if moreRange.length > 0 {
             attributedText.addAttributes([
                 .font: UIFont.systemFont(ofSize: 14, weight: .medium),
                 .foregroundColor: UIColor.black
             ], range: moreRange)
         }
-
+        
         attributedText.addAttributes([
             .font: UIFont.systemFont(ofSize: 14, weight: .regular),
             .foregroundColor: UIColor.black
         ], range: bodyRange)
-
+        
         return attributedText
     }
 
@@ -223,68 +231,86 @@ class NotifiCell: UITableViewCell {
 
 
     @objc private func handleLabelTap(_ sender: UITapGestureRecognizer) {
+        guard let label = sender.view as? UILabel,
+              let attributedText = label.attributedText else { return }
+        
+        let index = characterIndexTapped(in: label,
+                                         sender: sender,
+                                         attributedText: attributedText)
+        
         switch renderType {
         case .userAction:
-            guard let label = sender.view as? UILabel,
-                  let attributedText = label.attributedText else { return }
-
-            let index = characterIndexTapped(in: label, sender: sender, attributedText: attributedText)
-            print("👉 Tap index:", index)
-
-            switch index {
-            case _ where NSLocationInRange(index, personRange):
-                print("🟢 personRange tapped")
+            if NSLocationInRange(index, personRange) {
+               print("personRange tapped")
+                if let url = URL(string: fromRedirectUrl) {
+                    openUrl(url:url)
+                }
+            }
+            else if NSLocationInRange(index, seconRange) {
+                print("seconRange tapped")
                 if let url = URL(string: fromRedirectUrl) {
                     openUrl(url: url)
                 }
-            case _ where NSLocationInRange(index, seconRange):
-                print("🟡 seconRange tapped")
-
-            case _ where NSLocationInRange(index, moreRange):
-                print("🔵 moreRange tapped")
-
-            case _ where NSLocationInRange(index, bodyRange):
-                if let url = URL(string: redirectContent) {
+            }
+            else if NSLocationInRange(index, moreRange) {
+                print("moreRange tapped")
+                if let url = URL(string: redirectUrl) {
                     openUrl(url: url)
                 }
-
-            default:
-                print("⚪️ Outside target ranges")
             }
-
+            else if NSLocationInRange(index, bodyRange) {
+                print("bodyRange tapped")
+                if let url = URL(string: redirectUrl) {
+                    openUrl(url: url)
+                }
+            }
+            
         case .common:
-            print("hehe")
+            if let url = URL(string: redirectUrl) {
+                openUrl(url: url)
+            }
         case nil:
             break
         }
     }
-    
-    private func characterIndexTapped(in label: UILabel, sender: UITapGestureRecognizer, attributedText: NSAttributedString) -> Int {
-        label.layoutIfNeeded()
 
+    private func characterIndexTapped(in label: UILabel,
+                                      sender: UITapGestureRecognizer,
+                                      attributedText: NSAttributedString) -> Int {
+        label.layoutIfNeeded()
+        
         let textStorage = NSTextStorage(attributedString: attributedText)
         let layoutManager = NSLayoutManager()
         let textContainer = NSTextContainer(size: label.bounds.size)
-
+        
         textContainer.lineFragmentPadding = 0
         textContainer.maximumNumberOfLines = label.numberOfLines
         textContainer.lineBreakMode = label.lineBreakMode
-
+        
         layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
-
+        
         let touchPoint = sender.location(in: label)
         let textBoundingBox = layoutManager.usedRect(for: textContainer)
-
-        let xOffset = (label.bounds.width - textBoundingBox.width) / 2.0 - textBoundingBox.origin.x
+        
+        let xOffset: CGFloat
+        switch label.textAlignment {
+        case .center:
+            xOffset = (label.bounds.width - textBoundingBox.width) / 2.0 - textBoundingBox.origin.x
+        case .right:
+            xOffset = (label.bounds.width - textBoundingBox.width) - textBoundingBox.origin.x
+        default:
+            xOffset = -textBoundingBox.origin.x
+        }
         let yOffset = (label.bounds.height - textBoundingBox.height) / 2.0 - textBoundingBox.origin.y
-        let location = CGPoint(x: touchPoint.x - xOffset, y: touchPoint.y - yOffset)
-
-        return layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        
+        let location = CGPoint(x: touchPoint.x - xOffset,
+                               y: touchPoint.y - yOffset)
+        let index = layoutManager.characterIndex(for: location,
+                                                  in: textContainer,
+                                                  fractionOfDistanceBetweenInsertionPoints: nil)
+        return index
     }
-
-
-    
     
     @objc func tapThumbnail() {
         markAsRead?()
