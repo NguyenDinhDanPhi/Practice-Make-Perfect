@@ -62,3 +62,12 @@ people.append(programmer)
 
 print(people)
 ///result: [main.FootballPlayer(firstName: "DanPhi", lastName: "Phi", birthDate: 2025-06-05 07:08:32 +0000), main.SwiftProgrammer(firstName: "Nguyen", lastName: "Phi", birthDate: 2025-06-05 07:08:32 +0000)]
+
+for person in people {
+    if person is SwiftProgrammer {
+        print("\(person.firstName) is SwiftProgrammer ")
+    } else {
+      print("\(person.firstName) is FootballPlayer")
+    }
+}
+///result for Loop: DanPhi is FootballPlayer, Nguyen is SwiftProgramme
