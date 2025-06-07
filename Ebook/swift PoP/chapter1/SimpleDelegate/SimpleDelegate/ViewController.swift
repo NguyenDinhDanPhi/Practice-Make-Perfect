@@ -87,12 +87,8 @@ class ViewController: UIViewController, NextViewControllerDelegate {
     
     @objc func handleNext() {
             let nextVC = NextViewController()
-            // *** ĐIỂM QUAN TRỌNG NHẤT: GÁN NextViewController làm delegate cho ViewController hiện tại ***
-            // Điều này cho phép NextViewController nhận dữ liệu từ ViewController
             self.delegate = nextVC
             nextVC.delegate = self
-            // Gọi didUpdateText một lần khi chuyển màn hình để đảm bảo
-            // NextViewController có dữ liệu ban đầu nếu đã có text trong textFieldView
             textFieldDidChange()
             
             // Hiển thị NextViewController
