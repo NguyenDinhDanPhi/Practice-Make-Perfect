@@ -25,4 +25,12 @@ class BViewModel {
             }
         }
     }
+    
+    func postRequest(completion: @escaping (Bool) -> Void) {
+            DispatchQueue.global().asyncAfter(deadline: .now() + 1.0) {
+                let success = Bool.random() // giả lập thành công/thất bại
+                completion(success)
+            }
+        }
+
 }

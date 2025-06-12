@@ -27,7 +27,25 @@ class AViewController: UIViewController {
     }
 
     @objc private func fetchAndPresentB() {
-        BViewController.presentIfNeeded(from: self)
+        BViewController.presentIfNeeded(
+            from: self,
+            onPostResult: { [weak self] success in
+                let message = success ? "🎉 Post thành công!" : "❌ Post thất bại!"
+                self?.showToast(message: message)
+            },
+            onFetchFailed: { [weak self] in
+                self?.showToast(message: "⚠️ Không tải được dữ liệu!")
+            }
+        )
+    }
+
+
+    private func showToast(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            alert.dismiss(animated: true)
+        }
     }
 
 
