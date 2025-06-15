@@ -1,0 +1,572 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		D0B1A0122DFEC26400474DAA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0B19FF32DFEC26200474DAA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0B19FFA2DFEC26200474DAA;
+			remoteInfo = "QuickTrip - SimpleApp FacadePattern";
+		};
+		D0B1A01C2DFEC26400474DAA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0B19FF32DFEC26200474DAA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0B19FFA2DFEC26200474DAA;
+			remoteInfo = "QuickTrip - SimpleApp FacadePattern";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D0B19FFB2DFEC26200474DAA /* QuickTrip - SimpleApp FacadePattern.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QuickTrip - SimpleApp FacadePattern.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0B1A0112DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "QuickTrip - SimpleApp FacadePatternTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0B1A01B2DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "QuickTrip - SimpleApp FacadePatternUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D0B1A0232DFEC26400474DAA /* Exceptions for "QuickTrip - SimpleApp FacadePattern" folder in "QuickTrip - SimpleApp FacadePattern" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D0B19FFA2DFEC26200474DAA /* QuickTrip - SimpleApp FacadePattern */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D0B19FFD2DFEC26200474DAA /* QuickTrip - SimpleApp FacadePattern */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D0B1A0232DFEC26400474DAA /* Exceptions for "QuickTrip - SimpleApp FacadePattern" folder in "QuickTrip - SimpleApp FacadePattern" target */,
+			);
+			path = "QuickTrip - SimpleApp FacadePattern";
+			sourceTree = "<group>";
+		};
+		D0B1A0142DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "QuickTrip - SimpleApp FacadePatternTests";
+			sourceTree = "<group>";
+		};
+		D0B1A01E2DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "QuickTrip - SimpleApp FacadePatternUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D0B19FF82DFEC26200474DAA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0B1A00E2DFEC26400474DAA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0B1A0182DFEC26400474DAA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D0B19FF22DFEC26200474DAA = {
+			isa = PBXGroup;
+			children = (
+				D0B19FFD2DFEC26200474DAA /* QuickTrip - SimpleApp FacadePattern */,
+				D0B1A0142DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternTests */,
+				D0B1A01E2DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternUITests */,
+				D0B19FFC2DFEC26200474DAA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D0B19FFC2DFEC26200474DAA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D0B19FFB2DFEC26200474DAA /* QuickTrip - SimpleApp FacadePattern.app */,
+				D0B1A0112DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternTests.xctest */,
+				D0B1A01B2DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D0B19FFA2DFEC26200474DAA /* QuickTrip - SimpleApp FacadePattern */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0B1A0242DFEC26400474DAA /* Build configuration list for PBXNativeTarget "QuickTrip - SimpleApp FacadePattern" */;
+			buildPhases = (
+				D0B19FF72DFEC26200474DAA /* Sources */,
+				D0B19FF82DFEC26200474DAA /* Frameworks */,
+				D0B19FF92DFEC26200474DAA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D0B19FFD2DFEC26200474DAA /* QuickTrip - SimpleApp FacadePattern */,
+			);
+			name = "QuickTrip - SimpleApp FacadePattern";
+			packageProductDependencies = (
+			);
+			productName = "QuickTrip - SimpleApp FacadePattern";
+			productReference = D0B19FFB2DFEC26200474DAA /* QuickTrip - SimpleApp FacadePattern.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D0B1A0102DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0B1A0292DFEC26400474DAA /* Build configuration list for PBXNativeTarget "QuickTrip - SimpleApp FacadePatternTests" */;
+			buildPhases = (
+				D0B1A00D2DFEC26400474DAA /* Sources */,
+				D0B1A00E2DFEC26400474DAA /* Frameworks */,
+				D0B1A00F2DFEC26400474DAA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D0B1A0132DFEC26400474DAA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D0B1A0142DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternTests */,
+			);
+			name = "QuickTrip - SimpleApp FacadePatternTests";
+			packageProductDependencies = (
+			);
+			productName = "QuickTrip - SimpleApp FacadePatternTests";
+			productReference = D0B1A0112DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D0B1A01A2DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0B1A02C2DFEC26400474DAA /* Build configuration list for PBXNativeTarget "QuickTrip - SimpleApp FacadePatternUITests" */;
+			buildPhases = (
+				D0B1A0172DFEC26400474DAA /* Sources */,
+				D0B1A0182DFEC26400474DAA /* Frameworks */,
+				D0B1A0192DFEC26400474DAA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D0B1A01D2DFEC26400474DAA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D0B1A01E2DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternUITests */,
+			);
+			name = "QuickTrip - SimpleApp FacadePatternUITests";
+			packageProductDependencies = (
+			);
+			productName = "QuickTrip - SimpleApp FacadePatternUITests";
+			productReference = D0B1A01B2DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D0B19FF32DFEC26200474DAA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					D0B19FFA2DFEC26200474DAA = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					D0B1A0102DFEC26400474DAA = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = D0B19FFA2DFEC26200474DAA;
+					};
+					D0B1A01A2DFEC26400474DAA = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = D0B19FFA2DFEC26200474DAA;
+					};
+				};
+			};
+			buildConfigurationList = D0B19FF62DFEC26200474DAA /* Build configuration list for PBXProject "QuickTrip - SimpleApp FacadePattern" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D0B19FF22DFEC26200474DAA;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D0B19FFC2DFEC26200474DAA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D0B19FFA2DFEC26200474DAA /* QuickTrip - SimpleApp FacadePattern */,
+				D0B1A0102DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternTests */,
+				D0B1A01A2DFEC26400474DAA /* QuickTrip - SimpleApp FacadePatternUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D0B19FF92DFEC26200474DAA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0B1A00F2DFEC26400474DAA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0B1A0192DFEC26400474DAA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D0B19FF72DFEC26200474DAA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0B1A00D2DFEC26400474DAA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0B1A0172DFEC26400474DAA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D0B1A0132DFEC26400474DAA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0B19FFA2DFEC26200474DAA /* QuickTrip - SimpleApp FacadePattern */;
+			targetProxy = D0B1A0122DFEC26400474DAA /* PBXContainerItemProxy */;
+		};
+		D0B1A01D2DFEC26400474DAA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0B19FFA2DFEC26200474DAA /* QuickTrip - SimpleApp FacadePattern */;
+			targetProxy = D0B1A01C2DFEC26400474DAA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D0B1A0252DFEC26400474DAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FZCMHM49LE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "QuickTrip - SimpleApp FacadePattern/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rphi.QuickTrip---SimpleApp-FacadePattern";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D0B1A0262DFEC26400474DAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FZCMHM49LE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "QuickTrip - SimpleApp FacadePattern/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rphi.QuickTrip---SimpleApp-FacadePattern";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D0B1A0272DFEC26400474DAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D0B1A0282DFEC26400474DAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D0B1A02A2DFEC26400474DAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FZCMHM49LE;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rphi.QuickTrip---SimpleApp-FacadePatternTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickTrip - SimpleApp FacadePattern.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/QuickTrip - SimpleApp FacadePattern";
+			};
+			name = Debug;
+		};
+		D0B1A02B2DFEC26400474DAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FZCMHM49LE;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rphi.QuickTrip---SimpleApp-FacadePatternTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QuickTrip - SimpleApp FacadePattern.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/QuickTrip - SimpleApp FacadePattern";
+			};
+			name = Release;
+		};
+		D0B1A02D2DFEC26400474DAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FZCMHM49LE;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rphi.QuickTrip---SimpleApp-FacadePatternUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "QuickTrip - SimpleApp FacadePattern";
+			};
+			name = Debug;
+		};
+		D0B1A02E2DFEC26400474DAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FZCMHM49LE;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rphi.QuickTrip---SimpleApp-FacadePatternUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "QuickTrip - SimpleApp FacadePattern";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D0B19FF62DFEC26200474DAA /* Build configuration list for PBXProject "QuickTrip - SimpleApp FacadePattern" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0B1A0272DFEC26400474DAA /* Debug */,
+				D0B1A0282DFEC26400474DAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0B1A0242DFEC26400474DAA /* Build configuration list for PBXNativeTarget "QuickTrip - SimpleApp FacadePattern" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0B1A0252DFEC26400474DAA /* Debug */,
+				D0B1A0262DFEC26400474DAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0B1A0292DFEC26400474DAA /* Build configuration list for PBXNativeTarget "QuickTrip - SimpleApp FacadePatternTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0B1A02A2DFEC26400474DAA /* Debug */,
+				D0B1A02B2DFEC26400474DAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0B1A02C2DFEC26400474DAA /* Build configuration list for PBXNativeTarget "QuickTrip - SimpleApp FacadePatternUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0B1A02D2DFEC26400474DAA /* Debug */,
+				D0B1A02E2DFEC26400474DAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D0B19FF32DFEC26200474DAA /* Project object */;
+}
