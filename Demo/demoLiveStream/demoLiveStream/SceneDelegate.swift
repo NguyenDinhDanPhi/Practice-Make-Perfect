@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScreen = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScreen)
-        window.rootViewController = LiveStreamViewController(streamURL: "rtmp://a.rtmp.youtube.com/live2", streamKey: "tuue-q5dq-q83u-vzz7-8mxe")
+        window.rootViewController = LiveStreamViewController(streamURL: "rtmps://dev-rtmp.fangtv.vn:1935/live", streamKey: "fpl-q9i7gtqi6mnfaj8rskd78t0u5zel")
         window.makeKeyAndVisible()
         self.window = window
     }
