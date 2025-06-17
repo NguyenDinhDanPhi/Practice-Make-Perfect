@@ -67,7 +67,7 @@ class LiveStreamViewController: UIViewController {
         rtmpStream = RTMPStream(connection: rtmpConnection)
 
         // captureSettings
-        rtmpStream.sessionPreset = .hd1280x720
+        rtmpStream.sessionPreset = .iFrame1280x720
         rtmpStream.frameRate = 30
 
         // attachAudio: closure có 2 tham số
@@ -95,10 +95,10 @@ class LiveStreamViewController: UIViewController {
 
         // videoSettings bằng dictionary
         rtmpStream.videoSettings = VideoCodecSettings(
-            videoSize: .init(width: 720, height: 1280),
-            bitRate: 1_000_000,
-            profileLevel: kVTProfileLevel_H264_Baseline_3_1 as String,
-            maxKeyFrameIntervalDuration: 2
+            videoSize: .init(width: 1280, height: 720),
+            bitRate: 1_500_000,
+            profileLevel: kVTProfileLevel_H264_Main_AutoLevel as String,
+            maxKeyFrameIntervalDuration: 1
         )
 
         // Tương tự audioSettings:
