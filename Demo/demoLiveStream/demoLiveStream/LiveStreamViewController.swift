@@ -4,7 +4,7 @@ import AVFoundation
 import VideoToolbox
 
 /// LiveStreamViewController: hiển thị preview camera và stream lên RTMP server.
-/// Khởi tạo với streamURL (ví dụ "rtmps://dev-rtmp.fangtv.vn:1935/live") và streamKey (key do server cung cấp).
+/// Khởi tạo với streamURL (ví dụ "rtmps://dev-rtmp.fangtv.vn:1935/live") và streamKey.
 class LiveStreamViewController: UIViewController {
     // MARK: - Properties
 
@@ -17,7 +17,6 @@ class LiveStreamViewController: UIViewController {
     private let streamURL: String
     private let streamKey: String
 
-    // Để theo dõi orientation
     private var isObservingOrientation = false
 
     // MARK: - Init
@@ -29,7 +28,7 @@ class LiveStreamViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) chưa dùng")
     }
 
     // MARK: - Lifecycle
@@ -45,6 +44,8 @@ class LiveStreamViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startObservingDeviceOrientation()
+        // Thiết lập ban đầu theo orientation hiện tại:
+        applyCurrentOrientationToStream()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,10 +57,9 @@ class LiveStreamViewController: UIViewController {
         stopObservingDeviceOrientation()
     }
 
-    // MARK: - Setup Preview
+    // MARK: - Preview
 
     private func setupPreview() {
-        // Tạo MTHKView để hiển thị preview camera
         hkView = MTHKView(frame: view.bounds)
         hkView.videoGravity = .resizeAspectFill
         hkView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,10 +72,9 @@ class LiveStreamViewController: UIViewController {
         ])
     }
 
-    // MARK: - Setup UI
+    // MARK: - UI
 
     private func setupUI() {
-        // Nút Start/Stop Stream
         startButton.setTitle("Bắt đầu Stream", for: .normal)
         startButton.tintColor = .white
         startButton.backgroundColor = UIColor(white: 0.1, alpha: 0.7)
@@ -91,32 +90,29 @@ class LiveStreamViewController: UIViewController {
         ])
     }
 
-    // MARK: - Setup Stream
+    // MARK: - Stream setup
 
     private func setupStream() {
-        // 1. Cấu hình AVAudioSession
+        // 1. AVAudioSession
         let session = AVAudioSession.sharedInstance()
         do {
             try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
             try session.setPreferredSampleRate(44_100)
-            //Bạn có thể setPreferredIOBufferDuration nếu cần latency thấp
-            //try session.setPreferredIOBufferDuration(0.02)
+            // session.setPreferredIOBufferDuration chỉ ảnh hưởng audio local
             try session.setActive(true)
         } catch {
             print("Lỗi AVAudioSession:", error)
         }
 
-        // 2. Khởi tạo RTMPStream
+        // 2. RTMPStream
         rtmpStream = RTMPStream(connection: rtmpConnection)
 
-        // 3. Cấu hình capture: sessionPreset, frameRate
-        //  .hd1280x720 cho capture 720p. Nếu muốn stream portrait: vẫn dùng hd1280x720 nhưng lưu ý encode videoSize swap width/height khi set videoSettings.
+        // 3. Capture settings
         rtmpStream.sessionPreset = .hd1280x720
         rtmpStream.frameRate = 30
 
         // 4. Attach camera với autofocus/exposure/stabilization
         if let cameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
-            // Cấu hình focus/exposure trước khi attach
             do {
                 try cameraDevice.lockForConfiguration()
                 if cameraDevice.isFocusModeSupported(.continuousAutoFocus) {
@@ -129,20 +125,15 @@ class LiveStreamViewController: UIViewController {
             } catch {
                 print("Không thể cấu hình camera:", error)
             }
-            // Attach camera
-            rtmpStream.attachCamera(cameraDevice, track: 0) { [weak self] videoUnit, error in
+            rtmpStream.attachCamera(cameraDevice, track: 0) { videoUnit, error in
                 if let e = error {
                     print("Camera attach lỗi:", e)
                 } else if let vu = videoUnit {
-                    // Mirror nếu front camera
                     vu.isVideoMirrored = true
-                    // Stabilization nếu hỗ trợ
                     if vu.preferredVideoStabilizationMode != .off {
                         vu.preferredVideoStabilizationMode = .standard
                     }
-                    // Không cần set orientation trên videoUnit, ta set orientation ở rtmpStream phía dưới
                 }
-                // Sau khi attach camera, ta có thể đảm bảo preview và encoder đã sẵn sàng.
             }
         }
 
@@ -155,47 +146,19 @@ class LiveStreamViewController: UIViewController {
             }
         }
 
-        // 6. Preview: attach stream vào hkView
+        // 6. Preview
         hkView.attachStream(rtmpStream)
 
-        // 7. Cấu hình encode video:
-        // Giả sử muốn stream portrait 720p: videoSize width=720, height=1280
-        // Nếu muốn landscape: width=1280, height=720 và set videoOrientation tương ứng
-        let isPortrait = true
-        if isPortrait {
-            // Stream dọc
-            let w = 720
-            let h = 1280
-            rtmpStream.videoSettings = VideoCodecSettings(
-                videoSize: .init(width: w, height: h),
-                bitRate: 2_500_000,                          // bitrate ~2.5 Mbps
-                profileLevel: kVTProfileLevel_H264_Main_AutoLevel as String,
-                maxKeyFrameIntervalDuration: 2               // GOP = 2s
-            )
-            rtmpStream.videoOrientation = .portrait
-        } else {
-            // Stream ngang
-            let w = 1280
-            let h = 720
-            rtmpStream.videoSettings = VideoCodecSettings(
-                videoSize: .init(width: w, height: h),
-                bitRate: 2_500_000,
-                profileLevel: kVTProfileLevel_H264_Main_AutoLevel as String,
-                maxKeyFrameIntervalDuration: 2
-            )
-            // Chọn landscapeRight hoặc landscapeLeft tùy hướng UI/UX
-            rtmpStream.videoOrientation = .landscapeRight
-        }
+        // 7. Video encode & orientation: ban đầu sẽ set trong applyCurrentOrientationToStream()
+        // 8. Audio encode
+        rtmpStream.audioSettings = AudioCodecSettings(bitRate: 128_000)
 
-        // 8. Cấu hình encode audio
-        rtmpStream.audioSettings = AudioCodecSettings(bitRate: 128_000) // 128kbps
-
-        // 9. Lắng nghe trạng thái RTMP
+        // 9. RTMP listeners
         rtmpConnection.addEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
         rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
     }
 
-    // MARK: - Device Orientation
+    // MARK: - Orientation handling
 
     private func startObservingDeviceOrientation() {
         guard !isObservingOrientation else { return }
@@ -215,51 +178,66 @@ class LiveStreamViewController: UIViewController {
     }
 
     @objc private func deviceOrientationDidChange() {
+        applyCurrentOrientationToStream()
+    }
+
+    private func applyCurrentOrientationToStream() {
+        // Lấy orientation thiết bị
         let deviceOrientation = UIDevice.current.orientation
         var videoOrientation: AVCaptureVideoOrientation?
-
         switch deviceOrientation {
         case .portrait:
             videoOrientation = .portrait
         case .portraitUpsideDown:
             videoOrientation = .portraitUpsideDown
         case .landscapeLeft:
-            // Chú ý: khi deviceOrientation = landscapeLeft, thường videoOrientation phải là .landscapeRight để khớp chiều camera
+            // Khi thiết bị quay trái, camera image quay phải
             videoOrientation = .landscapeRight
         case .landscapeRight:
             videoOrientation = .landscapeLeft
         default:
-            // .faceUp, .faceDown, .unknown: bỏ qua
+            // faceUp, faceDown, unknown: không đổi
             break
         }
+        guard let vo = videoOrientation else { return }
 
-        if let vo = videoOrientation {
-            // Cập nhật orientation encoder ngay khi stream chưa bắt đầu hoặc đang streaming
-            rtmpStream.videoOrientation = vo
+        // Cập nhật orientation encoder
+        rtmpStream.videoOrientation = vo
 
-            // Nếu muốn thay đổi resolution động:
-            // Ví dụ: khi chuyển giữa portrait <-> landscape, ta có thể tái set videoSettings:
-            /*
-            if vo.isPortrait {
-                rtmpStream.videoSettings = VideoCodecSettings(
-                    videoSize: .init(width: 720, height: 1280),
-                    bitRate: 2_500_000,
-                    profileLevel: kVTProfileLevel_H264_Main_AutoLevel as String,
-                    maxKeyFrameIntervalDuration: 2
-                )
-            } else {
-                rtmpStream.videoSettings = VideoCodecSettings(
-                    videoSize: .init(width: 1280, height: 720),
-                    bitRate: 2_500_000,
-                    profileLevel: kVTProfileLevel_H264_Main_AutoLevel as String,
-                    maxKeyFrameIntervalDuration: 2
-                )
-            }
-            */
+        // Cập nhật videoSettings nếu muốn thay đổi resolution tương ứng
+        let isPortrait = (vo == .portrait || vo == .portraitUpsideDown)
+        if isPortrait {
+            let w = 720
+            let h = 1280
+            rtmpStream.videoSettings = VideoCodecSettings(
+                videoSize: .init(width: w, height: h),
+                bitRate: 2_500_000,
+                profileLevel: kVTProfileLevel_H264_Main_AutoLevel as String,
+                scalingMode: .trim,
+                bitRateMode: .average,
+                maxKeyFrameIntervalDuration: 2,
+                allowFrameReordering: true,
+                isHardwareEncoderEnabled: true
+               
+            )
+        } else {
+            let w = 1280
+            let h = 720
+            rtmpStream.videoSettings = VideoCodecSettings(
+                videoSize: .init(width: w, height: h),
+                bitRate: 2_500_000,
+                profileLevel: kVTProfileLevel_H264_Main_AutoLevel as String,
+                scalingMode: .trim,
+                bitRateMode: .average,
+                maxKeyFrameIntervalDuration: 2,
+                allowFrameReordering: true,
+                isHardwareEncoderEnabled: true
+               
+            )
         }
     }
 
-    // MARK: - Start / Stop Stream
+    // MARK: - Start/Stop Stream
 
     @objc private func toggleStream() {
         if isStreaming {
@@ -274,7 +252,6 @@ class LiveStreamViewController: UIViewController {
             showAlert(title: "Lỗi", message: "URL không hợp lệ.")
             return
         }
-        // Kết nối RTMP
         rtmpConnection.connect(streamURL)
         DispatchQueue.main.async {
             self.startButton.isEnabled = false
@@ -285,10 +262,8 @@ class LiveStreamViewController: UIViewController {
     @objc private func rtmpStatusHandler(_ notification: Notification) {
         let e = Event.from(notification)
         if let data = e.data as? ASObject, let code = data["code"] as? String {
-            print("RTMP Status: \(code)")
             switch code {
             case RTMPConnection.Code.connectSuccess.rawValue:
-                // Khi kết nối thành công, publish với streamKey
                 rtmpStream.publish(streamKey)
                 DispatchQueue.main.async {
                     self.isStreaming = true
@@ -309,7 +284,6 @@ class LiveStreamViewController: UIViewController {
     }
 
     @objc private func rtmpErrorHandler(_ notification: Notification) {
-        // Xảy ra lỗi IO khi streaming
         DispatchQueue.main.async {
             self.isStreaming = false
             self.startButton.isEnabled = true
@@ -340,8 +314,7 @@ class LiveStreamViewController: UIViewController {
     // MARK: - Orientation Support
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        // Nếu chỉ muốn portrait: return .portrait
-        // Nếu muốn hỗ trợ xoay: return .allButUpsideDown hoặc .all
+        // Cho phép xoay: portrait và landscape
         return .allButUpsideDown
     }
 }
