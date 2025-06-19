@@ -169,8 +169,11 @@ class LiveStreamViewController: UIViewController {
                           userInfo: [NSLocalizedDescriptionKey: "MediaMixer not initialized"])
         }
   
-        await mediaMixer.setSessionPreset(.hd1280x720)
         await mediaMixer.setFrameRate(30)
+        await mediaMixer.setSessionPreset(AVCaptureSession.Preset.medium)
+        await mediaMixer.configuration { session in
+            session.automaticallyConfiguresApplicationAudioSession = true
+        }
         
         // Attach camera
         if let cameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
