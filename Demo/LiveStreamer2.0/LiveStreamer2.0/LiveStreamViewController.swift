@@ -4,18 +4,19 @@ import HaishinKit
 
 class LiveStreamViewController: UIViewController {
     // MARK: - Properties
-    private let rtmpConnection = RTMPConnection()
-    private var rtmpStream: RTMPStream!
-    private var hkView: MTHKView!
+    private let rtmpConnection = RTMPConnection() // Kết nối RTMP
+    private var rtmpStream: RTMPStream!           // RTMPStream để publish
+    private var hkView: MTHKView!                 // Preview view
     private let startButton = UIButton(type: .system)
-    private var isStreaming = false
+    private var isStreaming = false               // Trạng thái streaming
     
     // MediaMixer để capture camera/audio
     private var mediaMixer: MediaMixer?
+    // Lưu videoUnit nếu cần (kiểu public do HaishinKit cung cấp); nếu không rõ, dùng Any
+    private var videoCaptureUnitTrack0: Any?
     
-    private let streamURL: String
-    private let streamKey: String
-    
+    private let streamURL: String  // URL RTMP server
+    private let streamKey: String  // stream key
     private var isObservingOrientation = false
     
     // MARK: - Init
@@ -24,7 +25,6 @@ class LiveStreamViewController: UIViewController {
         self.streamKey = streamKey
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) chưa dùng")
     }
@@ -35,15 +35,11 @@ class LiveStreamViewController: UIViewController {
         view.backgroundColor = .black
         setupPreview()
         setupUI()
-        
-        // Không setup stream ngay, đợi viewDidAppear
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         startObservingDeviceOrientation()
-        
-        // Setup stream sau khi view đã appear
         Task {
             await setupStreamAsync()
         }
@@ -52,18 +48,13 @@ class LiveStreamViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopObservingDeviceOrientation()
-        
-        // Stop mọi thứ
         Task {
             await cleanup()
         }
     }
-    
     deinit {
         stopObservingDeviceOrientation()
-        Task {
-            await cleanup()
-        }
+        Task { await cleanup() }
     }
     
     // MARK: - Preview Setup
@@ -100,168 +91,133 @@ class LiveStreamViewController: UIViewController {
     // MARK: - Stream Setup
     private func setupStreamAsync() async {
         print("🎬 Starting stream setup...")
-        
         do {
-            // 1. Request permissions
             let hasPermissions = await requestPermissions()
             guard hasPermissions else {
-                 showAlert(title: "Lỗi", message: "Cần cấp quyền camera và microphone")
+                showAlert(title: "Lỗi", message: "Cần cấp quyền camera và microphone")
                 return
             }
-            
-            // 2. Setup audio session
             try setupAudioSession()
-            
-            // 3. Setup MediaMixer và connections
             try await setupMediaMixerAndConnections()
-            
-            // 4. Attach devices
-            try await attachDevices()
-            
-            // 5. Configure settings
+            try await attachDevices() // Phần cấu hình sessionPreset và frameRate
+            // Configure codec settings ban đầu
             await MainActor.run {
                 configureStreamSettings()
             }
-            
+            // Áp orientation khởi tạo
+            applyCurrentOrientationToStream()
             print("✅ Stream setup completed")
-            
         } catch {
-            print("❌ Stream setup failed: \(error)")
-             showAlert(title: "Lỗi", message: "Không thể khởi tạo camera: \(error.localizedDescription)")
+            print("❌ Stream setup failed:", error)
+            showAlert(title: "Lỗi", message: error.localizedDescription)
         }
     }
     
     private func requestPermissions() async -> Bool {
-        // Check camera permission
-        let cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
-        let cameraGranted: Bool
-        
-        switch cameraStatus {
-        case .authorized:
-            cameraGranted = true
-        case .notDetermined:
-            cameraGranted = await AVCaptureDevice.requestAccess(for: .video)
-        default:
-            cameraGranted = false
-        }
-        
-        // Check audio permission
-        let audioStatus = AVCaptureDevice.authorizationStatus(for: .audio)
-        let audioGranted: Bool
-        
-        switch audioStatus {
-        case .authorized:
-            audioGranted = true
-        case .notDetermined:
-            audioGranted = await AVCaptureDevice.requestAccess(for: .audio)
-        default:
-            audioGranted = false
-        }
-        
-        print("🔐 Permissions - Camera: \(cameraGranted), Audio: \(audioGranted)")
-        return cameraGranted && audioGranted
+        // Camera
+        let cameraGranted: Bool = await {
+            switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .authorized: return true
+            case .notDetermined: return await AVCaptureDevice.requestAccess(for: .video)
+            default: return false
+            }
+        }()
+        // Microphone
+        let audioGranted: Bool = await {
+            switch AVCaptureDevice.authorizationStatus(for: .audio) {
+            case .authorized: return true
+            case .notDetermined: return await AVCaptureDevice.requestAccess(for: .audio)
+            default: return false
+            }
+        }()
+        let cam = await cameraGranted, mic = await audioGranted
+        print("🔐 Permissions - Camera: \(cam), Audio: \(mic)")
+        return cam && mic
     }
     
     private func setupAudioSession() throws {
         let session = AVAudioSession.sharedInstance()
-        try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
+        try session.setCategory(.playAndRecord, mode: .default,
+                                options: [.defaultToSpeaker, .allowBluetooth])
         try session.setPreferredSampleRate(44_100)
         try session.setActive(true)
         print("🔊 Audio session configured")
     }
     
     private func setupMediaMixerAndConnections() async throws {
-        print("📹 Setting up MediaMixer and connections...")
-        
-        // 1. Create MediaMixer
+        // Tạo MediaMixer
         mediaMixer = MediaMixer()
-        
         guard let mediaMixer = mediaMixer else {
-            throw NSError(domain: "MediaMixer", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create MediaMixer"])
+            throw NSError(domain: "MediaMixer", code: -1,
+                          userInfo: [NSLocalizedDescriptionKey: "MediaMixer not initialized"])
         }
-        
-        // 2. Create RTMPStream on main thread
+        // Tạo RTMPStream trên MainActor
         await MainActor.run {
             rtmpStream = RTMPStream(connection: rtmpConnection)
             setupConnectionListeners()
         }
-        
-        // 3. Add outputs (these are async calls)
-         await mediaMixer.addOutput(hkView)
+        // Add outputs cho preview và stream
+        await mediaMixer.addOutput(hkView)
         print("✅ Preview connected")
-        
-         await mediaMixer.addOutput(rtmpStream)
+        await mediaMixer.addOutput(rtmpStream)
         print("✅ Stream output connected")
     }
     
     private func attachDevices() async throws {
         guard let mediaMixer = mediaMixer else {
-            throw NSError(domain: "MediaMixer", code: -1, userInfo: [NSLocalizedDescriptionKey: "MediaMixer not initialized"])
+            throw NSError(domain: "MediaMixer", code: -1,
+                          userInfo: [NSLocalizedDescriptionKey: "MediaMixer not initialized"])
         }
+  
+        await mediaMixer.setSessionPreset(.hd1280x720)
+        await mediaMixer.setFrameRate(30)
         
         // Attach camera
         if let cameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-            try await attachCamera(cameraDevice, to: mediaMixer)
+            try await mediaMixer.attachVideo(cameraDevice, track: 0) { videoUnit in
+                // videoUnit kiểu public do HaishinKit cung cấp, không khai VideoIOUnit
+                self.videoCaptureUnitTrack0 = videoUnit
+                videoUnit.isVideoMirrored = true
+                if videoUnit.preferredVideoStabilizationMode != .off {
+                    videoUnit.preferredVideoStabilizationMode = .standard
+                }
+            }
+            print("✅ Camera attached")
         } else {
             print("⚠️ No camera found")
         }
-        
-        // Attach microphone
+        // Attach audio
         if let audioDevice = AVCaptureDevice.default(for: .audio) {
-            try await attachAudio(audioDevice, to: mediaMixer)
+            try await mediaMixer.attachAudio(audioDevice, track: 0) { audioUnit in
+                // Cấu hình audioUnit nếu cần
+            }
+            print("✅ Audio attached")
         } else {
             print("⚠️ No microphone found")
         }
     }
     
-    private func attachCamera(_ device: AVCaptureDevice, to mixer: MediaMixer) async throws {
-        print("📸 Attaching camera...")
-        
-        try device.lockForConfiguration()
-        defer { device.unlockForConfiguration() }
-        
-        if device.isFocusModeSupported(.continuousAutoFocus) {
-            device.focusMode = .continuousAutoFocus
-        }
-        if device.isExposureModeSupported(.continuousAutoExposure) {
-            device.exposureMode = .continuousAutoExposure
-        }
-        
-        try await mixer.attachVideo(device)
-        print("✅ Camera attached")
-    }
-    
-    private func attachAudio(_ device: AVCaptureDevice, to mixer: MediaMixer) async throws {
-        print("🎤 Attaching audio...")
-        try await mixer.attachAudio(device)
-        print("✅ Audio attached")
-    }
-    
     private func configureStreamSettings() {
         guard let rtmpStream = rtmpStream else { return }
-        
-        // Video settings
         var videoSettings = VideoCodecSettings()
         videoSettings.bitRate = 2_500_000
+        // Ban đầu kích thước 1280x720, sau cập orientation sẽ set lại
         videoSettings.videoSize = CGSize(width: 1280, height: 720)
         videoSettings.maxKeyFrameIntervalDuration = 2
         rtmpStream.setVideoSettings(videoSettings)
         
-        // Audio settings
         var audioSettings = AudioCodecSettings()
         audioSettings.bitRate = 128_000
         rtmpStream.setAudioSettings(audioSettings)
-        
         print("⚙️ Stream settings configured")
     }
     
     private func setupConnectionListeners() {
         guard let rtmpStream = rtmpStream else { return }
-        
         Task {
             for await status in rtmpStream.status {
                 await MainActor.run {
-                    self.handleRTMPStatus(status)
+                    handleRTMPStatus(status)
                 }
             }
         }
@@ -269,18 +225,27 @@ class LiveStreamViewController: UIViewController {
     
     private func handleRTMPStatus(_ status: RTMPStatus) {
         print("📡 RTMP Status: \(status.code) - \(status.description)")
-        
         switch status.code {
         case RTMPStream.Code.publishStart.rawValue:
-            print("✅ Stream started successfully")
+            DispatchQueue.main.async {
+                self.isStreaming = true
+                self.startButton.setTitle("Dừng Stream", for: .normal)
+                self.startButton.isEnabled = true
+            }
         case RTMPStream.Code.unpublishSuccess.rawValue:
-            print("✅ Stream stopped successfully")
+            DispatchQueue.main.async {
+                self.isStreaming = false
+                self.startButton.setTitle("Bắt đầu Stream", for: .normal)
+                self.startButton.isEnabled = true
+            }
         case RTMPStream.Code.connectFailed.rawValue,
              RTMPStream.Code.publishBadName.rawValue:
             showAlert(title: "Lỗi Stream", message: status.description)
-            isStreaming = false
-            startButton.setTitle("Bắt đầu Stream", for: .normal)
-            startButton.isEnabled = true
+            DispatchQueue.main.async {
+                self.isStreaming = false
+                self.startButton.setTitle("Bắt đầu Stream", for: .normal)
+                self.startButton.isEnabled = true
+            }
         default:
             break
         }
@@ -288,34 +253,14 @@ class LiveStreamViewController: UIViewController {
     
     // MARK: - Cleanup
     private func cleanup() async {
-        print("🧹 Cleaning up...")
-        
         if isStreaming {
-            // Cách 1: nếu không quan tâm lỗi, gán kết quả cho _
-            if let stream = rtmpStream {
-                _ = try? await stream.close()
-            }
+            _ = try? await rtmpStream.close()
             _ = try? await rtmpConnection.close()
-            
-            // Hoặc Cách 2: xử lý lỗi cụ thể
-            if let stream = rtmpStream {
-                do {
-                    try await stream.close()
-                } catch {
-                    print("❌ Lỗi khi đóng stream: \(error)")
-                }
-            }
-            do {
-                try await rtmpConnection.close()
-            } catch {
-                print("❌ Lỗi khi đóng connection: \(error)")
-            }
         }
-        
         mediaMixer = nil
         print("✅ Cleanup completed")
     }
-
+    
     // MARK: - Stream Control
     @objc private func toggleStream() {
         if isStreaming {
@@ -324,58 +269,36 @@ class LiveStreamViewController: UIViewController {
             Task { await startStream() }
         }
     }
-    
     private func startStream() async {
         guard !streamURL.isEmpty, mediaMixer != nil else {
-             showAlert(title: "Lỗi", message: "Stream chưa sẵn sàng")
+            showAlert(title: "Lỗi", message: "Stream chưa sẵn sàng")
             return
         }
-        
         await MainActor.run {
             startButton.isEnabled = false
             startButton.setTitle("Đang kết nối...", for: .normal)
         }
-        
         do {
             _ = try await rtmpConnection.connect(streamURL)
             _ = try await rtmpStream.publish(streamKey)
-            
-            await MainActor.run {
-                self.isStreaming = true
-                self.startButton.isEnabled = true
-                self.startButton.setTitle("Dừng Stream", for: .normal)
-            }
         } catch {
             await MainActor.run {
                 self.isStreaming = false
                 self.startButton.isEnabled = true
                 self.startButton.setTitle("Bắt đầu Stream", for: .normal)
             }
-             showAlert(title: "Lỗi", message: "Không kết nối được: \(error.localizedDescription)")
+            showAlert(title: "Lỗi", message: error.localizedDescription)
         }
     }
-    
     private func stopStream() async {
-        // Cập nhật UI sớm, tránh kẹt khi network chậm
         await MainActor.run {
             self.isStreaming = false
             self.startButton.setTitle("Bắt đầu Stream", for: .normal)
             self.startButton.isEnabled = true
         }
-        // Nếu chưa ở trạng thái publish, không cần close
-        do {
-            _ = try await rtmpStream.close()         // bỏ qua lỗi nếu có
-        } catch {
-            print("❌ Stop stream warning: \(error)")
-        }
-        do {
-            _ = try await rtmpConnection.close()      // bỏ qua lỗi nếu có
-        } catch {
-            print("❌ Stop connection warning: \(error)")
-        }
-        // MediaMixer có thể tiếp tục giữ preview nếu cần, hoặc nil nếu thoát màn hình
+        _ = try? await rtmpStream.close()
+        _ = try? await rtmpConnection.close()
     }
-
     
     // MARK: - Orientation
     private func startObservingDeviceOrientation() {
@@ -387,45 +310,45 @@ class LiveStreamViewController: UIViewController {
                                                name: UIDevice.orientationDidChangeNotification,
                                                object: nil)
     }
-    
     private func stopObservingDeviceOrientation() {
         guard isObservingOrientation else { return }
         isObservingOrientation = false
-        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIDevice.orientationDidChangeNotification,
+                                                  object: nil)
         UIDevice.current.endGeneratingDeviceOrientationNotifications()
     }
-    
     @objc private func deviceOrientationDidChange() {
         applyCurrentOrientationToStream()
     }
-    
     private func applyCurrentOrientationToStream() {
-        guard let rtmpStream = rtmpStream else { return }
-        
+        guard let mediaMixer = mediaMixer, let rtmpStream = rtmpStream else { return }
         let deviceOrientation = UIDevice.current.orientation
-        let isPortrait: Bool
-        
+        var vo: AVCaptureVideoOrientation?
         switch deviceOrientation {
-        case .portrait, .portraitUpsideDown:
-            isPortrait = true
-        case .landscapeLeft, .landscapeRight:
-            isPortrait = false
-        default:
-            return
+        case .portrait: vo = .portrait
+        case .portraitUpsideDown: vo = .portraitUpsideDown
+        case .landscapeLeft: vo = .landscapeRight
+        case .landscapeRight: vo = .landscapeLeft
+        default: vo = nil
         }
-        
-        let size = isPortrait ? CGSize(width: 720, height: 1280) : CGSize(width: 1280, height: 720)
-        var videoSettings = rtmpStream.videoSettings
-        videoSettings.videoSize = size
-        rtmpStream.setVideoSettings(videoSettings)
+        if let orientation = vo {
+            mediaMixer.setVideoOrientation(orientation)
+            // Cập nhật kích thước encoder phù hợp
+            let size = (orientation == .portrait || orientation == .portraitUpsideDown)
+                ? CGSize(width: 720, height: 1280)
+                : CGSize(width: 1280, height: 720)
+            var vs = rtmpStream.videoSettings
+            vs.videoSize = size
+            rtmpStream.setVideoSettings(vs)
+        }
     }
     
-    // MARK: - Alert Helper
     @MainActor
     private func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(.init(title: "OK", style: .default))
+        present(ac, animated: true)
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
