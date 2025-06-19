@@ -105,7 +105,7 @@ class LiveStreamViewController: UIViewController {
             // 1. Request permissions
             let hasPermissions = await requestPermissions()
             guard hasPermissions else {
-                await showAlert(title: "Lỗi", message: "Cần cấp quyền camera và microphone")
+                 showAlert(title: "Lỗi", message: "Cần cấp quyền camera và microphone")
                 return
             }
             
@@ -127,7 +127,7 @@ class LiveStreamViewController: UIViewController {
             
         } catch {
             print("❌ Stream setup failed: \(error)")
-            await showAlert(title: "Lỗi", message: "Không thể khởi tạo camera: \(error.localizedDescription)")
+             showAlert(title: "Lỗi", message: "Không thể khởi tạo camera: \(error.localizedDescription)")
         }
     }
     
@@ -187,10 +187,10 @@ class LiveStreamViewController: UIViewController {
         }
         
         // 3. Add outputs (these are async calls)
-        try await mediaMixer.addOutput(hkView)
+         await mediaMixer.addOutput(hkView)
         print("✅ Preview connected")
         
-        try await mediaMixer.addOutput(rtmpStream)
+         await mediaMixer.addOutput(rtmpStream)
         print("✅ Stream output connected")
     }
     
@@ -291,14 +291,31 @@ class LiveStreamViewController: UIViewController {
         print("🧹 Cleaning up...")
         
         if isStreaming {
-            try? await rtmpStream?.close()
-            try? await rtmpConnection.close()
+            // Cách 1: nếu không quan tâm lỗi, gán kết quả cho _
+            if let stream = rtmpStream {
+                _ = try? await stream.close()
+            }
+            _ = try? await rtmpConnection.close()
+            
+            // Hoặc Cách 2: xử lý lỗi cụ thể
+            if let stream = rtmpStream {
+                do {
+                    try await stream.close()
+                } catch {
+                    print("❌ Lỗi khi đóng stream: \(error)")
+                }
+            }
+            do {
+                try await rtmpConnection.close()
+            } catch {
+                print("❌ Lỗi khi đóng connection: \(error)")
+            }
         }
         
         mediaMixer = nil
         print("✅ Cleanup completed")
     }
-    
+
     // MARK: - Stream Control
     @objc private func toggleStream() {
         if isStreaming {
@@ -310,7 +327,7 @@ class LiveStreamViewController: UIViewController {
     
     private func startStream() async {
         guard !streamURL.isEmpty, mediaMixer != nil else {
-            await showAlert(title: "Lỗi", message: "Stream chưa sẵn sàng")
+             showAlert(title: "Lỗi", message: "Stream chưa sẵn sàng")
             return
         }
         
@@ -334,23 +351,31 @@ class LiveStreamViewController: UIViewController {
                 self.startButton.isEnabled = true
                 self.startButton.setTitle("Bắt đầu Stream", for: .normal)
             }
-            await showAlert(title: "Lỗi", message: "Không kết nối được: \(error.localizedDescription)")
+             showAlert(title: "Lỗi", message: "Không kết nối được: \(error.localizedDescription)")
         }
     }
     
     private func stopStream() async {
-        do {
-            _ = try await rtmpStream.close()
-            _ = try await rtmpConnection.close()
-            
-            await MainActor.run {
-                self.isStreaming = false
-                self.startButton.setTitle("Bắt đầu Stream", for: .normal)
-            }
-        } catch {
-            print("❌ Stop stream error: \(error)")
+        // Cập nhật UI sớm, tránh kẹt khi network chậm
+        await MainActor.run {
+            self.isStreaming = false
+            self.startButton.setTitle("Bắt đầu Stream", for: .normal)
+            self.startButton.isEnabled = true
         }
+        // Nếu chưa ở trạng thái publish, không cần close
+        do {
+            _ = try await rtmpStream.close()         // bỏ qua lỗi nếu có
+        } catch {
+            print("❌ Stop stream warning: \(error)")
+        }
+        do {
+            _ = try await rtmpConnection.close()      // bỏ qua lỗi nếu có
+        } catch {
+            print("❌ Stop connection warning: \(error)")
+        }
+        // MediaMixer có thể tiếp tục giữ preview nếu cần, hoặc nil nếu thoát màn hình
     }
+
     
     // MARK: - Orientation
     private func startObservingDeviceOrientation() {

@@ -112,7 +112,7 @@ class LiveStreamViewController: UIViewController {
         rtmpStream.frameRate = 30
 
         // 4. Attach camera với autofocus/exposure/stabilization
-        if let cameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
+        if let cameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             do {
                 try cameraDevice.lockForConfiguration()
                 if cameraDevice.isFocusModeSupported(.continuousAutoFocus) {
