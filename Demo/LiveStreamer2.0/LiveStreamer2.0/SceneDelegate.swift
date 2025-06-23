@@ -1,8 +1,8 @@
 //
 //  SceneDelegate.swift
-//  demoLiveStream
+//  LiveStreamer2.0
 //
-//  Created by Dan Phi on 16/6/25.
+//  Created by Dan Phi on 18/6/25.
 //
 
 import UIKit
