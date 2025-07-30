@@ -52,10 +52,14 @@ class UploadViewController: UIViewController {
     }
     
     @objc private func showList() {
-        print("nav:", navigationController as Any)   // <- xem có phải nil không
+        guard let nav = navigationController else {
+            print("⚠️ navigationController is nil – hãy kiểm tra SceneDelegate xem đã embed chưa")
+            return
+        }
         let listVC = VideoListViewController()
-        present(listVC, animated: true)
+        nav.pushViewController(listVC, animated: true)
     }
+
     
     
     

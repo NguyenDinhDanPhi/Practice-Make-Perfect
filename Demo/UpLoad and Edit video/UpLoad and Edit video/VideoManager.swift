@@ -7,7 +7,7 @@
 
 
 import UIKit
-
+import AVFoundation
 // MARK: - VideoManager
 final class VideoManager {
     static let shared = VideoManager()
@@ -18,20 +18,32 @@ final class VideoManager {
         return fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
 
-    // Save picked video to documents directory
     func saveVideo(at sourceURL: URL) throws {
-        let destinationURL = documentsURL.appendingPathComponent(sourceURL.lastPathComponent)
-        if fileManager.fileExists(atPath: destinationURL.path) {
-            try fileManager.removeItem(at: destinationURL)
+        // Bạn có thể đổi tên file thành timestamp để dễ đọc:
+        let ext = sourceURL.pathExtension
+        let name = "video_\(Int(Date().timeIntervalSince1970)).\(ext)"
+        let dest = documentsURL.appendingPathComponent(name)
+        
+        if fileManager.fileExists(atPath: dest.path) {
+            try fileManager.removeItem(at: dest)
         }
-        try fileManager.copyItem(at: sourceURL, to: destinationURL)
+        try fileManager.copyItem(at: sourceURL, to: dest)
     }
 
-    // List saved videos
-    func fetchVideos() -> [URL] {
-        guard let files = try? fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil, options: []) else {
+    /// Trả về mảng `Video` thay vì chỉ URL
+    func fetchVideos() -> [Video] {
+        guard let files = try? fileManager.contentsOfDirectory(at: documentsURL,
+                                                              includingPropertiesForKeys: nil,
+                                                              options: []) else {
             return []
         }
-        return files.filter { ["mov", "mp4", "m4v"].contains($0.pathExtension.lowercased()) }
+        return files
+            .filter { ["mov","mp4","m4v"].contains($0.pathExtension.lowercased()) }
+            .map    { Video(url: $0) }
     }
 }
+
+struct Video {
+    let url: URL
+}
+

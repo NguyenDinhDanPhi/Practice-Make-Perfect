@@ -15,7 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScreen = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScreen)
-        window.rootViewController = UploadViewController()
+        let uploadVC = UploadViewController()
+        let nav = UINavigationController(rootViewController: uploadVC)
+        window.rootViewController = nav
         window.makeKeyAndVisible()
         self.window = window
     }
