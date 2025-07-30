@@ -143,7 +143,7 @@ class EditViewController: UIViewController {
                         // Trong completion của addDrawingOverlay, trước khi present player:
                        try? VideoManager.shared.saveVideo(at: out)
 
-d                    }
+                   }
                 }
             }
         }
