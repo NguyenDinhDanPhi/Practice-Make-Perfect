@@ -32,7 +32,7 @@ class UploadViewController: UIViewController {
         listButton.addTarget(self, action: #selector(showList), for: .touchUpInside)
     }
     
-    private func setupLayout() {
+    private func setupLayout()  {
         view.addSubview(selectButton)
         view.addSubview(listButton)
         NSLayoutConstraint.activate([
@@ -48,6 +48,7 @@ class UploadViewController: UIViewController {
         picker.delegate = self
         picker.mediaTypes = ["public.movie"]
         picker.videoQuality = .typeMedium
+        picker.modalPresentationStyle = .fullScreen
         present(picker, animated: true)
     }
     
@@ -66,20 +67,23 @@ class UploadViewController: UIViewController {
 }
 
 extension UploadViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
-        if let url = info[.mediaURL] as? URL {
-            do {
-                
-                try VideoManager.shared.saveVideo(at: url)
-                let alert = UIAlertController(title: "Thành công", message: "Video đã được lưu", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                present(alert, animated: true)
-            } catch {
-                let alert = UIAlertController(title: "Lỗi", message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                present(alert, animated: true)
-            }
+        guard let url = info[.mediaURL] as? URL else { return }
+        do {
+            try VideoManager.shared.saveVideo(at: url)
+            // Chuyển thẳng vào EditViewController với URL gốc hoặc URL đã save
+            let editVC = EditViewController(sourceURL: url)
+            navigationController?.pushViewController(editVC, animated: true)
+            
+        } catch {
+            let alert = UIAlertController(title: "Lỗi",
+                                          message: error.localizedDescription,
+                                          preferredStyle: .alert)
+            alert.addAction(.init(title: "OK", style: .default))
+            present(alert, animated: true)
         }
     }
 }
+
