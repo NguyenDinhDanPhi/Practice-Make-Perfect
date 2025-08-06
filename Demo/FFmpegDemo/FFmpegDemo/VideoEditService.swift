@@ -64,7 +64,7 @@ final class VideoEditService {
     ///   - x: X position.
     ///   - y: Y position.
     ///   - completion: Completion handler with success flag and optional error.
-    static func addTextOverlay(inputURL: URL, outputURL: URL, text: String, fontFile: String, fontSize: Int = 24, fontColor: String = "white", x: Int = 10, y: Int = 10, completion: @escaping (Bool, Error?) -> Void) {
+    static func addTextOverlay(inputURL: URL, outputURL: URL, text: String, fontFile: String, fontSize: Int = 24, fontColor: String = "red", x: Int = 10, y: Int = 10, completion: @escaping (Bool, Error?) -> Void) {
             // Example fontFile: "/System/Library/Fonts/Helvetica.ttc"
             let drawText = "drawtext=fontfile='\(fontFile)':text='\(text)':fontcolor=\(fontColor):fontsize=\(fontSize):x=\(x):y=\(y)"
             let command = "-y -i \"\(inputURL.path)\" -vf \"\(drawText)\" -codec:a copy \"\(outputURL.path)\""

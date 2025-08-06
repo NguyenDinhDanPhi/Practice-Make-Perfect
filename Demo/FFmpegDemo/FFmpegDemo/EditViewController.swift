@@ -121,8 +121,17 @@ class EditViewController: UIViewController {
     
     @objc private func didTapText() {
         let out = FileManager.default.temporaryDirectory.appendingPathComponent("story_text.mp4")
-        VideoEditService.addTextOverlay(inputURL: videoURL, outputURL: out, text: "My Story", fontFile: "/System/Library/Fonts/Helvetica.ttc" , fontSize: 28, fontColor: "white", x: 20, y: 20) { [weak self] ok, err in
-            self?.handleResult(ok: ok, url: out, error: err)
+        VideoEditService.addTextOverlay(
+            inputURL: videoURL,
+          outputURL: out,
+          text: "Hello Story",
+          fontFile: "/System/Library/Fonts/Helvetica.ttc",
+          fontSize: 28,
+          fontColor: "red",
+          x: 20,
+          y: 20
+        ) { success, error in
+            self.handleResult(ok: success, url: out, error: error)
         }
     }
     
