@@ -173,7 +173,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         VideoEditService.addTextOverlay(
             inputURL: currentURL,
             outputURL: out,
-            text: "Hello Story",
+            text: "Hehe Boy",
             fontFile: "/System/Library/Fonts/Helvetica.ttc",
             fontSize: 28,
             fontColor: "red",
