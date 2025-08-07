@@ -5,7 +5,7 @@
 //  Created by Dan Phi on 6/8/25.
 //
 
-import Foundation
+import UIKit
 import ffmpegkit
 
 /// A simple video editing service using FFmpegKit.
@@ -155,7 +155,60 @@ final class VideoEditService {
         runAsync(command: command, completion: completion)
     }
     
-    // MARK: - Private
+    /// Rotate video by degrees (90, 180, 270).
+        /// - Parameters:
+        ///   - inputURL: URL of the source video.
+        ///   - outputURL: URL where output video will be saved.
+        ///   - degrees: Rotation angle (90, 180, 270).
+        ///   - completion: Completion handler with success flag and optional error.
+        static func rotateVideo(
+            inputURL: URL,
+            outputURL: URL,
+            degrees: Int,
+            completion: @escaping (Bool, Error?) -> Void
+        ) {
+            let transpose = degrees == 90 ? 1 : degrees == 180 ? 2 : degrees == 270 ? 3 : 0
+            let filter = transpose > 0 ? "transpose=\(transpose)" : ""
+            let vf = filter.isEmpty ? "" : "-vf \"\(filter)\""
+            let command = "-y -i \"\(inputURL.path)\" \(vf) -c:v libx264 -crf 18 -preset veryfast -c:a copy \"\(outputURL.path)\""
+            runAsync(command: command, completion: completion)
+        }
+    
+    /// Apply a built‑in color filter (e.g. sepia or black‑and‑white).
+        /// - Parameters:
+        ///   - inputURL: URL of the source video.
+        ///   - outputURL: URL where filtered video will be saved.
+        ///   - filterName: Name of the FFmpeg filter ("sepia","hue=s=0" for B&W, etc.).
+        ///   - completion: Completion handler with success flag and optional error.
+        static func applyColorFilter(
+            inputURL: URL,
+            outputURL: URL,
+            filterName: String,
+            completion: @escaping (Bool, Error?) -> Void
+        ) {
+            let command = "-y -i \"\(inputURL.path)\" -vf \"\(filterName)\" -c:v libx264 -crf 18 -preset veryfast -c:a copy \"\(outputURL.path)\""
+            runAsync(command: command, completion: completion)
+        }
+
+    /// Create a crossfade transition between two videos of equal dimensions.
+        /// - Parameters:
+        ///   - firstURL: URL of the first clip.
+        ///   - secondURL: URL of the second clip.
+        ///   - outputURL: URL where output video will be saved.
+        ///   - duration: Duration in seconds of the crossfade.
+        ///   - completion: Completion handler with success flag and optional error.
+        static func crossfadeVideos(
+            firstURL: URL,
+            secondURL: URL,
+            outputURL: URL,
+            duration: Double,
+            completion: @escaping (Bool, Error?) -> Void
+        ) {
+            let filter = "[0:v][1:v]xfade=transition=fade:duration=\(duration):offset=0,format=yuv420p"
+            let command = "-y -i \"\(firstURL.path)\" -i \"\(secondURL.path)\" -filter_complex \"\(filter)\" -c:v libx264 -crf 18 -preset veryfast -c:a copy \"\(outputURL.path)\""
+            runAsync(command: command, completion: completion)
+        }
+        
     
     /// Helper to run an FFmpegKit async command and map the return code.
     private static func runAsync(

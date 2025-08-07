@@ -16,6 +16,7 @@ class UploadViewController: UIViewController {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
         btn.tintColor = .white
+        btn.layer.cornerRadius = 25
         btn.backgroundColor = .systemBlue
         return btn
     }()

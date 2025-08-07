@@ -20,6 +20,9 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     private let textButton = UIButton(type: .system)
     private let stickerButton = UIButton(type: .system)
     private let boxButton = UIButton(type: .system)
+    private let rotateButton = UIButton(type: .system)
+    private let filterButton = UIButton(type: .system)
+    private let transitionButton = UIButton(type: .system)
     
     init(videoURL: URL) {
         self.currentURL = videoURL
@@ -59,18 +62,18 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     private func setupActionButtons() {
-        // Configure back button
-        backButton.tintColor = .white
-        backButton.layer.cornerRadius = 30
-        backButton.backgroundColor = UIColor(white: 0.1, alpha: 0.6)
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        backButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        backButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        backButton.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
-        backButton.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
-
-        let buttons = [backButton, trimButton, cropButton, textButton, stickerButton, boxButton]
-        let icons = ["chevron.backward","scissors", "crop", "textformat", "photo", "scribble"]
+        // Configure icons and buttons array
+        let buttons = [backButton, trimButton, cropButton, textButton,
+                       stickerButton, boxButton, rotateButton,
+                       filterButton, transitionButton]
+        let icons = ["chevron.backward","scissors","crop","textformat",
+                     "photo","scribble","rotate.right","wand.and.stars",
+                     "pencil.tip"]
+        let selectors: [Selector] = [#selector(didTapBack), #selector(didTapTrim),
+                                     #selector(didTapCrop), #selector(didTapText), #selector(didTapSticker),
+                                     #selector(didTapBox), #selector(didTapRotate), #selector(didTapFilter),
+                                     #selector(didTapTransition)]
+        
         for (btn, icon) in zip(buttons, icons) {
             btn.tintColor = .white
             btn.layer.cornerRadius = 30
@@ -78,36 +81,50 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             btn.translatesAutoresizingMaskIntoConstraints = false
             btn.widthAnchor.constraint(equalToConstant: 30).isActive = true
             btn.heightAnchor.constraint(equalToConstant: 30).isActive = true
-            btn.setImage(UIImage(systemName: icon), for: .normal)
+        }
+        // Set images & actions
+        for (i, btn) in buttons.enumerated() {
+            btn.setImage(UIImage(systemName: icons[i]), for: .normal)
+            btn.addTarget(self, action: selectors[i], for: .touchUpInside)
         }
         
+        // Create horizontal scroll view for buttons
+        let scrollView = UIScrollView()
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        
+        // Use stack view inside scroll view
         let stack = UIStackView(arrangedSubviews: buttons)
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
         stack.spacing = 10
         stack.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(stack)
+        scrollView.addSubview(stack)
         
+        // Layout scroll view
         NSLayoutConstraint.activate([
-            stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
-            stack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 10),
-            stack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -10)
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            scrollView.heightAnchor.constraint(equalToConstant: 50)
         ])
         
-        // Actions
-        trimButton.addTarget(self, action: #selector(didTapTrim), for: .touchUpInside)
-        cropButton.addTarget(self, action: #selector(didTapCrop), for: .touchUpInside)
-        textButton.addTarget(self, action: #selector(didTapText), for: .touchUpInside)
-        stickerButton.addTarget(self, action: #selector(didTapSticker), for: .touchUpInside)
-        boxButton.addTarget(self, action: #selector(didTapBox), for: .touchUpInside)
+        // Layout stack inside scroll view
+        NSLayoutConstraint.activate([
+            stack.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            stack.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            stack.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10),
+            stack.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -10)
+        ])
     }
+    
     
     @objc private func didTapBack() {
         dismiss(animated: true, completion: nil)
     }
-
+    
     @objc private func didTapTrim() {
         let out = FileManager.default.temporaryDirectory
             .appendingPathComponent("edit_trim_\(Date().timeIntervalSince1970).mp4")
@@ -172,30 +189,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         picker.delegate = self
         present(picker, animated: true)
     }
-
-    // UIImagePickerControllerDelegate
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true)
-        guard let imageURL = info[.imageURL] as? URL else { return }
-        let out = FileManager.default.temporaryDirectory
-            .appendingPathComponent("edit_sticker_\(Date().timeIntervalSince1970).mp4")
-        VideoEditService.addStickerOverlay(
-            inputURL: currentURL,
-            stickerURL: imageURL,
-            outputURL: out,
-            x: 59, y: 30,
-            stickerWidth: 50
-        ) { [weak self] success, error in
-            guard success else { self?.showError(error); return }
-            self?.currentURL = out
-            self?.replacePlayerItem(with: out)
-        }
-    }
-
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true)
-    }
-
+    
     @objc private func didTapBox() {
         let out = FileManager.default.temporaryDirectory
             .appendingPathComponent("edit_box_\(Date().timeIntervalSince1970).mp4")
@@ -213,6 +207,69 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
     }
     
+    @objc private func didTapRotate() {
+        let out = FileManager.default.temporaryDirectory
+            .appendingPathComponent("edit_rotate_\(Date().timeIntervalSince1970).mp4")
+        VideoEditService.rotateVideo(
+            inputURL: currentURL,
+            outputURL: out,
+            degrees: 90
+        ) { [weak self] success, error in
+            guard success else { self?.showError(error); return }
+            self?.currentURL = out
+            self?.replacePlayerItem(with: out)
+        }
+    }
+    
+    @objc private func didTapFilter() {
+        let out = FileManager.default.temporaryDirectory
+            .appendingPathComponent("edit_filter_\(Date().timeIntervalSince1970).mp4")
+        // Example: sepia
+        VideoEditService.applyColorFilter(
+            inputURL: currentURL,
+            outputURL: out,
+            filterName: "colorchannelmixer=.393:.769:.189:0:.349:.686:.168:0:.272:.534:.131"
+        ) { [weak self] success, error in
+            guard success else { self?.showError(error); return }
+            self?.currentURL = out
+            self?.replacePlayerItem(with: out)
+        }
+    }
+    
+    @objc private func didTapTransition() {
+        // Requires second clip URL
+        let secondURL = currentURL // replace with real second clip
+        let out = FileManager.default.temporaryDirectory
+            .appendingPathComponent("edit_transition_\(Date().timeIntervalSince1970).mp4")
+        VideoEditService.crossfadeVideos(
+            firstURL: currentURL,
+            secondURL: secondURL,
+            outputURL: out,
+            duration: 2.0
+        ) { [weak self] success, error in
+            guard success else { self?.showError(error); return }
+            self?.currentURL = out
+            self?.replacePlayerItem(with: out)
+        }
+    }
+    
+    // UIImagePickerControllerDelegate
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true)
+        guard let imageURL = info[.imageURL] as? URL else { return }
+        let out = FileManager.default.temporaryDirectory
+            .appendingPathComponent("edit_doodle_\(Date().timeIntervalSince1970).mp4")
+        VideoEditService.addStickerOverlay(inputURL: currentURL, stickerURL: imageURL, outputURL: out, stickerWidth: 100) {[weak self] success, error in
+            guard success else { self?.showError(error); return }
+            self?.currentURL = out
+            self?.replacePlayerItem(with: out)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
     private func replacePlayerItem(with url: URL) {
         DispatchQueue.main.async {
             let newItem = AVPlayerItem(url: url)
@@ -222,11 +279,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     private func showError(_ error: Error?) {
-        let alert = UIAlertController(
-            title: "Lỗi",
-            message: error?.localizedDescription,
-            preferredStyle: .alert
-        )
+        let alert = UIAlertController(title: "Lỗi", message: error?.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
