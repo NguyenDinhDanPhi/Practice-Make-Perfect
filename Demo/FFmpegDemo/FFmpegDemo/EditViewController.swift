@@ -234,7 +234,8 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         VideoEditService.applyColorFilter(
             inputURL: currentURL,
             outputURL: out,
-            filterName: "colorchannelmixer=.393:.769:.189:0:.349:.686:.168:0:.272:.534:.131"
+            filterName: ColorMixerFilter.vintage.rawValue
+
         ) { [weak self] success, error in
             guard success else { self?.showError(error); return }
             self?.currentURL = out
