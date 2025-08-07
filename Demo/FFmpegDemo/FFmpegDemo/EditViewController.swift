@@ -13,6 +13,10 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     private var currentURL: URL
     private var playerVC: AVPlayerViewController?
     
+    private var isSelectingTransitionClip = false
+    private var isSelectingSticker = false
+    private var transitionFirstURL: URL?
+    
     // Story-like action buttons
     private let backButton = UIButton(type: .system)
     private let trimButton = UIButton(type: .system)
@@ -183,6 +187,8 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     @objc private func didTapSticker() {
         // Allow user to pick an image sticker from photo library
+        
+        isSelectingSticker = true
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.mediaTypes = ["public.image"]
@@ -237,39 +243,117 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     @objc private func didTapTransition() {
-        // Requires second clip URL
-        let secondURL = currentURL // replace with real second clip
-        let out = FileManager.default.temporaryDirectory
-            .appendingPathComponent("edit_transition_\(Date().timeIntervalSince1970).mp4")
-        VideoEditService.crossfadeVideos(
-            firstURL: currentURL,
-            secondURL: secondURL,
-            outputURL: out,
-            duration: 2.0
-        ) { [weak self] success, error in
-            guard success else { self?.showError(error); return }
-            self?.currentURL = out
-            self?.replacePlayerItem(with: out)
+        // Bắt đầu chọn clip thứ hai để transition
+        isSelectingTransitionClip = true
+        transitionFirstURL = currentURL
+        
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.mediaTypes = ["public.movie"]
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
+    ) {
+        picker.dismiss(animated: true)
+
+        // LƯU Ý: reset cả hai ngay khi delegate được gọi
+        let wasTransition = isSelectingTransitionClip
+        let wasSticker    = isSelectingSticker
+        isSelectingTransitionClip = false
+        isSelectingSticker       = false
+
+        if wasTransition {
+            handleTransition(info: info)
+        }
+        else if wasSticker {
+            handleSticker(info: info)
         }
     }
+
+
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            picker.dismiss(animated: true)
+            isSelectingTransitionClip = false
+            isSelectingSticker     = false
+        }
+    // MARK: – Helper
     
-    // UIImagePickerControllerDelegate
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true)
-        guard let imageURL = info[.imageURL] as? URL else { return }
-        let out = FileManager.default.temporaryDirectory
-            .appendingPathComponent("edit_doodle_\(Date().timeIntervalSince1970).mp4")
-        VideoEditService.addStickerOverlay(inputURL: currentURL, stickerURL: imageURL, outputURL: out, stickerWidth: 100) {[weak self] success, error in
-            guard success else { self?.showError(error); return }
-            self?.currentURL = out
-            self?.replacePlayerItem(with: out)
+    private func sandboxedURL(from originalURL: URL) throws -> URL {
+        // Tạo tên file tạm với UUID để tránh đụng
+        let filename = "\(UUID().uuidString)_\(originalURL.lastPathComponent)"
+        let dest = FileManager.default.temporaryDirectory.appendingPathComponent(filename)
+        
+        if FileManager.default.fileExists(atPath: dest.path) {
+            try FileManager.default.removeItem(at: dest)
+        }
+        try FileManager.default.copyItem(at: originalURL, to: dest)
+        return dest
+    }
+    
+    private func handleTransition(info: [UIImagePickerController.InfoKey: Any]) {
+        guard
+          let firstURL  = transitionFirstURL,
+          let secondURL = info[.mediaURL] as? URL
+        else { return }
+
+        do {
+            let a = try sandboxedURL(from: firstURL)
+            let b = try sandboxedURL(from: secondURL)
+            let out = FileManager.default.temporaryDirectory
+                .appendingPathComponent("transition_\(UUID().uuidString).mp4")
+
+            VideoEditService.crossfadeVideos(
+                firstURL: a,
+                secondURL: b,
+                outputURL: out,
+                duration: 2.0
+            ) { [weak self] ok, err in
+                guard ok else { self?.showError(err); return }
+                self?.currentURL = out
+                self?.replacePlayerItem(with: out)
+            }
+        } catch {
+            showError(error)
         }
     }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true)
+
+    private func handleSticker(info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.originalImage] as? UIImage else {
+            showError(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Không lấy được ảnh"]))
+            return
+        }
+        let stickerFile = FileManager.default.temporaryDirectory
+            .appendingPathComponent("\(UUID().uuidString)_sticker.png")
+        guard let data = image.pngData() else {
+            showError(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "PNG data thất bại"]))
+            return
+        }
+        do {
+            try data.write(to: stickerFile)
+            let videoTemp = try sandboxedURL(from: currentURL)
+            let out = FileManager.default.temporaryDirectory
+                .appendingPathComponent("sticker_\(UUID().uuidString).mp4")
+
+            VideoEditService.addStickerOverlay(
+                inputURL: videoTemp,
+                stickerURL: stickerFile,
+                outputURL: out,
+                stickerWidth: 100
+            ) { [weak self] ok, err in
+                guard ok else { self?.showError(err); return }
+                self?.currentURL = out
+                self?.replacePlayerItem(with: out)
+            }
+        } catch {
+            showError(error)
+        }
     }
-    
+
+
     private func replacePlayerItem(with url: URL) {
         DispatchQueue.main.async {
             let newItem = AVPlayerItem(url: url)
