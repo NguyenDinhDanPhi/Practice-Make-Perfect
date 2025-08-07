@@ -107,17 +107,21 @@ final class VideoEditService {
         outputURL: URL,
         x: Int = 0,
         y: Int = 0,
+        stickerWidth: Int,  
         completion: @escaping (Bool, Error?) -> Void
     ) {
+        // Scale sticker to given width (auto height), then overlay
+        let filter = "[1:v]scale=\(stickerWidth):-1[st];[0:v][st]overlay=\(x):\(y)"
         let command = """
         -y -i "\(inputURL.path)" \
         -i "\(stickerURL.path)" \
-        -filter_complex "overlay=\(x):\(y)" \
+        -filter_complex "\(filter)" \
         -c:v libx264 -crf 18 -preset veryfast \
         -c:a copy "\(outputURL.path)"
         """
         runAsync(command: command, completion: completion)
     }
+
     
     /// Draw a colored box (rectangle) on the video.
     /// - Parameters:

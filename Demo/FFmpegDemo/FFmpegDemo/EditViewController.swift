@@ -183,7 +183,8 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             inputURL: currentURL,
             stickerURL: imageURL,
             outputURL: out,
-            x: 30, y: 30
+            x: 59, y: 30,
+            stickerWidth: 50
         ) { [weak self] success, error in
             guard success else { self?.showError(error); return }
             self?.currentURL = out
@@ -201,7 +202,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         VideoEditService.drawBoxOverlay(
             inputURL: currentURL,
             outputURL: out,
-            x: 50, y: 50,
+            x: 70, y: 50,
             width: 200, height: 100,
             color: "blue@0.5",
             thickness: 10
