@@ -14,20 +14,11 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     private var playerVC: AVPlayerViewController?
     
     // Story-like action buttons
+    private let backButton = UIButton(type: .system)
     private let trimButton = UIButton(type: .system)
     private let cropButton = UIButton(type: .system)
     private let textButton = UIButton(type: .system)
     private let stickerButton = UIButton(type: .system)
-    
-    // MARK: - Back Button
-    private func setupBackButton() {
-        let back = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(didTapBack))
-        navigationItem.leftBarButtonItem = back
-    }
-
-    @objc private func didTapBack() {
-        dismiss(animated: true, completion: nil)
-    }
     private let boxButton = UIButton(type: .system)
     
     init(videoURL: URL) {
@@ -43,7 +34,6 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         super.viewDidLoad()
         title = "Edit Story"
         view.backgroundColor = .black
-        setupBackButton()
         setupPlayerView()
         setupActionButtons()
     }
@@ -69,15 +59,25 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     private func setupActionButtons() {
-        let buttons = [trimButton, cropButton, textButton, stickerButton, boxButton]
-        let icons = ["scissors", "crop", "textformat", "photo", "scribble"]
+        // Configure back button
+        backButton.tintColor = .white
+        backButton.layer.cornerRadius = 30
+        backButton.backgroundColor = UIColor(white: 0.1, alpha: 0.6)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        backButton.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        backButton.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        backButton.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
+
+        let buttons = [backButton, trimButton, cropButton, textButton, stickerButton, boxButton]
+        let icons = ["chevron.backward","scissors", "crop", "textformat", "photo", "scribble"]
         for (btn, icon) in zip(buttons, icons) {
             btn.tintColor = .white
             btn.layer.cornerRadius = 30
             btn.backgroundColor = UIColor(white: 0.1, alpha: 0.6)
             btn.translatesAutoresizingMaskIntoConstraints = false
-            btn.widthAnchor.constraint(equalToConstant: 60).isActive = true
-            btn.heightAnchor.constraint(equalToConstant: 60).isActive = true
+            btn.widthAnchor.constraint(equalToConstant: 30).isActive = true
+            btn.heightAnchor.constraint(equalToConstant: 30).isActive = true
             btn.setImage(UIImage(systemName: icon), for: .normal)
         }
         
@@ -85,15 +85,15 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-        stack.spacing = 20
+        stack.spacing = 10
         stack.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stack)
         
         NSLayoutConstraint.activate([
             stack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
-            stack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
-            stack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
+            stack.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 10),
+            stack.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -10)
         ])
         
         // Actions
@@ -104,6 +104,10 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         boxButton.addTarget(self, action: #selector(didTapBox), for: .touchUpInside)
     }
     
+    @objc private func didTapBack() {
+        dismiss(animated: true, completion: nil)
+    }
+
     @objc private func didTapTrim() {
         let out = FileManager.default.temporaryDirectory
             .appendingPathComponent("edit_trim_\(Date().timeIntervalSince1970).mp4")
