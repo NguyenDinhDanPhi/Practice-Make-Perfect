@@ -27,6 +27,8 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     private let rotateButton = UIButton(type: .system)
     private let filterButton = UIButton(type: .system)
     private let transitionButton = UIButton(type: .system)
+    var activityIndicator = UIActivityIndicatorView(style: .large)
+
     
     init(videoURL: URL) {
         self.currentURL = videoURL
@@ -43,6 +45,17 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         view.backgroundColor = .black
         setupPlayerView()
         setupActionButtons()
+        view.addSubview(activityIndicator)
+        activityIndicator.color = .red
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        activityIndicator.hidesWhenStopped = true
+        
+        view.bringSubviewToFront(activityIndicator)
     }
     
     private func setupPlayerView() {
@@ -78,7 +91,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                                      #selector(didTapBox), #selector(didTapRotate), #selector(didTapFilter),
                                      #selector(didTapTransition)]
         
-        for (btn, icon) in zip(buttons, icons) {
+        for (btn, _) in zip(buttons, icons) {
             btn.tintColor = .white
             btn.layer.cornerRadius = 30
             btn.backgroundColor = UIColor(white: 0.1, alpha: 0.6)
@@ -130,6 +143,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     @objc private func didTapTrim() {
+        activityIndicator.startAnimating()
         let out = FileManager.default.temporaryDirectory
             .appendingPathComponent("edit_trim_\(Date().timeIntervalSince1970).mp4")
         VideoEditService.trimVideo(
@@ -139,12 +153,14 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             duration: 10
         ) { [weak self] success, error in
             guard success else { self?.showError(error); return }
+            self?.activityIndicator.stopAnimating()
             self?.currentURL = out
             self?.replacePlayerItem(with: out)
         }
     }
     
     @objc private func didTapCrop() {
+        activityIndicator.startAnimating()
         let asset = AVAsset(url: currentURL)
         guard let track = asset.tracks(withMediaType: .video).first else { return }
         let transformedSize = track.naturalSize.applying(track.preferredTransform)
@@ -162,12 +178,14 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             x: x, y: y
         ) { [weak self] success, error in
             guard success else { self?.showError(error); return }
+            self?.activityIndicator.stopAnimating()
             self?.currentURL = out
             self?.replacePlayerItem(with: out)
         }
     }
     
     @objc private func didTapText() {
+        activityIndicator.startAnimating()
         let out = FileManager.default.temporaryDirectory
             .appendingPathComponent("edit_text_\(Date().timeIntervalSince1970).mp4")
         VideoEditService.addTextOverlay(
@@ -180,6 +198,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             x: 20, y: 20
         ) { [weak self] success, error in
             guard success else { self?.showError(error); return }
+            self?.activityIndicator.stopAnimating()
             self?.currentURL = out
             self?.replacePlayerItem(with: out)
         }
@@ -187,7 +206,6 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     @objc private func didTapSticker() {
         // Allow user to pick an image sticker from photo library
-        
         isSelectingSticker = true
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
@@ -197,6 +215,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     @objc private func didTapBox() {
+        activityIndicator.startAnimating()
         let out = FileManager.default.temporaryDirectory
             .appendingPathComponent("edit_box_\(Date().timeIntervalSince1970).mp4")
         VideoEditService.drawBoxOverlay(
@@ -208,12 +227,14 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             thickness: 10
         ) { [weak self] success, error in
             guard success else { self?.showError(error); return }
+            self?.activityIndicator.stopAnimating()
             self?.currentURL = out
             self?.replacePlayerItem(with: out)
         }
     }
     
     @objc private func didTapRotate() {
+        activityIndicator.startAnimating()
         let out = FileManager.default.temporaryDirectory
             .appendingPathComponent("edit_rotate_\(Date().timeIntervalSince1970).mp4")
         VideoEditService.rotateVideo(
@@ -222,12 +243,14 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             degrees: 90
         ) { [weak self] success, error in
             guard success else { self?.showError(error); return }
+            self?.activityIndicator.stopAnimating()
             self?.currentURL = out
             self?.replacePlayerItem(with: out)
         }
     }
     
     @objc private func didTapFilter() {
+        activityIndicator.startAnimating()
         let out = FileManager.default.temporaryDirectory
             .appendingPathComponent("edit_filter_\(Date().timeIntervalSince1970).mp4")
         // Example: sepia
@@ -238,6 +261,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 
         ) { [weak self] success, error in
             guard success else { self?.showError(error); return }
+            self?.activityIndicator.stopAnimating()
             self?.currentURL = out
             self?.replacePlayerItem(with: out)
         }
@@ -296,6 +320,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     private func handleTransition(info: [UIImagePickerController.InfoKey: Any]) {
+        activityIndicator.startAnimating()
         guard
             let firstURL  = transitionFirstURL,
             let secondURL = info[.mediaURL] as? URL
@@ -322,6 +347,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 offset: startAt
             ) { [weak self] ok, err in
                 guard ok else { self?.showError(err); return }
+                self?.activityIndicator.stopAnimating()
                 self?.currentURL = out
                 self?.replacePlayerItem(with: out)
             }
@@ -343,6 +369,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             return
         }
         do {
+            activityIndicator.startAnimating()
             try data.write(to: stickerFile)
             let videoTemp = try sandboxedURL(from: currentURL)
             let out = FileManager.default.temporaryDirectory
@@ -355,6 +382,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 stickerWidth: 100
             ) { [weak self] ok, err in
                 guard ok else { self?.showError(err); return }
+                self?.activityIndicator.stopAnimating()
                 self?.currentURL = out
                 self?.replacePlayerItem(with: out)
             }
