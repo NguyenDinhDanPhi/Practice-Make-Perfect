@@ -25,10 +25,10 @@ final class VideoEditService {
         duration: Double,
         completion: @escaping (Bool, Error?) -> Void
     ) {
-        let command = "-y -i \"\(inputURL.path)\" -ss \(startTime) -t \(duration) -c copy \"\(outputURL.path)\""
-
+        let command = "-y -ss \(startTime) -i \"\(inputURL.path)\" -t \(duration) -c copy -avoid_negative_ts make_zero -movflags +faststart \"\(outputURL.path)\""
         runAsync(command: command, completion: completion)
     }
+
     
     /// Crop a video to specified rectangle.
     /// - Parameters:
