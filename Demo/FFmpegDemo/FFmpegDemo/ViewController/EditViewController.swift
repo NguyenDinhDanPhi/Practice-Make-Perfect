@@ -297,8 +297,8 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     private func handleTransition(info: [UIImagePickerController.InfoKey: Any]) {
         guard
-          let firstURL  = transitionFirstURL,
-          let secondURL = info[.mediaURL] as? URL
+            let firstURL  = transitionFirstURL,
+            let secondURL = info[.mediaURL] as? URL
         else { return }
 
         do {
@@ -307,11 +307,19 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let out = FileManager.default.temporaryDirectory
                 .appendingPathComponent("transition_\(UUID().uuidString).mp4")
 
+            // 1) Crossfade tại giây 5 của clip 1:
+           // let startAt: Double = 5.0
+
+            // 2) Hoặc crossfade ở CUỐI clip 1:
+             let firstDur = CMTimeGetSeconds(AVAsset(url: a).duration)
+             let startAt  = max(0, firstDur - 2.0) // nếu duration = 2.0
+
             VideoEditService.crossfadeVideos(
                 firstURL: a,
                 secondURL: b,
                 outputURL: out,
-                duration: 2.0
+                duration: 2.0,
+                offset: startAt
             ) { [weak self] ok, err in
                 guard ok else { self?.showError(err); return }
                 self?.currentURL = out
@@ -321,6 +329,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             showError(error)
         }
     }
+
 
     private func handleSticker(info: [UIImagePickerController.InfoKey: Any]) {
         guard let image = info[.originalImage] as? UIImage else {
@@ -339,7 +348,7 @@ class EditViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let out = FileManager.default.temporaryDirectory
                 .appendingPathComponent("sticker_\(UUID().uuidString).mp4")
 
-            VideoEditService.addStickerOverlay(
+            VideoEditService.addImageOverlay(
                 inputURL: videoTemp,
                 stickerURL: stickerFile,
                 outputURL: out,

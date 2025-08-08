@@ -7,7 +7,7 @@
 
 import UIKit
 import ffmpegkit
-
+import AVKit
 /// A simple video editing service using FFmpegKit.
 final class VideoEditService {
     
@@ -101,7 +101,7 @@ final class VideoEditService {
     ///   - x: X position of the sticker in pixels.
     ///   - y: Y position of the sticker in pixels.
     ///   - completion: Completion handler with success flag and optional error.
-    static func addStickerOverlay(
+    static func addImageOverlay(
         inputURL: URL,
         stickerURL: URL,
         outputURL: URL,
@@ -197,17 +197,48 @@ final class VideoEditService {
         ///   - outputURL: URL where output video will be saved.
         ///   - duration: Duration in seconds of the crossfade.
         ///   - completion: Completion handler with success flag and optional error.
-        static func crossfadeVideos(
-            firstURL: URL,
-            secondURL: URL,
-            outputURL: URL,
-            duration: Double,
-            completion: @escaping (Bool, Error?) -> Void
-        ) {
-            let filter = "[0:v][1:v]xfade=transition=fade:duration=\(duration):offset=0,format=yuv420p"
-            let command = "-y -i \"\(firstURL.path)\" -i \"\(secondURL.path)\" -filter_complex \"\(filter)\" -c:v libx264 -crf 18 -preset veryfast -c:a copy \"\(outputURL.path)\""
-            runAsync(command: command, completion: completion)
+    static func crossfadeVideos(
+        firstURL: URL,
+        secondURL: URL,
+        outputURL: URL,
+        duration: Double,
+        offset: Double = 0,                // cho phép chọn thời điểm bắt đầu crossfade trên clip 1
+        completion: @escaping (Bool, Error?) -> Void
+    ) {
+        // Lấy size & fps từ clip 1
+        let asset = AVAsset(url: firstURL)
+        guard let track = asset.tracks(withMediaType: .video).first else {
+            completion(false, NSError(domain: "FFmpegKit",
+                                      code: -1,
+                                      userInfo: [NSLocalizedDescriptionKey: "Không đọc được track video của clip 1"]))
+            return
         }
+        let natural = track.naturalSize.applying(track.preferredTransform)
+        let w = Int(abs(natural.width))
+        let h = Int(abs(natural.height))
+        let nominal = track.nominalFrameRate
+        let fps = max(1, Int(round(nominal > 0 ? nominal : 30))) // fallback 30fps
+        
+        // Clamp offset: 0...(durationClip1 - duration)
+        let firstDur = CMTimeGetSeconds(asset.duration)
+        let safeOffset = max(0, min(offset, max(0, firstDur - duration)))
+        
+        // Chuẩn hoá: fps + settb + scale + setsar + setpts, rồi xfade
+        let filter = """
+            [0:v]fps=\(fps),settb=AVTB,scale=\(w):\(h),setsar=1,setpts=PTS-STARTPTS[v0];
+            [1:v]fps=\(fps),settb=AVTB,scale=\(w):\(h),setsar=1,setpts=PTS-STARTPTS[v1];
+            [v0][v1]xfade=transition=fade:duration=\(duration):offset=\(safeOffset),format=yuv420p
+            """
+        
+        let command = """
+            -y -i "\(firstURL.path)" -i "\(secondURL.path)" \
+            -filter_complex "\(filter)" \
+            -c:v libx264 -crf 18 -preset veryfast \
+            -c:a copy "\(outputURL.path)"
+            """
+        
+        runAsync(command: command, completion: completion)
+    }
         
     
     /// Helper to run an FFmpegKit async command and map the return code.
