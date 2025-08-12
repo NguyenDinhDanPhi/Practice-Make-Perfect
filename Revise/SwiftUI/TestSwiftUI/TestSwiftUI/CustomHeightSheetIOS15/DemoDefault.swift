@@ -10,7 +10,7 @@ struct DemoDefault: View {
     @State private var show = false
     var body: some View {
         Button("Open (default 45%)") { show = true }
-            .partialBottomSheetDefault(isPresented: $show, defaultRatio: 0.4) {
+            .partialBottomSheetDefault(isPresented: $show, defaultRatio: 0.45) {
                 SheetBody { show = false }
             }
     }

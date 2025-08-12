@@ -4,12 +4,6 @@
 //
 //  Created by Dan Phi on 12/8/25.
 //
-
-import UIKit
-
-// AdaptiveBottomSheetSizing.swift
-// UIKit layer
-
 import UIKit
 
 public protocol AdaptiveBottomSheetSizing {
