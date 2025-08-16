@@ -60,6 +60,7 @@ class LiveStreamViewController: UIViewController {
     // MARK: - Preview
 
     private func setupPreview() {
+        //MARK: Preview before LiveStream
         hkView = MTHKView(frame: view.bounds)
         hkView.videoGravity = .resizeAspectFill
         hkView.translatesAutoresizingMaskIntoConstraints = false
@@ -109,10 +110,11 @@ class LiveStreamViewController: UIViewController {
 
         // 3. Capture settings
         rtmpStream.sessionPreset = .hd1280x720
+        // tốc độ khung kình
         rtmpStream.frameRate = 30
 
         // 4. Attach camera với autofocus/exposure/stabilization
-        if let cameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
+        if let cameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             do {
                 try cameraDevice.lockForConfiguration()
                 if cameraDevice.isFocusModeSupported(.continuousAutoFocus) {
@@ -215,8 +217,8 @@ class LiveStreamViewController: UIViewController {
                 profileLevel: kVTProfileLevel_H264_Main_AutoLevel as String,
                 scalingMode: .trim,
                 bitRateMode: .average,
-                maxKeyFrameIntervalDuration: 2,
-                allowFrameReordering: true,
+                maxKeyFrameIntervalDuration: 1,
+                allowFrameReordering: false,
                 isHardwareEncoderEnabled: true
                
             )
@@ -229,8 +231,8 @@ class LiveStreamViewController: UIViewController {
                 profileLevel: kVTProfileLevel_H264_Main_AutoLevel as String,
                 scalingMode: .trim,
                 bitRateMode: .average,
-                maxKeyFrameIntervalDuration: 2,
-                allowFrameReordering: true,
+                maxKeyFrameIntervalDuration: 1,
+                allowFrameReordering: false,
                 isHardwareEncoderEnabled: true
                
             )
