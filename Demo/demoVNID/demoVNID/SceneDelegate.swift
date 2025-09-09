@@ -12,10 +12,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScreen = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScreen)
-        window.rootViewController = ViewController()
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: windowScene)
+        
+        // Bọc trong NavigationController
+        let rootVC = ViewController()
+        let nav = UINavigationController(rootViewController: rootVC)
+        
+        window.rootViewController = nav
         window.makeKeyAndVisible()
         self.window = window
     }
