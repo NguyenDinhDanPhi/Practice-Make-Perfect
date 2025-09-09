@@ -44,8 +44,8 @@ class ViewController: UIViewController {
     }
     
     @objc private func didTapApproved() {
-     //   let vc = ApprovedViewController()
-        //navigationController?.pushViewController(vc, animated: true)
+        let vc = StartStreamerViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     // MARK: - Layout
