@@ -33,7 +33,6 @@ class BecomeStreamerViewController: UIViewController, UITableViewDataSource, UIT
         return view
     }()
 
-    // 👉 tableView cũng khai báo kiểu lazy var như label
     private lazy var tableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .plain)
         tv.translatesAutoresizingMaskIntoConstraints = false
