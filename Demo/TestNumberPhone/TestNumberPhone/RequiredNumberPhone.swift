@@ -42,14 +42,13 @@ final class RequiredNumberPhone: UIViewController, KeyboardAdjustable, UITextFie
         v.layer.cornerRadius = 8
         v.textColor = .white
         v.keyboardType = .numberPad
-        v.clearButtonMode = .whileEditing
         v.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 48))
         v.leftViewMode = .always
         v.attributedPlaceholder = NSAttributedString(
             string: "nhập số điện thoại của bạn",
             attributes: [.foregroundColor: UIColor(white: 1, alpha: 0.5)]
         )
-        v.delegate = self // dùng delegate để chặn ngoài 10 số & chỉ cho số
+        v.delegate = self
         return v
     }()
 
@@ -60,7 +59,7 @@ final class RequiredNumberPhone: UIViewController, KeyboardAdjustable, UITextFie
         v.textColor = .red
         v.font = .systemFont(ofSize: 12, weight: .regular)
         v.textAlignment = .left
-        v.isHidden = true // chỉ hiện khi bấm nút mà sai
+        v.isHidden = true
         return v
     }()
 
@@ -107,7 +106,7 @@ final class RequiredNumberPhone: UIViewController, KeyboardAdjustable, UITextFie
         super.viewDidLoad()
         setupUI()
         setupConstraints()
-        setupKeyboardObservers() // từ KeyboardAdjustable
+        setupKeyboardObservers()
 
         // Tap nền để ẩn bàn phím
         view.addGestureRecognizer(UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing)))
@@ -116,7 +115,10 @@ final class RequiredNumberPhone: UIViewController, KeyboardAdjustable, UITextFie
         checkbox.isChecked = true
         checkbox.addTarget(self, action: #selector(checkboxChanged), for: .touchUpInside)
 
-        updateButtonState() // giờ chỉ phụ thuộc checkbox
+        // ⚠️ Thêm target: sửa là ẩn lỗi và reset border
+        textfield.addTarget(self, action: #selector(onEditingChanged), for: .editingChanged)
+
+        updateButtonState() // nút phụ thuộc checkbox
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -188,6 +190,12 @@ final class RequiredNumberPhone: UIViewController, KeyboardAdjustable, UITextFie
         updateButtonState() // nút vẫn theo checkbox
     }
 
+    @objc private func onEditingChanged() {
+        if !errorLabel.isHidden { 
+            clearErrorUI()
+        }
+    }
+
     @objc private func checkboxChanged() { updateButtonState() }
 
     private func updateButtonState() {
@@ -195,7 +203,7 @@ final class RequiredNumberPhone: UIViewController, KeyboardAdjustable, UITextFie
         button.alpha = button.isEnabled ? 1.0 : 0.5
     }
 
-    // MARK: - Validation (gọi CHỈ khi ấn nút)
+    // MARK: - Validation (chỉ khi bấm nút)
     func isValidPhone(_ s: String) -> Bool {
         return !s.isEmpty && s.allSatisfy(\.isNumber) && s.count == 10
     }
