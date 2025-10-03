@@ -139,38 +139,68 @@ final class RequiredNumberPhone: UIViewController, KeyboardAdjustable, UITextFie
     }
 
     private func setupConstraints() {
+        // 1) Tạo 2 layout guides cho hai “máy đo” bề rộng
+        let form566 = UILayoutGuide()   // cho title + textfield
+        let form534 = UILayoutGuide()   // cho button + checkbox + privacy
+
+        view.addLayoutGuide(form566)
+        view.addLayoutGuide(form534)
+
+        // 2) Ràng buộc max width + căn giữa + mép an toàn 16pt
         NSLayoutConstraint.activate([
+            // Guide 566
+            form566.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            form566.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 16),
+            form566.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -16),
+            form566.widthAnchor.constraint(lessThanOrEqualToConstant: 566),
+
+            // Guide 534
+            form534.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            form534.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 16),
+            form534.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -16),
+            form534.widthAnchor.constraint(lessThanOrEqualToConstant: 534),
+        ])
+
+        // 3) Các ràng buộc còn lại
+        NSLayoutConstraint.activate([
+            // BG như cũ
             bgBackground.topAnchor.constraint(equalTo: view.topAnchor),
             bgBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bgBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bgBackground.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.521),
 
+            // Title: top theo safeArea, LEFT/RIGHT bám vào form566
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 28),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
+            titleLabel.leadingAnchor.constraint(equalTo: form566.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: form566.trailingAnchor),
 
+            // Textfield: dưới title, bám form566, cao 48
             textfield.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            textfield.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            textfield.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            textfield.leadingAnchor.constraint(equalTo: form566.leadingAnchor),
+            textfield.trailingAnchor.constraint(equalTo: form566.trailingAnchor),
             textfield.heightAnchor.constraint(equalToConstant: 48),
 
+            // Error label: dưới textfield, bám form566
             errorLabel.topAnchor.constraint(equalTo: textfield.bottomAnchor, constant: 8),
-            errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            errorLabel.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -16),
+            errorLabel.leadingAnchor.constraint(equalTo: form566.leadingAnchor),
+            errorLabel.trailingAnchor.constraint(lessThanOrEqualTo: form566.trailingAnchor),
 
-            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            // Button: bám form534, nằm trên checkbox 1 khoảng
+            button.leadingAnchor.constraint(equalTo: form534.leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: form534.trailingAnchor),
             button.heightAnchor.constraint(equalToConstant: buttonHeight),
             button.bottomAnchor.constraint(equalTo: checkbox.topAnchor, constant: -spacingBetweenButtonAndCheckbox),
 
-            checkbox.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            // Checkbox + privacyLabel: bám form534
+            checkbox.leadingAnchor.constraint(equalTo: form534.leadingAnchor),
             checkbox.widthAnchor.constraint(equalToConstant: 20),
             checkbox.heightAnchor.constraint(equalToConstant: 20),
 
             privacyLabel.leadingAnchor.constraint(equalTo: checkbox.trailingAnchor, constant: 8),
-            privacyLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            privacyLabel.centerYAnchor.constraint(equalTo: checkbox.centerYAnchor)
+            privacyLabel.trailingAnchor.constraint(equalTo: form534.trailingAnchor),
+            privacyLabel.centerYAnchor.constraint(equalTo: checkbox.centerYAnchor),
         ])
+
 
         bottomConstraint = checkbox.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
                                                            constant: bottomSpacingWhenHidden)
@@ -191,7 +221,7 @@ final class RequiredNumberPhone: UIViewController, KeyboardAdjustable, UITextFie
     }
 
     @objc private func onEditingChanged() {
-        if !errorLabel.isHidden { 
+        if !errorLabel.isHidden {
             clearErrorUI()
         }
     }
