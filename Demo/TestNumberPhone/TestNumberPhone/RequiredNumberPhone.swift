@@ -7,11 +7,12 @@
 
 import UIKit
 
-final class RequiredNumberPhone: UIViewController {
-    
-    // MARK: - Keyboard bottom constraint
-    private var bottomConstraint: NSLayoutConstraint?
-    private let bottomSpacingWhenHidden: CGFloat = -16
+final class RequiredNumberPhone: UIViewController, KeyboardAdjustable {
+
+    // MARK: - KeyboardAdjustable
+    var bottomConstraint: NSLayoutConstraint?
+    let bottomSpacingWhenHidden: CGFloat = -16
+    var keyboardPadding: CGFloat = 0
     private let spacingBetweenButtonAndCheckbox: CGFloat = 12
     private let buttonHeight: CGFloat = 48
     
@@ -94,7 +95,7 @@ final class RequiredNumberPhone: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
-        setupKeyboardObservers()
+        setupKeyboardObservers() // từ protocol
         
         // Tap nền để ẩn bàn phím
         view.addGestureRecognizer(UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing)))
@@ -103,17 +104,13 @@ final class RequiredNumberPhone: UIViewController {
         checkbox.isChecked = true
         checkbox.addTarget(self, action: #selector(checkboxChanged), for: .touchUpInside)
         
-        // Cập nhật trạng thái nút lần đầu
         updateButtonState()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // Auto focus
         textfield.becomeFirstResponder()
     }
-    
-    deinit { NotificationCenter.default.removeObserver(self) }
     
     // MARK: - Setup
     private func setupUI() {
@@ -135,7 +132,7 @@ final class RequiredNumberPhone: UIViewController {
             
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 28),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
             
             textfield.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
             textfield.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -161,17 +158,6 @@ final class RequiredNumberPhone: UIViewController {
         bottomConstraint?.isActive = true
     }
     
-    private func setupKeyboardObservers() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleKeyboard(notification:)),
-                                               name: UIResponder.keyboardWillChangeFrameNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleKeyboard(notification:)),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
-    }
-    
     // MARK: - Actions
     @objc private func didTapContinue() {
         print("Tiếp tục với số: \(textfield.text ?? "")")
@@ -181,32 +167,6 @@ final class RequiredNumberPhone: UIViewController {
     
     private func updateButtonState() {
         button.isEnabled = checkbox.isChecked
-    }
-    
-    // MARK: - Keyboard
-    @objc private func handleKeyboard(notification: Notification) {
-        guard
-            let userInfo = notification.userInfo,
-            let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue,
-            let curveRaw = (userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber)?.uintValue
-        else { return }
-        
-        var overlap: CGFloat = 0
-        if let endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let kbEnd = view.convert(endFrame, from: nil)
-            overlap = max(0, view.bounds.maxY - kbEnd.origin.y)
-        }
-        
-        if overlap > 0 {
-            bottomConstraint?.constant = -(overlap + 12)
-        } else {
-            bottomConstraint?.constant = bottomSpacingWhenHidden
-        }
-        
-        let options = UIView.AnimationOptions(rawValue: curveRaw << 16)
-        UIView.animate(withDuration: duration, delay: 0, options: options) {
-            self.view.layoutIfNeeded()
-        }
     }
 }
 
@@ -225,71 +185,4 @@ extension UIColor {
         
         self.init(red: r, green: g, blue: b, alpha: alpha)
     }
-}
-
-// MARK: - GradientButton
-final class GradientButton: UIButton {
-    private let gradientLayer = CAGradientLayer()
-    
-    override var isEnabled: Bool {
-        didSet { updateStyle() }
-    }
-    
-    override init(frame: CGRect) { super.init(frame: frame); setupGradient() }
-    required init?(coder: NSCoder) { super.init(coder: coder); setupGradient() }
-    
-    private func setupGradient() {
-        gradientLayer.colors = [
-            UIColor(hex: "#FE592A").cgColor,
-            UIColor(hex: "#FD3C12").cgColor
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
-        gradientLayer.endPoint   = CGPoint(x: 1, y: 0.5)
-        layer.insertSublayer(gradientLayer, at: 0)
-        
-        layer.cornerRadius = 8
-        layer.masksToBounds = true
-        titleLabel?.font = .boldSystemFont(ofSize: 16)
-        updateStyle()
-    }
-    
-    private func updateStyle() {
-        if isEnabled {
-            gradientLayer.isHidden = false
-            backgroundColor = .clear
-            setTitleColor(.white, for: .normal)
-        } else {
-            gradientLayer.isHidden = true
-            backgroundColor = UIColor.black.withAlphaComponent(0.06)
-            setTitleColor(UIColor.white.withAlphaComponent(0.38), for: .normal)
-        }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        gradientLayer.frame = bounds
-        gradientLayer.cornerRadius = layer.cornerRadius
-    }
-}
-
-// MARK: - CheckBox
-final class CheckBox: UIButton {
-    private let checkedImage = UIImage(systemName: "checkmark.square.fill")
-    private let uncheckedImage = UIImage(systemName: "square")
-    
-    var isChecked: Bool = false {
-        didSet {
-            setImage(isChecked ? checkedImage : uncheckedImage, for: .normal)
-            tintColor = UIColor(hex: "#FE592A")
-        }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setImage(uncheckedImage, for: .normal)
-        addTarget(self, action: #selector(toggle), for: .touchUpInside)
-    }
-    required init?(coder: NSCoder) { super.init(coder: coder) }
-    
-    @objc private func toggle() { isChecked.toggle() }
 }
